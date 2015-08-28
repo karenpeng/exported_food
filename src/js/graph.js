@@ -1,12 +1,14 @@
 import d3 from 'd3'
 
-module.exports = function (_data, key1, key2){
-  let svg = d3.select('svg');
+module.exports = function (_data){
+  let svg = d3.select('svg')
+  let main = d3.select('main')
     
-  const width = 400;
-  const height = 400;
+  let width = window.innerWidth - 400
+  let height = window.innerHeight - 100
       
-  svg.attr('width',width).attr('height', height).style('background-color','yellow')
+  svg.attr('width',width).attr('height', height)
+  main.attr('width',width).attr('height', height)
 
   let x = d3.scale.ordinal()
       .rangeBands([0, width])
@@ -58,12 +60,6 @@ module.exports = function (_data, key1, key2){
 
   chartEnter
     .append('text')
-
-  // chart
-  //    .attr('transform', (d,i) =>{
-  //      return 'translate('+ i * interval+',0)'
-  //    })
-
    
    let rects = d3.selectAll('rect')
     .attr('width', interval - 1)
