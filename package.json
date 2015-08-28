@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  },
+  "dependencies": {
+    "babelify": "^6.2.0",
+    "browserify": "^11.0.1",
+    "d3": "^3.5.6",
+    "gulp-sourcemaps": "^1.5.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.3.1"
+  }
+}
