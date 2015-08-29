@@ -29917,17 +29917,17 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _SliderJsx = require('./Slider.jsx');
+var _yearJsx = require('./year.jsx');
 
-var _SliderJsx2 = _interopRequireDefault(_SliderJsx);
+var _yearJsx2 = _interopRequireDefault(_yearJsx);
+
+var _catJsx = require('./cat.jsx');
 
 var _viewMapJs = require('./../view/map.js');
 
 var _viewMapJs2 = _interopRequireDefault(_viewMapJs);
 
 var _viewPieJs = require('./../view/pie.js');
-
-var _viewPieJs2 = _interopRequireDefault(_viewPieJs);
 
 var BigBrother = _react2['default'].createClass({
   displayName: 'BigBrother',
@@ -29943,42 +29943,41 @@ var BigBrother = _react2['default'].createClass({
     };
   },
   componentDidMount: function componentDidMount() {
-    var main = document.getElementsByClassName('main')[0];
-    main.setAttribute('width', window.innerWidth - 400 + 'px');
-    (0, _viewPieJs2['default'])(this.props.data[this.state.cat][this.state.subCat], this.state.index);
+    (0, _viewPieJs.pie)(this.props.data[this.state.cat][this.state.subCat], this.state.index);
   },
   handleYear: function handleYear(year) {
     this.setState({
       index: year - 1999
     });
   },
-  handleCategory: function handleCategory() {},
+  handleCategory: function handleCategory(cat) {
+    this.setState({
+      cat: cat
+    });
+  },
   render: function render() {
 
-    (0, _viewPieJs2['default'])(this.props.data[this.state.cat][this.state.subCat], this.state.index);
-
+    (0, _viewPieJs.pie)(this.props.data[this.state.cat][this.state.subCat], this.state.index);
+    var keys = Object.keys(this.props.data);
+    // console.log(keys)
     return _react2['default'].createElement(
       'div',
       { id: 'container' },
       _react2['default'].createElement(
         'div',
-        { className: 'main-wrap' },
-        _react2['default'].createElement(
-          'section',
-          { className: 'main' },
-          _react2['default'].createElement('svg', null),
-          _react2['default'].createElement(_SliderJsx2['default'], { handleYear: this.handleYear })
-        )
-      ),
-      _react2['default'].createElement(
-        'section',
         { className: 'sub' },
-        '??'
+        _react2['default'].createElement(_catJsx.Cat, { options: keys, handleCat: this.handleCategory })
       ),
       _react2['default'].createElement(
         'section',
         { className: 'aside' },
-        '??'
+        '?sdffgdfgdfgsdfds?'
+      ),
+      _react2['default'].createElement(
+        'div',
+        { className: 'main' },
+        _react2['default'].createElement('svg', null),
+        _react2['default'].createElement(_yearJsx2['default'], { handleYear: this.handleYear })
       )
     );
   }
@@ -29987,7 +29986,50 @@ var BigBrother = _react2['default'].createClass({
 module.exports = BigBrother;
 
 
-},{"./../view/map.js":162,"./../view/pie.js":163,"./Slider.jsx":160,"react":157}],160:[function(require,module,exports){
+},{"./../view/map.js":163,"./../view/pie.js":164,"./cat.jsx":160,"./year.jsx":161,"react":157}],160:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var Cat = _react2['default'].createClass({
+  displayName: 'Cat',
+
+  PropTypes: {
+    options: _react2['default'].PropTypes.array.isRequired,
+    handleCat: _react2['default'].PropTypes.func.isRequired
+  },
+  handleClick: function handleClick(e) {
+    e.preventDefault();
+    this.props.handleCat(e.target.value);
+  },
+  render: function render() {
+    var options = this.props.options.map((function (d, i) {
+      return _react2['default'].createElement(
+        'option',
+        { key: i, value: d },
+        d
+      );
+    }).bind(this));
+    return _react2['default'].createElement(
+      'select',
+      { onChange: this.handleClick },
+      options
+    );
+  }
+
+});
+exports.Cat = Cat;
+
+
+},{"react":157}],161:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -30000,8 +30042,8 @@ var _d3 = require('d3');
 
 var _d32 = _interopRequireDefault(_d3);
 
-var Slider = _react2['default'].createClass({
-  displayName: 'Slider',
+var Year = _react2['default'].createClass({
+  displayName: 'Year',
 
   PropTypes: {
     handleYear: _react2['default'].PropTypes.func.isRequired
@@ -30023,10 +30065,10 @@ var Slider = _react2['default'].createClass({
   }
 });
 
-module.exports = Slider;
+module.exports = Year;
 
 
-},{"d3":2,"react":157}],161:[function(require,module,exports){
+},{"d3":2,"react":157}],162:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -30043,14 +30085,17 @@ var _controlBigBrotherJsx = require('./control/BigBrother.jsx');
 
 var _controlBigBrotherJsx2 = _interopRequireDefault(_controlBigBrotherJsx);
 
+//console.log(init)
+
 _d32['default'].json('./rawData/test.json', function (error, json) {
   if (error) return console.log(error);
   console.log(json);
+
   _react2['default'].render(_react2['default'].createElement(_controlBigBrotherJsx2['default'], { data: json }), document.getElementById('bigBrother'));
 });
 
 
-},{"./control/BigBrother.jsx":159,"d3":2,"react":157}],162:[function(require,module,exports){
+},{"./control/BigBrother.jsx":159,"d3":2,"react":157}],163:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -30064,8 +30109,13 @@ var _topojson = require('topojson');
 var _topojson2 = _interopRequireDefault(_topojson);
 
 
-},{"d3":2,"topojson":158}],163:[function(require,module,exports){
+},{"d3":2,"topojson":158}],164:[function(require,module,exports){
 'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+exports.pie = pie;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -30073,51 +30123,66 @@ var _d3 = require('d3');
 
 var _d32 = _interopRequireDefault(_d3);
 
-module.exports = function (data, index) {
+//problem:
+//1. how to only update index if data does not change
+//2. how to not put 'world' and 'quntity' in the data?
 
-  console.dir(data);
-  console.log(index);
+function pie(data, index) {
 
   var svg = _d32['default'].select('svg');
-  var width = window.innerWidth - 400;
+  var width = window.innerWidth - 600;
   var height = window.innerHeight - 100;
 
   svg.attr('width', width).attr('height', height);
 
   var interval = width / data.length;
 
-  var maxValue = _d32['default'].max(data, function (d) {
-    console.log(d);
-    return d["money"] ? d["money"][index] : null;
-  });
-  var minValue = _d32['default'].min(data, function (d) {
-    return d["money"] ? d["money"][index] : null;
-  });
+  var c = _d32['default'].scale.linear().range([0, 100]).domain([10, 2000]);
 
-  var c = _d32['default'].scale.linear().range([10, interval / 2]).domain([minValue, maxValue]);
+  var rr = _d32['default'].scale.linear().range([10, interval / 2]).domain([10, 2000]);
 
   var circle = svg.selectAll('circle').data(data, function (d) {
-    return d["country"] ? d["country"] : null;
+    if (d["country"] !== undefined) return d["country"];
   });
+
   circle.attr('cy', height / 2).attr('cx', function (d, i) {
     return i * interval + 10;
   }).attr('r', 0).transition().attr('r', function (d) {
-    return d["money"] ? c(d["money"][index]) : null;
+    return d["money"] ? rr(d["money"][index]) : null;
   });
+  // .each((d) =>{
+  //   d._cur = d["money"] ? rr(d["money"][index]) : null
+  // })
 
   circle.exit().transition().attr('r', 0).remove();
 
   circle.enter().append('circle').attr('cy', height / 2).attr('cx', function (d, i) {
     return i * interval + 10;
-  }).attr('r', 0).transition().attr('r', function (d) {
-    return d["money"] ? c(d["money"][index]) : null;
-  }).style('fill', 'red').text(function (d) {
+  }).style('fill', function (d) {
+    if (d["money"]) {
+      var h = c(d["money"][index]);
+      //console.log(h)
+      return 'hsl(200,' + h + '% , 50%)';
+    }
+    //return d3.hsl(c(d["money"]), 100%, 50%)
+  }).text(function (d) {
     return d["country"] ? d["country"] : null;
+  })
+  //@TODO: figure out to store previous radius
+  // .attr('r', (d) => {
+  //   console.log(d._cur)
+  //   return d._cur
+  // })
+  .attr('r', 0).transition()
+  //.duration(10)
+  //.ease("linear")
+  .attr('r', function (d) {
+    return d["money"] ? rr(d["money"][index]) : null;
   });
-};
+}
 
 
-},{"d3":2}]},{},[161])
+},{"d3":2}]},{},[162])
 
 
 //# sourceMappingURL=build.js.map

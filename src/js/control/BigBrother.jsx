@@ -1,8 +1,10 @@
 import React from 'react'
-import Slider from './Slider.jsx'
+import Year from './year.jsx'
+import {Cat} from './cat.jsx'
 
 import map from './../view/map.js'
-import pie from './../view/pie.js'
+import {pie} from './../view/pie.js'
+
 
 let BigBrother = React.createClass({
   PropTypes:{
@@ -15,9 +17,7 @@ let BigBrother = React.createClass({
       subCat: "Bovine animals"
     }
   },
-  componentDidMount: function(){
-    var main = document.getElementsByClassName('main')[0]
-    main.setAttribute('width', window.innerWidth-400 + 'px')
+  componentDidMount: function(){    
     pie(this.props.data[this.state.cat][this.state.subCat], this.state.index)
   },
   handleYear: function(year){
@@ -25,27 +25,29 @@ let BigBrother = React.createClass({
       index: year - 1999
     })
   },
-  handleCategory: function(){
-
+  handleCategory: function(cat){
+    this.setState({
+      cat: cat
+    })
   },
   render: function(){
 
     pie(this.props.data[this.state.cat][this.state.subCat], this.state.index)
-
+    var keys = Object.keys(this.props.data)
+    // console.log(keys)
     return(
       <div id="container">
-        <div className="main-wrap">
-          <section className="main">
-            <svg></svg>
-            <Slider handleYear={this.handleYear}></Slider>
-          </section>
+        <div className="sub">
+          <Cat options={keys} handleCat={this.handleCategory}></Cat>
         </div>
-        <section className="sub">??</section>
-        <section className="aside">??</section>
+        <section className="aside">?sdffgdfgdfgsdfds?</section>
+        <div className="main">
+          <svg></svg>
+          <Year handleYear={this.handleYear}></Year>
+        </div>
       </div>
     )
   }
 })
 
 module.exports = BigBrother
-

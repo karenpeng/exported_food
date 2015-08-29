@@ -1,7 +1,7 @@
 import React from 'react'
 import d3 from 'd3'
 
-let Slider = React.createClass({
+let Year = React.createClass({
   PropTypes:{
     handleYear: React.PropTypes.func.isRequired
   },
@@ -24,4 +24,4 @@ let Slider = React.createClass({
   }
 })
 
-module.exports = Slider
+module.exports = Year

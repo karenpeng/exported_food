@@ -1,42 +1,44 @@
 import d3 from 'd3'
 
-module.exports = function(data, index){
+//problem:
+//1. how to only update index if data does not change
+//2. how to not put 'world' and 'quntity' in the data?
 
-  console.dir(data)
-  console.log(index)
+export function pie(data, index){
 
   let svg = d3.select('svg')
-  let width = window.innerWidth - 400
+  let width = window.innerWidth - 600
   let height = window.innerHeight - 100
       
   svg.attr('width',width).attr('height', height)
 
   let interval = width / data.length
 
-  let maxValue = d3.max(data, (d) => {
-    console.log(d)
-    return d["money"] ? d["money"][index] : null
-  })
-  let minValue = d3.min(data, (d) =>{
-    return d["money"] ? d["money"][index] : null
-  })
-
   let c = d3.scale.linear()
+  .range([0, 100])
+  .domain([10, 2000])
+
+  let rr = d3.scale.linear()
   .range([10, interval/2])
-  .domain([minValue, maxValue])
+  .domain([10, 2000])
   
   let circle = svg.selectAll('circle')
   .data(data, (d) =>{
-    return d["country"] ? d["country"] : null
+    if(d["country"] !== undefined)
+    return d["country"]
   })
+
   circle
   .attr('cy', height/2)
   .attr('cx', (d, i) => {return i * interval + 10})
   .attr('r', 0)
   .transition()
   .attr('r', (d) => {
-    return d["money"] ? c(d["money"][index]) : null
+    return d["money"] ? rr(d["money"][index]) : null
   })
+  // .each((d) =>{
+  //   d._cur = d["money"] ? rr(d["money"][index]) : null
+  // })
 
   circle.exit()
   .transition()
@@ -48,13 +50,27 @@ module.exports = function(data, index){
   .attr('cx', (d, i) => {
     return i * interval + 10;
   })
-  .attr('r', 0)
-  .transition()
-  .attr('r', (d) => {
-    return d["money"] ? c(d["money"][index]) : null
+  .style('fill', (d) => {
+    if(d["money"]){
+      let h = c(d["money"][index])
+      //console.log(h)
+      return 'hsl(200,' + h + '% , 50%)'
+    }
+    //return d3.hsl(c(d["money"]), 100%, 50%)
   })
-  .style('fill', 'red')
   .text((d) => {
     return d["country"] ? d["country"] : null
+  })
+  //@TODO: figure out to store previous radius
+  // .attr('r', (d) => {
+  //   console.log(d._cur)
+  //   return d._cur
+  // })
+  .attr('r', 0)
+  .transition()
+  //.duration(10)
+  //.ease("linear")
+  .attr('r', (d) => {
+    return d["money"] ? rr(d["money"][index]) : null
   })
 }
