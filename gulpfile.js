@@ -6,7 +6,7 @@ var browserify = require('browserify')
 var watchify = require('watchify')
 var babelify = require('babelify')
 var reactify = require('reactify')
-var serve = require('gulp-serve')
+var server = require('gulp-server-livereload')
 var mocha = require('gulp-mocha')
 
 function compile(watch) {
@@ -52,13 +52,21 @@ function test(){
   })
 }
 
-//@TODO
-function server(){
-
+function serve(){
+  gulp.src('.')
+  .pipe(server({
+    port: 11235,
+    path:'/',
+    livereload: true,
+    directoryListing: true,
+    open: true,
+    defaultFile: 'index.html'
+  }))
 }
 
 gulp.task('build', function() { return compile()})
 gulp.task('watch', function() { return watch()})
 gulp.task('test', function(){ return test()})
+gulp.task('serve', function(){ return serve()})
 
-gulp.task('default', ['watch'])
+gulp.task('default', ['watch', 'serve'])
