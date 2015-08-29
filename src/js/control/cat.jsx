@@ -14,7 +14,7 @@ export const Cat = React.createClass({
       return(
         <option key={i} value={d}>{d}</option>
       )
-    }.bind(this)) 
+    }) 
     return(
       <select onChange={this.handleClick}>
         {options}

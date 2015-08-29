@@ -30010,13 +30010,13 @@ var Cat = _react2['default'].createClass({
     this.props.handleCat(e.target.value);
   },
   render: function render() {
-    var options = this.props.options.map((function (d, i) {
+    var options = this.props.options.map(function (d, i) {
       return _react2['default'].createElement(
         'option',
         { key: i, value: d },
         d
       );
-    }).bind(this));
+    });
     return _react2['default'].createElement(
       'select',
       { onChange: this.handleClick },
