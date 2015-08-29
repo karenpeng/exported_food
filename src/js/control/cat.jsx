@@ -1,15 +1,15 @@
 import React from 'react'
 
-export let Cat = React.createClass({
+export const Cat = React.createClass({
   PropTypes:{
     options: React.PropTypes.array.isRequired,
     handleCat: React.PropTypes.func.isRequired
   },
-  handleClick: function(e){
+  handleClick(e){
     e.preventDefault()
     this.props.handleCat(e.target.value)
   },
-  render: function(){
+  render(){
     let options = this.props.options.map((d, i) =>{
       return(
         <option key={i} value={d}>{d}</option>
@@ -21,5 +21,4 @@ export let Cat = React.createClass({
       </select>
     )
   }
-
 })

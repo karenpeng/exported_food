@@ -29911,6 +29911,10 @@ module.exports = require('./lib/React');
 },{}],159:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _react = require('react');
@@ -29919,16 +29923,13 @@ var _react2 = _interopRequireDefault(_react);
 
 var _yearJsx = require('./year.jsx');
 
-var _yearJsx2 = _interopRequireDefault(_yearJsx);
-
 var _catJsx = require('./cat.jsx');
 
 var _viewMapJs = require('./../view/map.js');
 
-var _viewMapJs2 = _interopRequireDefault(_viewMapJs);
-
 var _viewPieJs = require('./../view/pie.js');
 
+//problem: how to deal with sub category??
 var BigBrother = _react2['default'].createClass({
   displayName: 'BigBrother',
 
@@ -29956,7 +29957,6 @@ var BigBrother = _react2['default'].createClass({
     });
   },
   render: function render() {
-
     (0, _viewPieJs.pie)(this.props.data[this.state.cat][this.state.subCat], this.state.index);
     var keys = Object.keys(this.props.data);
     // console.log(keys)
@@ -29977,13 +29977,12 @@ var BigBrother = _react2['default'].createClass({
         'div',
         { className: 'main' },
         _react2['default'].createElement('svg', null),
-        _react2['default'].createElement(_yearJsx2['default'], { handleYear: this.handleYear })
+        _react2['default'].createElement(_yearJsx.Year, { handleYear: this.handleYear })
       )
     );
   }
 });
-
-module.exports = BigBrother;
+exports.BigBrother = BigBrother;
 
 
 },{"./../view/map.js":163,"./../view/pie.js":164,"./cat.jsx":160,"./year.jsx":161,"react":157}],160:[function(require,module,exports){
@@ -30024,13 +30023,16 @@ var Cat = _react2['default'].createClass({
       options
     );
   }
-
 });
 exports.Cat = Cat;
 
 
 },{"react":157}],161:[function(require,module,exports){
 'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -30064,8 +30066,7 @@ var Year = _react2['default'].createClass({
     return _react2['default'].createElement('input', { className: 'bottom', type: 'range', value: this.state.year, min: '1999', max: '2014', step: '1', onChange: this.handleSlide });
   }
 });
-
-module.exports = Year;
+exports.Year = Year;
 
 
 },{"d3":2,"react":157}],162:[function(require,module,exports){
@@ -30083,15 +30084,13 @@ var _d32 = _interopRequireDefault(_d3);
 
 var _controlBigBrotherJsx = require('./control/BigBrother.jsx');
 
-var _controlBigBrotherJsx2 = _interopRequireDefault(_controlBigBrotherJsx);
-
 //console.log(init)
 
 _d32['default'].json('./rawData/test.json', function (error, json) {
   if (error) return console.log(error);
   console.log(json);
 
-  _react2['default'].render(_react2['default'].createElement(_controlBigBrotherJsx2['default'], { data: json }), document.getElementById('bigBrother'));
+  _react2['default'].render(_react2['default'].createElement(_controlBigBrotherJsx.BigBrother, { data: json }), document.getElementById('bigBrother'));
 });
 
 

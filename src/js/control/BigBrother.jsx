@@ -1,37 +1,36 @@
 import React from 'react'
-import Year from './year.jsx'
+import {Year} from './year.jsx'
 import {Cat} from './cat.jsx'
 
-import map from './../view/map.js'
+import {map} from './../view/map.js'
 import {pie} from './../view/pie.js'
 
-
-let BigBrother = React.createClass({
+//problem: how to deal with sub category??
+export const BigBrother = React.createClass({
   PropTypes:{
     data: React.PropTypes.object.isRequired
   },
-  getInitialState: function(){
+  getInitialState(){
     return{
       index: 14,
       cat: "Animals",
       subCat: "Bovine animals"
     }
   },
-  componentDidMount: function(){    
+  componentDidMount(){    
     pie(this.props.data[this.state.cat][this.state.subCat], this.state.index)
   },
-  handleYear: function(year){
+  handleYear(year){
     this.setState({
       index: year - 1999
     })
   },
-  handleCategory: function(cat){
+  handleCategory(cat){
     this.setState({
       cat: cat
     })
   },
-  render: function(){
-
+  render(){
     pie(this.props.data[this.state.cat][this.state.subCat], this.state.index)
     var keys = Object.keys(this.props.data)
     // console.log(keys)
@@ -49,5 +48,3 @@ let BigBrother = React.createClass({
     )
   }
 })
-
-module.exports = BigBrother

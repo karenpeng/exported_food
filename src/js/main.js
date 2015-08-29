@@ -1,6 +1,6 @@
 import React from 'react'
 import d3 from 'd3'
-import BigBrother from './control/BigBrother.jsx'
+import {BigBrother} from './control/BigBrother.jsx'
 
 //console.log(init)
 

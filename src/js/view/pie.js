@@ -6,7 +6,7 @@ import d3 from 'd3'
 
 export function pie(data, index){
 
-  let svg = d3.select('svg')
+  const svg = d3.select('svg')
   let width = window.innerWidth - 600
   let height = window.innerHeight - 100
       
@@ -14,11 +14,11 @@ export function pie(data, index){
 
   let interval = width / data.length
 
-  let c = d3.scale.linear()
+  const c = d3.scale.linear()
   .range([0, 100])
   .domain([10, 2000])
 
-  let rr = d3.scale.linear()
+  const rr = d3.scale.linear()
   .range([10, interval/2])
   .domain([10, 2000])
   
