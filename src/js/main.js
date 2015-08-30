@@ -4,7 +4,7 @@ import {BigBrother} from './control/BigBrother.jsx'
 
 //console.log(init)
 
-d3.json('./rawData/test.json', function(error, json) {
+d3.json('./data/bySubCat.json', function(error, json) {
   if (error) return console.log(error)
   console.log(json)
 

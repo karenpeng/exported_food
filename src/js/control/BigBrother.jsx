@@ -1,11 +1,10 @@
 import React from 'react'
 import {Year} from './year.jsx'
 import {Cat} from './cat.jsx'
+import {Sort} from './sort.jsx'
 
-import {map} from './../view/map.js'
-import {pie} from './../view/pie.js'
+import {initBar, updateBar} from '../view/bar.js'
 
-//problem: how to deal with sub category??
 export const BigBrother = React.createClass({
   PropTypes:{
     data: React.PropTypes.object.isRequired
@@ -14,36 +13,44 @@ export const BigBrother = React.createClass({
     return{
       index: 14,
       cat: "Animals",
-      subCat: "Bovine animals"
+      sortBy: 'subCat'
     }
   },
   componentDidMount(){    
-    pie(this.props.data[this.state.cat][this.state.subCat], this.state.index)
+    //initBar()
+    updateBar(this.props.data[this.state.cat], this.state.index)
   },
   handleYear(year){
     this.setState({
       index: year - 1999
     })
   },
-  handleCategory(cat){
+  handleCategory(val){
     this.setState({
-      cat: cat
+      cat: val
+    })
+  },
+  handleSort(val){
+    this.setState({
+      sortBy: val
     })
   },
   render(){
-    pie(this.props.data[this.state.cat][this.state.subCat], this.state.index)
+    updateBar(this.props.data[this.state.cat], this.state.index)
     var keys = Object.keys(this.props.data)
     // console.log(keys)
     return(
       <div id="container">
-        <div className="sub">
+        <div className="top">
           <Cat options={keys} handleCat={this.handleCategory}></Cat>
+          <Sort handleSort={this.handleSort}></Sort>
         </div>
-        <section className="aside">?sdffgdfgdfgsdfds?</section>
         <div className="main">
-          <svg></svg>
-          <Year handleYear={this.handleYear}></Year>
+          <svg className="chart"></svg>
         </div>
+        <section className="bottom">
+          <Year handleYear={this.handleYear}></Year>
+        </section>
       </div>
     )
   }

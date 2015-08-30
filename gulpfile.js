@@ -56,7 +56,7 @@ function serve(){
   gulp.src('.')
   .pipe(server({
     port: 11235,
-    path:'/',
+    path:'/index.html',
     livereload: true,
     directoryListing: true,
     open: true,

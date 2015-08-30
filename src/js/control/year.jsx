@@ -1,5 +1,4 @@
 import React from 'react'
-import d3 from 'd3'
 
 export const Year = React.createClass({
   PropTypes:{
@@ -18,8 +17,9 @@ export const Year = React.createClass({
     this.props.handleYear(e.target.value)
   },
   render(){
+    let _w = {width: window.innerWidth - 100 + 'px'}
     return(
-      <input className="bottom" type="range" value={this.state.year} min="1999" max="2014" step="1" onChange={this.handleSlide}/>
+      <input id="yearBar" style={_w} type="range" value={this.state.year} min="1999" max="2014" step="1" onChange={this.handleSlide}/>
     )
   }
 })

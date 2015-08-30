@@ -6,22 +6,39 @@ html, body{
   width: 100%;
   height: 100%;
 }
+#container{
+  margin: 0;
+  padding: 0;
+  left: 0;
+}
 .main {
-    margin: 0 400px 0 200px;
-    background-color: #eee;
+  margin: 0;
+  padding: 0;
+  left: 0;
+  background-color: #eee;
 }
-.sub {
-    width: 200px;
-    float: left;
-    background-color: #ddd;
-}
-.aside {
-    width: 400px;
-    float: right;
-    background-color: #ccc;
+.top {
+  margin: 0;
+  padding: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background-color: #ddd;
 }
 .bottom{
+  position: fixed;
+  margin: 0;
+  padding: 0;
+  left: 0;
   bottom: 0;
-  margin: 50px 0;
   width: 100%;
+  height: 120px;
+}
+
+#yearBar{
+  margin: 50px;
+}
+
+.chart{
+  margin: 0 20px;
 }
