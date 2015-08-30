@@ -65,7 +65,11 @@ export function updateBar(data, index){
   let rects = d3.selectAll('.subGroup')
   .selectAll('rect')
   .data((d) => {
-    var key = Object.keys(d)[0]
+    let key = Object.keys(d)[0]
+    d[key].forEach( (dd , ii) =>{
+      console.log(dd, ii)
+    })
+    
     return d[key]
   })
 
@@ -84,18 +88,19 @@ export function updateBar(data, index){
     var key = Object.keys(d)[0]
     //how could i offset it???
     //console.log(lastHeight)
+    //console.log(d[key][index].y0, d[key][index].y1)
     return height - h(d[key][index]) - 40 - lastHeight
   })
   .attr('height', (d) => {
     var key = Object.keys(d)[0]
     lastHeight = h(d[key][index])
-    console.dir(d)
+    //console.dir(d.y0, d.y1)
     return h(d[key][index])
   })
   .attr('width', interval)
   .style('fill', (d) => {
     var key = Object.keys(d)[0]
-    console.log(c(d[key][index]))
+    //console.log(c(d[key][index]))
     return 'rgb(10, 10, '+ c(d[key][index]) +')'
   })
   // .append('text')

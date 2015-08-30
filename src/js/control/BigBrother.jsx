@@ -11,7 +11,7 @@ export const BigBrother = React.createClass({
   },
   getInitialState(){
     return{
-      index: 14,
+      index: 15,
       cat: "Animals",
       sortBy: 'subCat'
     }
