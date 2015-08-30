@@ -3,8 +3,8 @@ import d3 from 'd3'
 export function updateBar(data, index){
   const svg = d3.select('svg')
 
-  const width = window.innerWidth - 40
-  const height = window.innerHeight - 240
+  const width = window.innerWidth - 80
+  const height = window.innerHeight - 280
 
   svg
   .attr('width', width)
@@ -14,9 +14,16 @@ export function updateBar(data, index){
 
   const interval = width / data.length
 
+  //should it be generalized or not?
+  const max = 4000
+
   const h = d3.scale.linear()
   .range([0, height])
-  .domain([0, 4000])
+  .domain([0, max])
+
+  const c = d3.scale.linear()
+  .range([0, 255])
+  .domain([0, max])
 
   let chart = svg.selectAll('g')
   .data(data, (d) => {
@@ -26,8 +33,6 @@ export function updateBar(data, index){
   .attr('transform', (d, i) => {
      return 'translate('+ i * interval+', 0)'
    })
-
-  //console.log(chart)
 
    let chartExit = chart
     .exit()
@@ -39,38 +44,67 @@ export function updateBar(data, index){
    let chartEnter = chart
     .enter()
     .append('g')
-   .attr('transform', (d, i) => {
+    .attr('class', 'group')
+    .attr('width', interval)
+    .attr('transform', (d, i) => {
        return 'translate('+ i * interval+',0)'
      })
-    
-   chartEnter
-    .append('rect')
-   //.selectAll('rect')
-    //console.dir(chartEnter)
-
-   let rects = d3.selectAll('rect')
-    .attr('width', interval)
-    .attr('height', (d, i) =>{
+    .append('text')
+    .attr('y', height - 20)
+    .attr('x', interval/2)
+    .style('text-anchor', 'middle')
+    .text((d) => {
       let key = Object.keys(d)[0]
-      d[key].forEach( (dd, ii) => {
-        let key = Object.keys(dd)[0]
-        dd[key].forEach( (ddd, iii) => {
-          console.log(ddd)
-          return h(ddd)
-        })
-      })
-      //console.log(d.value0, d.value)
-      //return y(d.value2)
+      return key
     })
 
-    //.append('rect')
-   //  .style('fill', (d) =>{
-   //     return 'rgb(' + c(d.value) +',0,0)'
-   //   })
-   // .attr('y', (d) =>{
-   //     return height - y(d.value2)
-   // })
+  let subGroup = d3.selectAll('.group')
+  .append('g')
+  .attr('class', 'subGroup')
+ 
+  let rects = d3.selectAll('.subGroup')
+  .selectAll('rect')
+  .data((d) => {
+    var key = Object.keys(d)[0]
+    return d[key]
+  })
 
+  let rectsExit = rects
+    .exit()
+    .style('opacity', 1)
+    .transition()
+    .style('opacity', 0)
+    .remove()
+
+  let lastHeight = 0
+  let rectsEnter = rects
+  .enter()
+  .append('rect')
+  .attr('y', (d, i) => {
+    var key = Object.keys(d)[0]
+    //how could i offset it???
+    //console.log(lastHeight)
+    return height - h(d[key][index]) - 40 - lastHeight
+  })
+  .attr('height', (d) => {
+    var key = Object.keys(d)[0]
+    lastHeight = h(d[key][index])
+    console.dir(d)
+    return h(d[key][index])
+  })
+  .attr('width', interval)
+  .style('fill', (d) => {
+    var key = Object.keys(d)[0]
+    console.log(c(d[key][index]))
+    return 'rgb(10, 10, '+ c(d[key][index]) +')'
+  })
+  // .append('text')
+  // .text((d) => {
+  //   var key = Object.keys(d)[0]
+  //   //console.dir(d[key][index])
+  //   return d[key][index]
+  // })
+  // .style('fill', 'white')
 }
 
 

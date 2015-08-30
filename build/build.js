@@ -29620,8 +29620,8 @@ var _d32 = _interopRequireDefault(_d3);
 function updateBar(data, index) {
   var svg = _d32['default'].select('svg');
 
-  var width = window.innerWidth - 40;
-  var height = window.innerHeight - 240;
+  var width = window.innerWidth - 80;
+  var height = window.innerHeight - 280;
 
   svg.attr('width', width).attr('height', height);
 
@@ -29629,7 +29629,12 @@ function updateBar(data, index) {
 
   var interval = width / data.length;
 
-  var h = _d32['default'].scale.linear().range([0, height]).domain([0, 4000]);
+  //should it be generalized or not?
+  var max = 4000;
+
+  var h = _d32['default'].scale.linear().range([0, height]).domain([0, max]);
+
+  var c = _d32['default'].scale.linear().range([0, 255]).domain([0, max]);
 
   var chart = svg.selectAll('g').data(data, function (d) {
     var name = Object.keys(d)[0];
@@ -29638,38 +29643,47 @@ function updateBar(data, index) {
     return 'translate(' + i * interval + ', 0)';
   });
 
-  //console.log(chart)
-
   var chartExit = chart.exit().style('opacity', 1).transition().style('opacity', 0).remove();
 
-  var chartEnter = chart.enter().append('g').attr('transform', function (d, i) {
+  var chartEnter = chart.enter().append('g').attr('class', 'group').attr('width', interval).attr('transform', function (d, i) {
     return 'translate(' + i * interval + ',0)';
-  });
-
-  chartEnter.append('rect');
-  //.selectAll('rect')
-  //console.dir(chartEnter)
-
-  var rects = _d32['default'].selectAll('rect').attr('width', interval).attr('height', function (d, i) {
+  }).append('text').attr('y', height - 20).attr('x', interval / 2).style('text-anchor', 'middle').text(function (d) {
     var key = Object.keys(d)[0];
-    d[key].forEach(function (dd, ii) {
-      var key = Object.keys(dd)[0];
-      dd[key].forEach(function (ddd, iii) {
-        console.log(ddd);
-        return h(ddd);
-      });
-    });
-    //console.log(d.value0, d.value)
-    //return y(d.value2)
+    return key;
   });
 
-  //.append('rect')
-  //  .style('fill', (d) =>{
-  //     return 'rgb(' + c(d.value) +',0,0)'
-  //   })
-  // .attr('y', (d) =>{
-  //     return height - y(d.value2)
+  var subGroup = _d32['default'].selectAll('.group').append('g').attr('class', 'subGroup');
+
+  var rects = _d32['default'].selectAll('.subGroup').selectAll('rect').data(function (d) {
+    var key = Object.keys(d)[0];
+    return d[key];
+  });
+
+  var rectsExit = rects.exit().style('opacity', 1).transition().style('opacity', 0).remove();
+
+  var lastHeight = 0;
+  var rectsEnter = rects.enter().append('rect').attr('y', function (d, i) {
+    var key = Object.keys(d)[0];
+    //how could i offset it???
+    //console.log(lastHeight)
+    return height - h(d[key][index]) - 40 - lastHeight;
+  }).attr('height', function (d) {
+    var key = Object.keys(d)[0];
+    lastHeight = h(d[key][index]);
+    console.dir(d);
+    return h(d[key][index]);
+  }).attr('width', interval).style('fill', function (d) {
+    var key = Object.keys(d)[0];
+    console.log(c(d[key][index]));
+    return 'rgb(10, 10, ' + c(d[key][index]) + ')';
+  });
+  // .append('text')
+  // .text((d) => {
+  //   var key = Object.keys(d)[0]
+  //   //console.dir(d[key][index])
+  //   return d[key][index]
   // })
+  // .style('fill', 'white')
 }
 
 
