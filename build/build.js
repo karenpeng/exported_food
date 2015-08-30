@@ -29604,95 +29604,10 @@ _d32['default'].json('./data/bySubCat.json', function (error, json) {
 
 
 },{"./control/BigBrother.jsx":158,"d3":2,"react":157}],163:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-exports.updateBar = updateBar;
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _d3 = require('d3');
-
-var _d32 = _interopRequireDefault(_d3);
-
-function updateBar(data, index) {
-  var svg = _d32['default'].select('svg');
-
-  var width = window.innerWidth - 80;
-  var height = window.innerHeight - 280;
-
-  svg.attr('width', width).attr('height', height);
-
-  var title = Object.keys(data)[0];
-
-  var interval = width / data.length;
-
-  //should it be generalized or not?
-  var max = 4000;
-
-  var h = _d32['default'].scale.linear().range([0, height]).domain([0, max]);
-
-  var c = _d32['default'].scale.linear().range([0, 255]).domain([0, max]);
-
-  var chart = svg.selectAll('g').data(data, function (d) {
-    var name = Object.keys(d)[0];
-    return name;
-  }).attr('transform', function (d, i) {
-    return 'translate(' + i * interval + ', 0)';
-  });
-
-  var chartExit = chart.exit().style('opacity', 1).transition().style('opacity', 0).remove();
-
-  var chartEnter = chart.enter().append('g').attr('class', 'group').attr('width', interval).attr('transform', function (d, i) {
-    return 'translate(' + i * interval + ',0)';
-  }).append('text').attr('y', height - 20).attr('x', interval / 2).style('text-anchor', 'middle').text(function (d) {
-    var key = Object.keys(d)[0];
-    return key;
-  });
-
-  var subGroup = _d32['default'].selectAll('.group').append('g').attr('class', 'subGroup');
-
-  var rects = _d32['default'].selectAll('.subGroup').selectAll('rect').data(function (d) {
-    var key = Object.keys(d)[0];
-    d[key].forEach(function (dd, ii) {
-      console.log(dd, ii);
-    });
-
-    return d[key];
-  });
-
-  var rectsExit = rects.exit().style('opacity', 1).transition().style('opacity', 0).remove();
-
-  var lastHeight = 0;
-  var rectsEnter = rects.enter().append('rect').attr('y', function (d, i) {
-    var key = Object.keys(d)[0];
-    //how could i offset it???
-    //console.log(lastHeight)
-    //console.log(d[key][index].y0, d[key][index].y1)
-    return height - h(d[key][index]) - 40 - lastHeight;
-  }).attr('height', function (d) {
-    var key = Object.keys(d)[0];
-    lastHeight = h(d[key][index]);
-    //console.dir(d.y0, d.y1)
-    return h(d[key][index]);
-  }).attr('width', interval).style('fill', function (d) {
-    var key = Object.keys(d)[0];
-    //console.log(c(d[key][index]))
-    return 'rgb(10, 10, ' + c(d[key][index]) + ')';
-  });
-  // .append('text')
-  // .text((d) => {
-  //   var key = Object.keys(d)[0]
-  //   //console.dir(d[key][index])
-  //   return d[key][index]
-  // })
-  // .style('fill', 'white')
-}
+"use strict";
 
 
-},{"d3":2}]},{},[162])
+},{}]},{},[162])
 
 
 //# sourceMappingURL=build.js.map
