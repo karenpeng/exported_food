@@ -34,7 +34,7 @@ export const BigBrother = React.createClass({
   },
   shouldComponentUpdate(nextProps, nextState){
     if(nextState.index !== this.state.index){
-      updateBar(this.state.countryData, this.state.drilldownData, nextState.index)
+      updateBar(nextState.index)
     }
     return nextState.cat !== this.state.cat
   },

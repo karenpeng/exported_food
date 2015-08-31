@@ -3,12 +3,11 @@
   {
     name: "Canada",
     id: "Canada",
-    tooltip: {
+    tooltip:{
       pointFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
     },
-    dataLabels: {
-      enabled: true,
-      format: '{point.y:.1f} Million$'
+    dataLabels:{
+      enabled: false
     },
     data: [
       [
@@ -24,8 +23,11 @@
   {
     name: "Mexico",
     id: "Mexico",
-    tooltip: {
+    tooltip:{
       pointFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
+    },
+    dataLabels:{
+      enabled: false
     },
     data: [
       [
@@ -49,12 +51,13 @@ export function getDrilldown(catAllData, countryData){
     let obj = {
       name: d.name,
       id: d.name,
-      tooltip: {
-        pointFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
+      tooltip:{
+        headerFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
+        pointFormat: ''
       },
-      dataLabels: {
+      dataLabels:{
         enabled: true,
-        format: '{point.y:.1f} Million$'
+        format: '{point.y:.1f}'
       },
       data:[]
     }

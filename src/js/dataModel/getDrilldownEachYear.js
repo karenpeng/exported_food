@@ -3,13 +3,12 @@
   {
     name: "Canada",
     id: "Canada",
-    tooltip: {
+    tooltip:{
       pointFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
     },
-    dataLabels: {
-      enabled: true,
-      format: '{point.y:.1f} Million$'
-    },
+    dataLabels:{
+      enabled: false
+    },    
     data: [
       [
         "Bovine",
@@ -24,13 +23,12 @@
   {
     name: "Mexico",
     id: "Mexico",
-    tooltip: {
+    tooltip:{
       pointFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
     },
-    dataLabels: {
-      enabled: true,
-      format: '{point.y:.1f} Million$'
-    },
+    dataLabels:{
+      enabled: false
+    },    
     data: [
       [
         "Bovine",
@@ -65,19 +63,31 @@ export function getDrilldownEachYear(arr, index){
 
       output.push(obj)
   })
-  console.dir(output)
+  //console.dir(output)
   return output
 }
 
 /*
-
+[12, 45, 43, 23,...]
  */
 export function getDrilldownEachYearJustY(arr, country, index){
-  // let output = []
-  //   arr.forEach((d)=>{
-  //     if(d[name] === country){
-  //       output.push(y: d.data[index])
-  //     }
-  // })
-  // return output
+  
+  let output = []
+  arr.forEach((d) =>{
+    if(d.name === country){
+      d.data.forEach((dd) =>{
+        output.push(dd[1][index])
+      })
+    }
+  })
+  //console.dir(output)
+  return output
 }
+
+
+
+
+
+
+
+

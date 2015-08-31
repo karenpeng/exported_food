@@ -2,11 +2,11 @@
 [{
   name: "Country",
   colorByPoint: true,
-  tooltip: {
+  tooltip:{
     headerFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
     pointFormat: '<b>{point.percentage:.1f}%</b> of total<br/>'
   },
-  dataLabels: {
+  dataLabels:{
     enabled: true,
     format: '{point.percentage:.1f}%'
   },
@@ -26,7 +26,7 @@
 }]
  */
 /**
- * [getCategoryForBar description]
+ * [getCatForBar description]
  * @param  {array} obj     for instance, data["Animals"]
  * @return {array}         array in above format 
  */
@@ -35,11 +35,11 @@ export function getCountry(obj){
   output.push({
     name: "Country",
     colorByPoint: true,
-    tooltip: {
+    tooltip:{
       headerFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
       pointFormat: '<b>{point.percentage:.1f}%</b> of total<br/>'
     },
-    dataLabels: {
+    dataLabels:{
       enabled: true,
       format: '{point.percentage:.1f}%'
     },
