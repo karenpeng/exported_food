@@ -4,7 +4,7 @@ export function registerBar(){
 }
 
 export function bar(arr1, arr2){
-  let index = 15
+  let index = $("#yearBar").val() - 1999
   // Create the chart
   let chart = new Highcharts.Chart({
     chart: {
