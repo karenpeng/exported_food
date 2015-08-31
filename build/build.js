@@ -19886,6 +19886,8 @@ var _dataModelGetAllJs = require('../dataModel/getAll.js');
 
 var _dataModelGetCatJs = require('../dataModel/getCat.js');
 
+var _dataModelGetCountryJs = require('../dataModel/getCountry.js');
+
 //control
 
 var _yearJsx = require('./year.jsx');
@@ -19912,19 +19914,20 @@ var BigBrother = _react2['default'].createClass({
   },
   getInitialState: function getInitialState() {
     return {
-      index: 15,
+      //index: 15,
       cat: "All",
       sortBy: 'subCat'
     };
   },
   componentDidMount: function componentDidMount() {
     (0, _viewLineJs.line)(this.props.totals);
+    (0, _viewBarJs.registerBar)();
   },
-  handleYear: function handleYear(year) {
-    this.setState({
-      index: year - 1999
-    });
-  },
+  // handleYear(year){
+  //   this.setState({
+  //     index: year - 1999
+  //   })
+  // },
   handleCat: function handleCat(val) {
     this.setState({
       cat: val
@@ -19945,7 +19948,7 @@ var BigBrother = _react2['default'].createClass({
     } else {
         timeMachine = { display: 'block' };
         (0, _viewSublineJs.subline)((0, _dataModelGetCatJs.getCatForLine)(this.props.totals, this.state.cat));
-        (0, _viewBarJs.bar)((0, _dataModelGetCatJs.getCountryForBar)(this.props.data[this.state.cat], this.state.index));
+        (0, _viewBarJs.bar)((0, _dataModelGetCountryJs.getCountryForBar)(this.props.data[this.state.cat]), null);
       }
 
     return _react2['default'].createElement(
@@ -19980,7 +19983,7 @@ var BigBrother = _react2['default'].createClass({
 exports.BigBrother = BigBrother;
 
 
-},{"../dataModel/getAll.js":161,"../dataModel/getCat.js":162,"../view/bar.js":164,"../view/line.js":165,"../view/subline.js":166,"./cat.jsx":158,"./sort.jsx":159,"./year.jsx":160,"react":156}],158:[function(require,module,exports){
+},{"../dataModel/getAll.js":161,"../dataModel/getCat.js":162,"../dataModel/getCountry.js":163,"../view/bar.js":166,"../view/line.js":167,"../view/subline.js":168,"./cat.jsx":158,"./sort.jsx":159,"./year.jsx":160,"react":156}],158:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -20081,9 +20084,9 @@ var _react2 = _interopRequireDefault(_react);
 var Year = _react2['default'].createClass({
   displayName: 'Year',
 
-  PropTypes: {
-    handleYear: _react2['default'].PropTypes.func.isRequired
-  },
+  // PropTypes:{
+  //   handleYear: React.PropTypes.func.isRequired
+  // },
   getInitialState: function getInitialState() {
     return {
       year: 2014
@@ -20094,7 +20097,7 @@ var Year = _react2['default'].createClass({
     this.setState({
       year: e.target.value
     });
-    this.props.handleYear(e.target.value);
+    //this.props.handleYear(e.target.value)
   },
   render: function render() {
     var _w = { width: window.innerWidth - 84 + 'px' };
@@ -20149,32 +20152,29 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 exports.getCatForLine = getCatForLine;
-exports.getCatForBar = getCatForBar;
 
 function getCatForLine(totals, cat) {
-  var output = [];
-  totals.forEach(function (obj) {
-    if (obj['name'] === cat) {
-      output.push(obj);
-      return;
-    }
-  });
-  return output;
+  function isCat(obj) {
+    return obj['name'] === cat;
+  }
+  return totals.filter(isCat);
 }
 
+
+},{}],163:[function(require,module,exports){
 /*
 [{
   name: "Country",
   colorByPoint: true,
   data: [{
     name: "Canada",
-    y: 56.33,
-    presentage: 71.2,
+    y: [56.33, 65, 25, ...]
+    presentage: [71.2, 36, 34...]
     drilldown: "Canada"
   }, {
     name: "Mexico",
-    y: 24.03,
-    presentage: 10.1,
+    y: [24.03, 23, 3...]
+    presentage: [10.1, 34, 22...]
     drilldown: "Mexico"
   }, 
   ...
@@ -20184,11 +20184,16 @@ function getCatForLine(totals, cat) {
 /**
  * [getCatForBar description]
  * @param  {array} obj     for instance, data["Animals"]
- * @param  {number} index  represent which year
  * @return {array}         array in above format 
  */
+"use strict";
 
-function getCatForBar(obj, index) {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getCountryForBar = getCountryForBar;
+
+function getCountryForBar(obj) {
   var output = [];
   output.push({
     name: "Country",
@@ -20197,42 +20202,128 @@ function getCatForBar(obj, index) {
   });
 
   var hash = {};
-  var total = obj[0]['total'][index];
-  console.log('tttotal', total);
+  var total = obj[0]['total'];
 
   obj.forEach(function (d, i) {
     if (i > 0) {
       var subCategory = d[Object.keys(d)[0]];
       subCategory.forEach(function (dd, ii) {
         if (ii > 0) {
-          var country = Object.keys(dd)[0];
-          if (hash[country] === undefined) hash[country] = 0;
-          hash[country] += dd[country][index];
+          (function () {
+            var country = Object.keys(dd)[0];
+            if (hash[country] === undefined) hash[country] = [];
+            dd[country].forEach(function (c, iii) {
+              if (hash[country][iii] === undefined) hash[country][iii] = 0;
+              hash[country][iii] += dd[country][iii];
+            });
+          })();
         }
       });
     }
   });
+
+  function getPercentage(arr, total) {
+    var _arr = [];
+    arr.forEach(function (d, i) {
+      _arr.push(d / total[i] * 100);
+    });
+    return _arr;
+  }
 
   var arr = [];
   for (var key in hash) {
     arr.push({
       name: key,
       y: hash[key],
-      percentage: hash[key] / total * 100,
+      percentage: getPercentage(hash[key], total),
       drilldown: key
     });
   }
   arr.sort(function (a, b) {
-    return a.y - b.y < 0;
+    return a.y[a.y.lenght - 1] - b.y[b.y.length - 1] < 0;
   });
 
   output[0].data = arr;
-  console.dir(output);
+  //console.dir(output)
   return output;
 }
 
 
-},{}],163:[function(require,module,exports){
+},{}],164:[function(require,module,exports){
+/*
+[{
+  name: "Country",
+  colorByPoint: true,
+  data: [{
+    name: "Canada",
+    y: 56.33
+    presentage: 71.2
+    drilldown: "Canada"
+  }, {
+    name: "Mexico",
+    y: 24.03
+    presentage: 10.1
+    drilldown: "Mexico"
+  }, 
+  ...
+  ]
+}]
+ */
+
+/**
+ * @param  {array} arr     result from getCountry.js
+ * @param  {number} index  which year
+ * @return {arry}          filter out all the other years
+ */
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getEachYear = getEachYear;
+exports.getEachYearJustY = getEachYearJustY;
+
+function getEachYear(arr, index) {
+  var output = [];
+  output.push({
+    name: arr[0].name,
+    colorByPoint: arr[0].colorByPoint,
+    data: []
+  });
+
+  arr[0].data.forEach(function (d, i) {
+    output[0].data[i] = {
+      name: d.name,
+      y: d.y[index],
+      percentage: d.percentage[index],
+      drilldown: d.drilldown
+    };
+  });
+  //console.dir(output)
+  return output;
+}
+
+/*
+[
+  {y: 71.2, percetage: 34},
+  {y: 11.2, percetage: 23}
+  ...
+]
+ */
+
+function getEachYearJustY(arr, index) {
+  var output = [];
+  arr[0].data.forEach(function (d) {
+    output.push({
+      y: d.y[index],
+      percentage: d.percentage[index]
+    });
+  });
+  return output;
+}
+
+
+},{}],165:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -20267,15 +20358,21 @@ function finishLoading() {
 }
 
 
-},{"./control/BigBrother.jsx":157,"./dataModel/getAll.js":161,"react":156}],164:[function(require,module,exports){
+},{"./control/BigBrother.jsx":157,"./dataModel/getAll.js":161,"react":156}],166:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
     value: true
 });
+exports.registerBar = registerBar;
 exports.bar = bar;
 
-function bar(arr1, arr2, index) {
+var _dataModelGetEachYearJs = require('../dataModel/getEachYear.js');
+
+function registerBar() {}
+
+function bar(arr1, arr2) {
+    var index = 15;
     // Create the chart
     var chart = new Highcharts.Chart({
         chart: {
@@ -20293,6 +20390,7 @@ function bar(arr1, arr2, index) {
             type: 'category'
         },
         yAxis: {
+            max: arr1[0].data[0].y[arr1[0].data[0].y.length - 1],
             title: {
                 text: 'Million $'
             },
@@ -20310,16 +20408,16 @@ function bar(arr1, arr2, index) {
                 borderWidth: 0,
                 dataLabels: {
                     enabled: true,
-                    format: '{point.percentage:.0f}%' //,
+                    format: '{point.percentage:.1f}%' //,
                     //inside: true
                 }
             }
         },
         tooltip: {
             headerFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
-            pointFormat: '<b>{point.percentage:.0f}%</b> of total<br/>'
+            pointFormat: '<b>{point.percentage:.1f}%</b> of total<br/>'
         },
-        series: arr1,
+        series: (0, _dataModelGetEachYearJs.getEachYear)(arr1, index),
         drilldown: {
             series: [{
                 name: "Microsoft Internet Explorer",
@@ -20344,10 +20442,15 @@ function bar(arr1, arr2, index) {
             }]
         }
     });
+
+    $("#yearBar").change(function (e) {
+        index = e.target.value - 1999;
+        chart.series[0].setData((0, _dataModelGetEachYearJs.getEachYearJustY)(arr1, index));
+    });
 }
 
 
-},{}],165:[function(require,module,exports){
+},{"../dataModel/getEachYear.js":164}],167:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -20414,7 +20517,7 @@ function line(arr) {
 }
 
 
-},{}],166:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -20452,7 +20555,8 @@ function subline(arr, index) {
     },
     tooltip: {
       crosshairs: true,
-      pointFormat: "{point.y:.1f}"
+      headerFormat: "",
+      pointFormat: "{point.y:.1f} Million$"
     },
     legend: {
       enabled: false
@@ -20470,7 +20574,7 @@ function subline(arr, index) {
 }
 
 
-},{}]},{},[163])
+},{}]},{},[165])
 
 
 //# sourceMappingURL=build.js.map

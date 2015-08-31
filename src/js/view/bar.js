@@ -1,6 +1,12 @@
-export function bar(arr1, arr2, index){
+import {getEachYear, getEachYearJustY} from '../dataModel/getEachYear.js'
+
+export function registerBar(){
+}
+
+export function bar(arr1, arr2){
+  let index = 15
   // Create the chart
-  var chart = new Highcharts.Chart({
+  let chart = new Highcharts.Chart({
     chart: {
       type: 'column',
       renderTo: 'main',
@@ -16,6 +22,7 @@ export function bar(arr1, arr2, index){
       type: 'category'
     },
     yAxis: {
+      max: arr1[0].data[0].y[arr1[0].data[0].y.length-1],
       title: {
         text: 'Million $'
       },
@@ -33,16 +40,16 @@ export function bar(arr1, arr2, index){
         borderWidth: 0,
         dataLabels: {
           enabled: true,
-          format: '{point.percentage:.0f}%'//,
+          format: '{point.percentage:.1f}%'//,
           //inside: true
         }
       }
     },
     tooltip: {
       headerFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
-      pointFormat: '<b>{point.percentage:.0f}%</b> of total<br/>'
+      pointFormat: '<b>{point.percentage:.1f}%</b> of total<br/>'
     },
-    series: arr1,
+    series: getEachYear(arr1, index),
     drilldown: {
           series: [{
               name: "Microsoft Internet Explorer",
@@ -227,7 +234,13 @@ export function bar(arr1, arr2, index){
               ]
           }]
       }
-  });
+  })
+
+  $("#yearBar").change((e)=>{
+    index = e.target.value - 1999
+    chart.series[0].setData(getEachYearJustY(arr1, index))
+  })
+
 }
 
 

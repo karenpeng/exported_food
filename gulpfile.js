@@ -64,9 +64,9 @@ function serve(){
   }))
 }
 
-gulp.task('build', function() { return compile()})
-gulp.task('watch', function() { return watch()})
-gulp.task('test', function(){ return test()})
-gulp.task('serve', function(){ return serve()})
+gulp.task('build', compile)
+gulp.task('watch', watch)
+gulp.task('test', test)
+gulp.task('serve', serve)
 
 gulp.task('default', ['watch', 'serve'])
