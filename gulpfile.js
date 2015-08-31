@@ -6,6 +6,7 @@ var browserify = require('browserify')
 var watchify = require('watchify')
 var babelify = require('babelify')
 var reactify = require('reactify')
+var brfs = require('brfs')
 var server = require('gulp-server-livereload')
 var mocha = require('gulp-mocha')
 
@@ -13,7 +14,7 @@ function compile(watch) {
   var bundler = watchify(browserify({
     entries:'./src/js/main.js',
     debug: true,
-    transform :[babelify, reactify]
+    transform :[babelify, brfs, reactify]
   }))
 
   function rebundle() {

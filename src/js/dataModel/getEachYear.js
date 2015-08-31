@@ -24,7 +24,7 @@
  * @return {array}          filter out all the other years
  */
 export function getEachYear(arr, index){
-  console.log(arr)
+
   let output = []
   output.push({
     name: arr[0].name,

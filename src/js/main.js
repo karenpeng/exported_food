@@ -2,11 +2,16 @@ import React from 'react'
 import {BigBrother} from './control/BigBrother.jsx'
 import {getAll} from './dataModel/getAll.js'
 
-loading()
-let jqxhr = $.getJSON( "./data/json/data.json", function() {
-})
-.done(function(data) {
-  finishLoading()
+//brfs es6 problem
+//https://github.com/substack/brfs/issues/39
+var fs = require('fs')
+
+fs.readFile('./data/json/data.json', 'utf8', (err, str) => {
+  if(err) {
+    console.log(err)
+    return
+  }
+  let data = JSON.parse(str)
   console.dir(data)
 
   let cats = Object.keys(data)
@@ -14,14 +19,3 @@ let jqxhr = $.getJSON( "./data/json/data.json", function() {
 
   React.render(<BigBrother data={data} cats={cats} totals={getAll(data)}/>, document.getElementById('bigBrother'))
 })
-.fail(function(err) {
-  console.dir(err)
-})
-
-function loading(){
-  console.log('loading...')
-}
-
-function finishLoading(){
-  console.log('data loaded:')
-}
