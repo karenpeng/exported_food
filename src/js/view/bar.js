@@ -1,12 +1,10 @@
 import {getEachYear, getEachYearJustY} from '../dataModel/getEachYear.js'
 
-export function registerBar(){
-}
+let chart
 
-export function bar(arr1, arr2){
-  let index = $("#yearBar").val() - 1999
+export function bar(arr1, arr2, index){
   // Create the chart
-  let chart = new Highcharts.Chart({
+  chart = new Highcharts.Chart({
     chart: {
       type: 'column',
       renderTo: 'main',
@@ -235,12 +233,10 @@ export function bar(arr1, arr2){
           }]
       }
   })
+}
 
-  $("#yearBar").change((e)=>{
-    index = e.target.value - 1999
-    chart.series[0].setData(getEachYearJustY(arr1, index))
-  })
-
+export function updateBar(arr1, index){
+  chart.series[0].setData(getEachYearJustY(arr1, index))
 }
 
 

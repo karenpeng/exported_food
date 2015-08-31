@@ -1,9 +1,9 @@
 import React from 'react'
 
 export const Year = React.createClass({
-  // PropTypes:{
-  //   handleYear: React.PropTypes.func.isRequired
-  // },
+  PropTypes:{
+    handleYear: React.PropTypes.func.isRequired
+  },
   getInitialState(){
     return {
       year: 2014
@@ -14,7 +14,7 @@ export const Year = React.createClass({
     this.setState({
       year: e.target.value
     })
-    //this.props.handleYear(e.target.value)
+    this.props.handleYear(e.target.value)
   },
   render(){
     let _w = {width: window.innerWidth - 84 + 'px'}

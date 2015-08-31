@@ -11,7 +11,7 @@ import {Cat} from './cat.jsx'
 import {Sort} from './sort.jsx'
 
 //view
-import {registerBar, bar} from '../view/bar.js'
+import {bar, updateBar} from '../view/bar.js'
 import {line} from '../view/line.js'
 import {subline} from '../view/subline.js'
 
@@ -23,23 +23,30 @@ export const BigBrother = React.createClass({
   },
   getInitialState(){
     return{
-      //index: 15,
+      index: 15,
       cat: "All",
-      sortBy: 'subCat'
+      sortBy: 'subCat',
+      temData: null
     }
   },
   componentDidMount(){
     line(this.props.totals)
-    registerBar()
   },
-  // handleYear(year){
-  //   this.setState({
-  //     index: year - 1999
-  //   })
-  // },
+  shouldComponentUpdate(nextProps, nextState){
+    if(nextState.index !== this.state.index){
+      updateBar(this.state.temData, nextState.index)
+    }
+    return nextState.cat !== this.state.cat || nextState.sortBy !== this.state.sortBy
+  },
+  handleYear(year){
+    this.setState({
+      index: year - 1999
+    })
+  },
   handleCat(val){
     this.setState({
-      cat: val
+      cat: val,
+      temData: getCountryForBar(this.props.data[val])
     })
   },
   handleSort(val){
@@ -57,7 +64,7 @@ export const BigBrother = React.createClass({
     }else{
       timeMachine = {display :'block'}
       subline(getCatForLine(this.props.totals, this.state.cat))
-      bar(getCountryForBar(this.props.data[this.state.cat]), null)
+      bar(this.state.temData, null, this.state.index)
     }
 
     return(
