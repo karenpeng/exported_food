@@ -6,7 +6,7 @@
  }
  ]
  */
-export function getCatForLine(totals, cat){
+export function getCategory(totals, cat){
   function isCat(obj){
     return obj['name'] === cat
   }

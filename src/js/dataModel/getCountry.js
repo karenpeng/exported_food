@@ -2,6 +2,14 @@
 [{
   name: "Country",
   colorByPoint: true,
+  tooltip: {
+    headerFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
+    pointFormat: '<b>{point.percentage:.1f}%</b> of total<br/>'
+  },
+  dataLabels: {
+    enabled: true,
+    format: '{point.percentage:.1f}%'
+  },
   data: [{
     name: "Canada",
     y: [56.33, 65, 25, ...]
@@ -18,15 +26,23 @@
 }]
  */
 /**
- * [getCatForBar description]
+ * [getCategoryForBar description]
  * @param  {array} obj     for instance, data["Animals"]
  * @return {array}         array in above format 
  */
-export function getCountryForBar(obj){
+export function getCountry(obj){
   let output = []
   output.push({
     name: "Country",
     colorByPoint: true,
+    tooltip: {
+      headerFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
+      pointFormat: '<b>{point.percentage:.1f}%</b> of total<br/>'
+    },
+    dataLabels: {
+      enabled: true,
+      format: '{point.percentage:.1f}%'
+    },
     data: []
   })
 

@@ -1,9 +1,10 @@
 export function line(arr){
   let chart = new Highcharts.Chart({
     chart:{
-      renderTo: 'main',
+      renderTo: 'left',
       type: 'spline',
-      height: window.innerHeight - 160
+      height: window.innerHeight - 160,
+      width: window.innerWidth - 40
     },
     title:{
       text:''

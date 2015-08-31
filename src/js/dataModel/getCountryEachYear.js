@@ -2,6 +2,14 @@
 [{
   name: "Country",
   colorByPoint: true,
+  tooltip: {
+    headerFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
+    pointFormat: '<b>{point.percentage:.1f}%</b> of total<br/>'
+  },
+  dataLabels: {
+    enabled: true,
+    format: '{point.percentage:.1f}%'
+  },
   data: [{
     name: "Canada",
     y: 56.33
@@ -23,12 +31,14 @@
  * @param  {number} index  which year
  * @return {array}          filter out all the other years
  */
-export function getEachYear(arr, index){
+export function getCountryEachYear(arr, index){
 
   let output = []
   output.push({
     name: arr[0].name,
     colorByPoint: arr[0].colorByPoint,
+    tooltip: arr[0].tooltip,
+    dataLabels: arr[0].dataLabels,
     data:[]
   })
 
@@ -51,7 +61,7 @@ export function getEachYear(arr, index){
   ...
 ]
  */
-export function getEachYearJustY(arr, index){
+export function getCountryEachYearJustY(arr, index){
   var output = []
   arr[0].data.forEach((d)=>{
     output.push({

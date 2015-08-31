@@ -29,7 +29,7 @@ export function subline(arr, index){
     tooltip: {
       crosshairs: true,
       headerFormat: "",
-      pointFormat: "{point.y:.1f} Million$"
+      pointFormat: "Total {point.y:.1f} Million$"
     },
     legend: {
       enabled: false
