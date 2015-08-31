@@ -17,7 +17,7 @@ export const Year = React.createClass({
     this.props.handleYear(e.target.value)
   },
   render(){
-    let _w = {width: window.innerWidth - 100 + 'px'}
+    let _w = {width: window.innerWidth - 84 + 'px'}
     return(
       <input id="yearBar" style={_w} type="range" value={this.state.year} min="1999" max="2014" step="1" onChange={this.handleSlide}/>
     )

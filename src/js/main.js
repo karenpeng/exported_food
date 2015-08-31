@@ -1,12 +1,27 @@
 import React from 'react'
-import d3 from 'd3'
 import {BigBrother} from './control/BigBrother.jsx'
+import {getAll} from './dataModel/getAll.js'
 
-//console.log(init)
+loading()
+let jqxhr = $.getJSON( "./data/json/bySubCat.json", function() {
+})
+.done(function(data) {
+  finishLoading()
+  console.dir(data)
 
-d3.json('./data/bySubCat.json', function(error, json) {
-  if (error) return console.log(error)
-  console.log(json)
+  let cats = Object.keys(data)
+  cats.unshift('All')//omg unshift returns the length of the array!!
 
-  React.render(<BigBrother data={json}/>, document.getElementById('bigBrother'))
-});
+  React.render(<BigBrother data={data} cats={cats} totals={getAll(data)}/>, document.getElementById('bigBrother'))
+})
+.fail(function(err) {
+  console.dir(err)
+})
+
+function loading(){
+  console.log('loading...')
+}
+
+function finishLoading(){
+  console.log('data loaded:')
+}

@@ -11,8 +11,8 @@ export const Sort = React.createClass({
   render(){ 
     return(
       <select onChange={this.handleClick}>
-        <option value="country">country</option>
         <option value="subCategory">subCategory</option>
+        <option value="country">country</option>
       </select>
     )
   }

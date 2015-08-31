@@ -1,16 +1,15 @@
-export function line(arr){
+export function subline(arr){
   let chart = new Highcharts.Chart({
     chart:{
-      renderTo: 'main',
+      renderTo: 'bottom',
       type: 'spline',
-      height: window.innerHeight - 160
+      width: window.innerWidth - 70
     },
     title:{
       text:''
     },
     subtitle: {
-      text: 'Source USDA, www.fas.usda.gov/gats',
-      x: -20
+      text: ''
     },
     xAxis: {
       title: {
@@ -20,37 +19,27 @@ export function line(arr){
     },
     yAxis: {
       title: {
-        text: 'Million $'
+        text: ''
       },
-      plotLines: [{
-        value: 0,
-        width: 1,
-        color: '#808080'
-      }]
+      labels: {
+        enabled: false
+      },
+      gridLineWidth: 0
     },
     tooltip: {
       crosshairs: true,
-      shared: true//,
-      //pointFormat: "{point.y:.1f}"
+      pointFormat: "{point.y:.1f}"
     },
     legend: {
-      layout: 'vertical',
-      align: 'right',
-      verticalAlign: 'middle',
-      borderWidth: 0
+      enabled: false
     },
     plotOptions: {
       spline: {
         lineWidth: 2,
-        states: {
-          hover: {
-            lineWidth: 8
-          }
-        },
         marker: {
           enabled: false
         }
-      }
+    }
     },
     series: arr
   })

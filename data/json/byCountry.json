@@ -1,0 +1,16 @@
+{
+  "Animals":
+  [
+    {"Canada" :[
+      {"Swine" :[]},
+      {"Sheep": []},
+      {"Bovirne": []}
+    ]},
+    
+    {
+      "Mexico":[
+        {"Bovirne":[]}
+      ]
+    }
+  ]
+}

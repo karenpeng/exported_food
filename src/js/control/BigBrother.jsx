@@ -1,31 +1,41 @@
 import React from 'react'
+
+//data model
+import {getAll} from '../dataModel/getAll.js'
+import {getCatForLine, getCatForBar} from '../dataModel/getCat.js'
+
+//control
 import {Year} from './year.jsx'
 import {Cat} from './cat.jsx'
 import {Sort} from './sort.jsx'
 
-import {initBar, updateBar} from '../view/bar.js'
+//view
+import {bar} from '../view/bar.js'
+import {line} from '../view/line.js'
+import {subline} from '../view/subline.js'
 
 export const BigBrother = React.createClass({
   PropTypes:{
-    data: React.PropTypes.object.isRequired
+    data: React.PropTypes.object.isRequired,
+    cats: React.PropTypes.array.isRequired,
+    totals: React.PropTypes.array.isRequired
   },
   getInitialState(){
     return{
       index: 15,
-      cat: "Animals",
+      cat: "All",
       sortBy: 'subCat'
     }
   },
-  componentDidMount(){    
-    //initBar()
-    updateBar(this.props.data[this.state.cat], this.state.index)
+  componentDidMount(){
+    line(this.props.totals)
   },
   handleYear(year){
     this.setState({
       index: year - 1999
     })
   },
-  handleCategory(val){
+  handleCat(val){
     this.setState({
       cat: val
     })
@@ -36,19 +46,33 @@ export const BigBrother = React.createClass({
     })
   },
   render(){
-    updateBar(this.props.data[this.state.cat], this.state.index)
-    var keys = Object.keys(this.props.data)
-    // console.log(keys)
+
+    let timeMachine
+
+    if(this.state.cat === "All"){
+      timeMachine = {display :'none'}
+      //line(this.state.main)
+    }else{
+      timeMachine = {display :'block'}
+      subline(getCatForLine(this.props.totals, this.state.cat))
+      bar(getCatForBar(this.props.data[this.state.cat], this.state.index))
+    }
+
     return(
       <div id="container">
-        <div className="top">
-          <Cat options={keys} handleCat={this.handleCategory}></Cat>
-          <Sort handleSort={this.handleSort}></Sort>
+        <div id="top">
+          <span>
+            Category:
+            <Cat options={this.props.cats} handleCat={this.handleCat}></Cat>
+          </span>
+          <span>
+            Sorted By:
+            <Sort handleSort={this.handleSort}></Sort>
+          </span>
         </div>
-        <div className="main">
-          <svg className="chart"></svg>
-        </div>
-        <section className="bottom">
+        <div id="main"></div>
+        <section id="bottom"></section>
+        <section id="above" style={timeMachine}>
           <Year handleYear={this.handleYear}></Year>
         </section>
       </div>

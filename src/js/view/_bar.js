@@ -68,6 +68,7 @@ export function updateBar(data, index){
     let key = Object.keys(d)[0]
     d[key].forEach( (dd , ii) =>{
       console.log(dd, ii)
+      
     })
     
     return d[key]
