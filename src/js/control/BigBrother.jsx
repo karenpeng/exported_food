@@ -2,7 +2,7 @@ import React from 'react'
 
 //data model
 import {getAll} from '../dataModel/getAll.js'
-import {getCatForLine, getCatForBar} from '../dataModel/getCat.js'
+import {getCatForLine, getCountryForBar} from '../dataModel/getCat.js'
 
 //control
 import {Year} from './year.jsx'
@@ -55,7 +55,7 @@ export const BigBrother = React.createClass({
     }else{
       timeMachine = {display :'block'}
       subline(getCatForLine(this.props.totals, this.state.cat))
-      bar(getCatForBar(this.props.data[this.state.cat], this.state.index))
+      bar(getCountryForBar(this.props.data[this.state.cat], this.state.index))
     }
 
     return(

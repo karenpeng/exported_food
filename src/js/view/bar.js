@@ -1,4 +1,4 @@
-export function bar(arr1, arr2){
+export function bar(arr1, arr2, index){
   // Create the chart
   var chart = new Highcharts.Chart({
     chart: {
@@ -33,7 +33,8 @@ export function bar(arr1, arr2){
         borderWidth: 0,
         dataLabels: {
           enabled: true,
-          format: '{point.percentage:.0f}%'
+          format: '{point.percentage:.0f}%'//,
+          //inside: true
         }
       }
     },

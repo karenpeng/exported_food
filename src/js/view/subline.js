@@ -1,4 +1,4 @@
-export function subline(arr){
+export function subline(arr, index){
   let chart = new Highcharts.Chart({
     chart:{
       renderTo: 'bottom',

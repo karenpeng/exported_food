@@ -19945,7 +19945,7 @@ var BigBrother = _react2['default'].createClass({
     } else {
         timeMachine = { display: 'block' };
         (0, _viewSublineJs.subline)((0, _dataModelGetCatJs.getCatForLine)(this.props.totals, this.state.cat));
-        (0, _viewBarJs.bar)((0, _dataModelGetCatJs.getCatForBar)(this.props.data[this.state.cat], this.state.index));
+        (0, _viewBarJs.bar)((0, _dataModelGetCatJs.getCountryForBar)(this.props.data[this.state.cat], this.state.index));
       }
 
     return _react2['default'].createElement(
@@ -20246,7 +20246,7 @@ var _controlBigBrotherJsx = require('./control/BigBrother.jsx');
 var _dataModelGetAllJs = require('./dataModel/getAll.js');
 
 loading();
-var jqxhr = $.getJSON("./data/json/bySubCat.json", function () {}).done(function (data) {
+var jqxhr = $.getJSON("./data/json/data.json", function () {}).done(function (data) {
   finishLoading();
   console.dir(data);
 
@@ -20275,7 +20275,7 @@ Object.defineProperty(exports, '__esModule', {
 });
 exports.bar = bar;
 
-function bar(arr1, arr2) {
+function bar(arr1, arr2, index) {
     // Create the chart
     var chart = new Highcharts.Chart({
         chart: {
@@ -20310,7 +20310,8 @@ function bar(arr1, arr2) {
                 borderWidth: 0,
                 dataLabels: {
                     enabled: true,
-                    format: '{point.percentage:.0f}%'
+                    format: '{point.percentage:.0f}%' //,
+                    //inside: true
                 }
             }
         },
@@ -20421,7 +20422,7 @@ Object.defineProperty(exports, '__esModule', {
 });
 exports.subline = subline;
 
-function subline(arr) {
+function subline(arr, index) {
   var chart = new Highcharts.Chart({
     chart: {
       renderTo: 'bottom',

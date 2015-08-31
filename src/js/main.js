@@ -3,7 +3,7 @@ import {BigBrother} from './control/BigBrother.jsx'
 import {getAll} from './dataModel/getAll.js'
 
 loading()
-let jqxhr = $.getJSON( "./data/json/bySubCat.json", function() {
+let jqxhr = $.getJSON( "./data/json/data.json", function() {
 })
 .done(function(data) {
   finishLoading()
