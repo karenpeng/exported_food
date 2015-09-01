@@ -43,11 +43,7 @@ export const BigBrother = React.createClass({
     window.removeEventListener('resize', this.handleResize, false)
   },
   shouldComponentUpdate(nextProps, nextState){
-    if(nextState.cat === 'All') {
-      console.log('T_T') 
-      return true
-    }
-    console.log(nextState.cat)
+    if(nextState.cat === 'All') return true
 
     if(nextState.cat === this.state.cat && this.state.cat !== 'All'){
       updateBar(nextState.index)

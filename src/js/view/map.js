@@ -43,6 +43,9 @@ export function makeMap(arr){
       max: 1000,
       type: 'logarithmic'
     },
+    tooltip: {
+      headerFormat: ''
+    },
     series : [{
         data : arr,
         mapData: Highcharts.maps['custom/world'],

@@ -59,6 +59,7 @@ export function getCountry(obj){
           dd[country].forEach((c, iii) =>{
             if(hash[country][iii] === undefined) hash[country][iii] = 0
             hash[country][iii] += dd[country][iii]
+            hash[country][iii] = parseFloat(hash[country][iii].toFixed(1))
           })
         }
       })
@@ -68,7 +69,7 @@ export function getCountry(obj){
   function getPercentage(arr, total){
     var _arr = []
     arr.forEach((d, i)=>{
-      _arr.push(d/total[i]*100)
+      _arr.push(parseFloat((d/total[i]*100).toFixed(1)))
     })
     return _arr
   }
@@ -82,10 +83,11 @@ export function getCountry(obj){
       drilldown: key
     })
   }
+  console.dir(arr)
   arr.sort((a, b) =>{
     return a.y[a.y.lenght-1] - b.y[b.y.length-1] < 0
   })
-
+  console.dir(arr)
   output[0].data = arr
   //console.dir(output)
   return output
