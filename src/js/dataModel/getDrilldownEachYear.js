@@ -68,7 +68,7 @@ export function getDrilldownEachYear(arr, index){
 }
 
 /*
-[12, 45, 43, 23,...]
+[["Bovine", 12], ["Sheep", 45],...]
  */
 export function getDrilldownEachYearJustY(arr, country, index){
   
@@ -76,7 +76,7 @@ export function getDrilldownEachYearJustY(arr, country, index){
   arr.forEach((d) =>{
     if(d.name === country){
       d.data.forEach((dd) =>{
-        output.push(dd[1][index])
+        output.push([dd[0], dd[1][index]])
       })
     }
   })

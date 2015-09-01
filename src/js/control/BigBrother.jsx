@@ -5,6 +5,7 @@ import {getAll} from '../dataModel/getAll.js'
 import {getCategory} from '../dataModel/getCategory.js'
 import {getCountry} from '../dataModel/getCountry.js'
 import {getDrilldown} from '../dataModel/getDrilldown.js'
+import {getCountryMap} from '../dataModel/getCountryMap.js'
 
 //control
 import {Year} from './year.jsx'
@@ -31,19 +32,19 @@ export const BigBrother = React.createClass({
   },
   componentDidMount(){
     line(this.props.totals)
-    let ifr = document.getElementById("ifr")
-    let targetOrigin = window.location.origin + '/' + ifr.src 
-    window.postMessage('hello world!', targetOrigin)
   },
   shouldComponentUpdate(nextProps, nextState){
-    if(nextState.index !== this.state.index){
+    if(nextState.cat === this.state.cat){
       updateBar(nextState.index)
+
+      let ifr = document.getElementById("ifr")
+      let targetOrigin = ifr.src
+      let info = getCountryMap(this.state.countryData, nextState.index)
+      ifr.contentWindow.postMessage(JSON.stringify(info), targetOrigin)
     }
+
     return nextState.cat !== this.state.cat
   },
-  // componentDidUpdate(){
-
-  // },
   handleYear(year){
     this.setState({
       index: year - 1999
@@ -56,6 +57,11 @@ export const BigBrother = React.createClass({
       countryData: countryData,
       drilldownData: getDrilldown(this.props.data[val], countryData)
     })
+
+    let ifr = document.getElementById("ifr")
+    let targetOrigin = ifr.src
+    let info = getCountryMap(countryData, this.state.index)
+    ifr.contentWindow.postMessage(JSON.stringify(info), targetOrigin)
   },
   render(){
 
