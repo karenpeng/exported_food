@@ -27,14 +27,29 @@ export const BigBrother = React.createClass({
       index: 15,
       cat: "All",
       countryData: null,
-      drilldownData: null
+      drilldownData: null,
+      windowWidth: window.innerWidth,
+      didMount: false
     }
   },
+  handleResize(){
+    this.setState({windowWidth: window.innerWidth})
+  },
   componentDidMount(){
-    line(this.props.totals)
+    window.addEventListener('resize', this.handleResize, false)
+    this.setState({didMount: true})
+  },
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize, false)
   },
   shouldComponentUpdate(nextProps, nextState){
-    if(nextState.cat === this.state.cat){
+    if(nextState.cat === 'All') {
+      console.log('T_T') 
+      return true
+    }
+    console.log(nextState.cat)
+
+    if(nextState.cat === this.state.cat && this.state.cat !== 'All'){
       updateBar(nextState.index)
 
       let ifr = document.getElementById("ifr")
@@ -43,7 +58,7 @@ export const BigBrother = React.createClass({
       ifr.contentWindow.postMessage(JSON.stringify(info), targetOrigin)
     }
 
-    return nextState.cat !== this.state.cat
+    return nextState.cat !== this.state.cat || nextState.windowWidth !== this.state.windowWidth
   },
   handleYear(year){
     this.setState({
@@ -51,27 +66,32 @@ export const BigBrother = React.createClass({
     })
   },
   handleCat(val){
-    let countryData = getCountry(this.props.data[val])
     this.setState({
-      cat: val,
-      countryData: countryData,
-      drilldownData: getDrilldown(this.props.data[val], countryData)
+      cat: val
     })
+    if(val !== 'All'){
+      let countryData = getCountry(this.props.data[val])
+      this.setState({
+        countryData: countryData,
+        drilldownData: getDrilldown(this.props.data[val], countryData)
+      })
 
-    let ifr = document.getElementById("ifr")
-    let targetOrigin = ifr.src
-    let info = getCountryMap(countryData, this.state.index)
-    ifr.contentWindow.postMessage(JSON.stringify(info), targetOrigin)
+      let ifr = document.getElementById("ifr")
+      let targetOrigin = ifr.src
+      let info = getCountryMap(countryData, this.state.index)
+      ifr.contentWindow.postMessage(JSON.stringify(info), targetOrigin)
+    }
   },
   render(){
 
-    let timeMachine
+    let peek
 
     if(this.state.cat === "All"){
-      timeMachine = {display :'none'}
-      //line(this.state.main)
+      peek = {display :'none'}
+      if(this.state.didMount)line(this.props.totals)
+
     }else{
-      timeMachine = {display :'block'}
+      peek = {display :'block'}
       subline(getCategory(this.props.totals, this.state.cat))
       bar(this.state.countryData, this.state.drilldownData, this.state.index)
     }
@@ -82,19 +102,19 @@ export const BigBrother = React.createClass({
     return(
       <div id="container">
         <div id="top">
-          <span>
+          <div id="info">
             Category:
             <Cat options={this.props.cats} handleCat={this.handleCat}></Cat>
-          </span>
+          </div>
         </div>
         <div id="main">
           <div id="left"></div>
-          <div id="right" style={timeMachine}>
-            <iframe id="ifr" src="map.html" width={_w} height={_h}></iframe>
+          <div id="right" style={peek}>
+            <iframe id="ifr" src="map.html" width={_w} height={_h} scrolling="no"></iframe>
           </div>
         </div>
-        <section id="bottom"></section>
-        <section id="above" style={timeMachine}>
+        <section id="bottom" style={peek}></section>
+        <section id="above" style={peek}>
           <Year handleYear={this.handleYear}></Year>
         </section>
       </div>

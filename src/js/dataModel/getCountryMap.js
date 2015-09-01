@@ -32,6 +32,6 @@ export function getCountryMap(arr, index){
     }
   })
 
-  console.dir(output)
+  //console.dir(output)
   return output
 }
