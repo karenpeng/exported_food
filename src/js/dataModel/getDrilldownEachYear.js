@@ -49,7 +49,7 @@ export function getDrilldownEachYear(arr, index){
     let obj = {
       name: d.name,
       id: d.id,
-      tooltip: d.tooltip,
+      //tooltip: d.tooltip,
       dataLabels: d.dataLabels,
       data: []
     }

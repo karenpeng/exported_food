@@ -31,8 +31,12 @@ export function line(arr){
     },
     tooltip: {
       crosshairs: true,
-      shared: true//,
-      //pointFormat: "{point.y:.1f}"
+      //shared: true//,
+      //headerFormat: "{point.category}",
+      //pointFormat: "{point.y:.1f} Million$"
+      formatter(){
+        return "<b>"+this.x+"<b><br/>"+this.series.name+": "+this.y+" Million$"
+      }
     },
     legend: {
       layout: 'vertical',
@@ -45,7 +49,7 @@ export function line(arr){
         lineWidth: 2,
         states: {
           hover: {
-            lineWidth: 8
+            lineWidth: 10
           }
         },
         marker: {

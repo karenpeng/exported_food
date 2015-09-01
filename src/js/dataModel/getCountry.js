@@ -83,11 +83,11 @@ export function getCountry(obj){
       drilldown: key
     })
   }
-  console.dir(arr)
+  
   arr.sort((a, b) =>{
-    return a.y[a.y.lenght-1] - b.y[b.y.length-1] < 0
+    return b.y[b.y.length-1] - a.y[a.y.length-1] 
   })
-  console.dir(arr)
+  
   output[0].data = arr
   //console.dir(output)
   return output

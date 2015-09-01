@@ -3,7 +3,8 @@ export function subline(arr, index){
     chart:{
       renderTo: 'bottom',
       type: 'spline',
-      width: window.innerWidth - 70
+      width: window.innerWidth - 70,
+      height: 160
     },
     title:{
       text:''

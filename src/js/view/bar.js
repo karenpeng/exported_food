@@ -40,7 +40,7 @@ export function bar(_arr1, _arr2, index){
 
         },
         drillup: function(e) {
-          chart.setTitle({ text: 'countries' })
+          chart.setTitle({ text: 'Countries' })
           chart.yAxis[0].update({
             max: arr1[0].data[0].y[arr1[0].data[0].y.length-1]
           })
@@ -56,7 +56,7 @@ export function bar(_arr1, _arr2, index){
       }
     },
     title: {
-      text: 'countries'
+      text: 'Countries'
     },
     subtitle: {
       text: 'Click the columns to view detail'
@@ -78,20 +78,6 @@ export function bar(_arr1, _arr2, index){
     legend: {
       enabled: false
     },
-    plotOptions: {
-      series: {
-        borderWidth: 0,
-        dataLabels: {
-          enabled: true,
-          format: '{point.percentage:.1f}%'//,
-          //inside: true
-        }
-      }
-    },
-    tooltip: {
-      headerFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
-      pointFormat: '<b>{point.percentage:.1f}%</b> of total<br/>'
-    },
     series: getCountryEachYear(arr1, index),
     drilldown: {
       series: getDrilldownEachYear(arr2, index)
@@ -100,7 +86,7 @@ export function bar(_arr1, _arr2, index){
 }
 
 export function updateBar(index){
-  if(chart.title.textStr === 'countries'){
+  if(chart.title.textStr === 'Countries'){
     curCountryYear = index
     chart.series[0].setData(getCountryEachYearJustY(arr1, index))
   }else{

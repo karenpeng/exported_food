@@ -34,7 +34,9 @@ function compile(watch) {
     function rebundle() {
       var name = entry.split('/').pop()
       bundler.bundle()
-        .on('error', function(err) { console.error(err); this.emit('end') })
+        .on('error', function(err) { 
+          console.error(err) 
+          this.emit('end') }.bind(this))
         .pipe(source(name))
         .pipe(rename({
           extname: '.build.js'

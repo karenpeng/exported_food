@@ -4,10 +4,12 @@
     name: "Canada",
     id: "Canada",
     tooltip:{
-      pointFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
+        headerFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
+        pointFormat: ''
     },
     dataLabels:{
-      enabled: false
+      enabled: true,
+      format: '{point.y:.1f}'
     },
     data: [
       [
@@ -24,10 +26,12 @@
     name: "Mexico",
     id: "Mexico",
     tooltip:{
-      pointFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
+      headerFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
+      pointFormat: ''
     },
     dataLabels:{
-      enabled: false
+      enabled: true,
+      format: '{point.y:.1f}'
     },
     data: [
       [
@@ -52,12 +56,12 @@ export function getDrilldown(catAllData, countryData){
       name: d.name,
       id: d.name,
       tooltip:{
-        headerFormat: '<span style="color:{point.color}">{point.y:.1f} Million$</span><br/>',
+        headerFormat: '',
         pointFormat: ''
       },
       dataLabels:{
         enabled: true,
-        format: '{point.y:.1f}'
+        format: '{point.y:.1f} Million$'
       },
       data:[]
     }
@@ -77,6 +81,10 @@ export function getDrilldown(catAllData, countryData){
         })
 
       }
+    })
+
+    obj.data.sort((a, b)=>{
+      return b[1][b[1].length-1] - a[1][a[1].length-1]
     })
 
     output.push(obj)

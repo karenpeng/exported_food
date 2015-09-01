@@ -9,7 +9,7 @@ export function makeMap(arr){
       // height: window.innerHeight - 320
     },
     title:{
-      text : 'Zoom in on country by double click'
+      text : ''
     },
     xAxis:{
       lineWidth: 0,
