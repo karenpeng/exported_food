@@ -1,6 +1,6 @@
 let map
 
-export function map(arr){
+export function makeMap(arr){
   map = new Highcharts.Chart({
     chart:{
       type: 'map',

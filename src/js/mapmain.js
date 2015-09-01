@@ -1,11 +1,7 @@
-import {map, updateMap} from './view/map.js'
+import {makeMap, updateMap} from './view/map.js'
 
 window.addEventListener('message', (e) =>{
-  //console.log(e.data)
-  //document.getElementById('test').innerHTML = e.origin+' said: '+e.data
-  let info = JSON.parse(e.data)
-  console.dir(info.data)
   
-  map(info)
+  makeMap(info.data)
 
 }, false)
