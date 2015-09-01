@@ -62,7 +62,7 @@ export function getCountryEachYear(arr, index){
 ]
  */
 export function getCountryEachYearJustY(arr, index){
-  var output = []
+  let output = []
   arr[0].data.forEach((d)=>{
     output.push({
       y: d.y[index],

@@ -12,9 +12,15 @@ import {Year} from './year.jsx'
 import {Cat} from './cat.jsx'
 
 //view
-import {line} from '../view/line.js'
+import {Line} from '../view/line.jsx'
 import {subline} from '../view/subline.js'
 import {bar, updateBar} from '../view/bar.js'
+
+function sendData(json){
+  let ifr = document.getElementById("ifr")
+  let targetOrigin = ifr.src
+  ifr.contentWindow.postMessage(JSON.stringify(json), targetOrigin)
+}
 
 export const BigBrother = React.createClass({
   PropTypes:{
@@ -32,6 +38,8 @@ export const BigBrother = React.createClass({
       didMount: false
     }
   },
+
+  //window resize
   handleResize(){
     this.setState({windowWidth: window.innerWidth})
   },
@@ -42,25 +50,47 @@ export const BigBrother = React.createClass({
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize, false)
   },
+
+
   shouldComponentUpdate(nextProps, nextState){
+
     if(nextState.cat === 'All') return true
 
-    if(nextState.cat === this.state.cat && this.state.cat !== 'All'){
-      updateBar(nextState.index)
+    if(nextState.windowWidth === this.state.windowWidth){
+      let countryData = nextState.cat === this.state.cat ? 
+        this.state.countryData : getCountry(this.props.data[nextState.cat])
+      sendData(getCountryMap(countryData, nextState.index))
+    }
 
-      let ifr = document.getElementById("ifr")
-      let targetOrigin = ifr.src
-      let info = getCountryMap(this.state.countryData, nextState.index)
-      ifr.contentWindow.postMessage(JSON.stringify(info), targetOrigin)
+    if(nextState.cat === this.state.cat){
+      updateBar(nextState.index)
     }
 
     return nextState.cat !== this.state.cat || nextState.windowWidth !== this.state.windowWidth
   },
+
+  //user click one line in the 'All' category
+  handleDig(year, category){
+
+    let countryData = getCountry(this.props.data[category])
+
+    this.setState({
+      index: year - 1999,
+      cat: category,
+      countryData: countryData,
+      drilldownData: getDrilldown(this.props.data[category], countryData)
+    })
+    
+  },
+
+  //user drag year bar
   handleYear(year){
     this.setState({
       index: year - 1999
     })
   },
+
+  //user change category
   handleCat(val){
     this.setState({
       cat: val
@@ -71,23 +101,29 @@ export const BigBrother = React.createClass({
         countryData: countryData,
         drilldownData: getDrilldown(this.props.data[val], countryData)
       })
-
-      let ifr = document.getElementById("ifr")
-      let targetOrigin = ifr.src
-      let info = getCountryMap(countryData, this.state.index)
-      ifr.contentWindow.postMessage(JSON.stringify(info), targetOrigin)
     }
   },
+
+
   render(){
 
-    let peek
+    let peek1, peek2
+    let line
 
     if(this.state.cat === "All"){
-      peek = {display :'none'}
-      if(this.state.didMount)line(this.props.totals)
+      peek1 = {display :'none'}
+      peek2 = {display :'block'}
+
+      if(this.state.didMount){
+        line = function(){
+          return(
+            <Line style={peek2} dig={this.handleDig} arr={this.props.totals}></Line>
+          )}.bind(this)()
+      }
 
     }else{
-      peek = {display :'block'}
+      peek1 = {display :'block'}
+      peek2 = {display :'none'}
       subline(getCategory(this.props.totals, this.state.cat))
       bar(this.state.countryData, this.state.drilldownData, this.state.index)
     }
@@ -104,13 +140,16 @@ export const BigBrother = React.createClass({
           </div>
         </div>
         <div id="main">
-          <div id="left"></div>
-          <div id="right" style={peek}>
+          <div className="left" id="left1" style={peek2}>
+            {line}
+          </div>
+          <div className="left" id="left2" style={peek1}></div>
+          <div id="right" style={peek1}>
             <iframe id="ifr" src="map.html" width={_w} height={_h} scrolling="no"></iframe>
           </div>
         </div>
-        <section id="bottom" style={peek}></section>
-        <section id="above" style={peek}>
+        <section id="bottom" style={peek1}></section>
+        <section id="above" style={peek1}>
           <Year handleYear={this.handleYear}></Year>
         </section>
       </div>

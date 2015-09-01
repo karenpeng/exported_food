@@ -36,7 +36,7 @@ function compile(watch) {
       bundler.bundle()
         .on('error', function(err) { 
           console.error(err) 
-          this.emit('end') }.bind(this))
+          this.emit('end') })
         .pipe(source(name))
         .pipe(rename({
           extname: '.build.js'

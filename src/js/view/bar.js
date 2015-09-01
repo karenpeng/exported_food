@@ -18,7 +18,7 @@ export function bar(_arr1, _arr2, index){
   chart = new Highcharts.Chart({
     chart: {
       type: 'column',
-      renderTo: 'left',
+      renderTo: 'left2',
       width: window.innerWidth * 0.6 - 20,
       height: window.innerHeight - 320,
       events:{
@@ -94,5 +94,4 @@ export function updateBar(index){
     chart.series[0].setData(getDrilldownEachYearJustY(arr2, curCountry, index))
   }
 }
-
 
