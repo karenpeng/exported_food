@@ -16,6 +16,6 @@ fs.readFile('./data/json/data.json', 'utf8', (err, str) => {
 
   let cats = Object.keys(data)
   cats.unshift('All')//omg unshift returns the length of the array!!
-
+  //countries, drilldown
   React.render(<BigBrother data={data} cats={cats} totals={getAll(data)}/>, document.getElementById('bigBrother'))
 })

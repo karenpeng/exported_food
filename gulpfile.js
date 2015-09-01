@@ -2,6 +2,7 @@ var gulp = require('gulp')
 var sourcemaps = require('gulp-sourcemaps')
 var source = require('vinyl-source-stream')
 var buffer = require('vinyl-buffer')
+var rename = require('gulp-rename')
 var browserify = require('browserify')
 var watchify = require('watchify')
 var babelify = require('babelify')
@@ -11,30 +12,40 @@ var server = require('gulp-server-livereload')
 var mocha = require('gulp-mocha')
 
 function compile(watch) {
-  var bundler = watchify(browserify({
-    entries:'./src/js/main.js',
-    debug: true,
-    transform :[babelify, brfs, reactify]
-  }))
+  var files = ['./src/js/main.js', './src/js/mapmain.js']
 
-  function rebundle() {
-    bundler.bundle()
-      .on('error', function(err) { console.error(err); this.emit('end') })
-      .pipe(source('build.js'))
-      .pipe(buffer())
-      .pipe(sourcemaps.init({ loadMaps: true }))
-      .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest('./build'))
-  }
+  var task = files.map(function(entry){
+    
+    var bundler = watchify(browserify({
+      entries:[entry],
+      debug: true,
+      transform :[babelify, brfs, reactify]
+    }))
 
-  if (watch) {
-    bundler.on('update', function() {
-      console.log('-> bundling...')
-      rebundle()
-    })
-  }
+    if (watch) {
+      bundler.on('update', function() {
+        console.log('-> bundling...')
+        rebundle()
+      })
+    }
 
-  rebundle()
+    rebundle()
+
+    function rebundle() {
+      var name = entry.split('/').pop()
+      bundler.bundle()
+        .on('error', function(err) { console.error(err); this.emit('end') })
+        .pipe(source(name))
+        .pipe(rename({
+          extname: '.build.js'
+        }))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest('./build'))
+    }
+
+  })
 }
 
 function watch() {

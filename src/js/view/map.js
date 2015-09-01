@@ -1,58 +1,59 @@
 export function map(arr){
-  let data = [
-  {
-    "code": "AF",
-    "value": 53,
-    "name": "Afghanistan"
-  },
-  {
-    "code": "AL",
-    "value": 117,
-    "name": "Albania"
-  },
-  {
-    "code": "DZ",
-    "value": 15,
-    "name": "Algeria"
-  },
-  {
-    "code": "AS",
-    "value": 342,
-    "name": "American Samoa"
-  }]
-
   let map = new Highcharts.Chart({
-    chart:{
-      type: 'map',
-      renderTo: 'right',
-      width: window.innerWidth / 2 - 20,
-      height: window.innerHeight - 320
+  chart:{
+    type: 'map',
+    renderTo: 'haha',
+    // width: window.innerWidth / 2 - 20,
+    // height: window.innerHeight - 320
+  },
+  title:{
+    text : 'Zoom in on country by double click'
+  },
+  xAxis:{
+    lineWidth: 0,
+    minorGridLineWidth: 0,
+    lineColor: 'transparent',
+    labels:{
+      enabled: false
     },
-     title:{
-        text : 'Zoom in on country by double click'
+    minorTickLength: 0,
+    tickLength: 0,
+    gridLineWidth: 0
+  },
+  yAxis:{
+    title:'',
+    lineWidth: 0,
+    minorGridLineWidth: 0,
+    lineColor: 'transparent',
+    labels:{
+      enabled: false
+    },
+    minorTickLength: 0,
+   tickLength: 0,
+   gridLineWidth: 0
+  },
+  mapNavigation: {
+    enabled: true,
+    enableDoubleClickZoomTo: true
+  },
+  colorAxis: {
+    min: 1,
+    max: 1000,
+    type: 'logarithmic'
+  },
+  series : [{
+      data : arr,
+      mapData: Highcharts.maps['custom/world'],
+      joinBy: ['iso-a2', 'code'],
+      name: '',
+      states: {
+        hover: {
+          color: '#BADA55'
+        }
       },
-      mapNavigation: {
-        enabled: true,
-        enableDoubleClickZoomTo: true
-      },
-      colorAxis: {
-        min: 1,
-        max: 1000,
-        type: 'logarithmic'
-      },
-      series : [{
-          data : data,
-          mapData: Highcharts.maps['custom/world'],
-          joinBy: ['iso-a2', 'code'],
-          name: '',
-          states: {
-            hover: {
-              color: '#BADA55'
-            }
-          },
-          tooltip: {
-            valueSuffix: 'Million$'
-          }
-      }]
-  })
+      tooltip: {
+        valueSuffix: 'Million$'
+      }
+  }]
+})
 }

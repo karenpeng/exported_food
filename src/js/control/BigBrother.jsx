@@ -31,6 +31,9 @@ export const BigBrother = React.createClass({
   },
   componentDidMount(){
     line(this.props.totals)
+    let ifr = document.getElementById("ifr")
+    let targetOrigin = window.location.origin + '/' + ifr.src 
+    window.postMessage('hello world!', targetOrigin)
   },
   shouldComponentUpdate(nextProps, nextState){
     if(nextState.index !== this.state.index){
@@ -38,6 +41,9 @@ export const BigBrother = React.createClass({
     }
     return nextState.cat !== this.state.cat
   },
+  // componentDidUpdate(){
+
+  // },
   handleYear(year){
     this.setState({
       index: year - 1999
@@ -78,7 +84,7 @@ export const BigBrother = React.createClass({
         <div id="main">
           <div id="left"></div>
           <div id="right" style={timeMachine}>
-            <iframe src="../../../map.html" width={_w} height={_h}></iframe>
+            <iframe id="ifr" src="map.html" width={_w} height={_h}></iframe>
           </div>
         </div>
         <section id="bottom"></section>
