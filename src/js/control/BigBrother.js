@@ -3,18 +3,20 @@ import React from 'react'
 //data model
 import {getAll} from '../dataModel/getAll.js'
 import {getCountry} from '../dataModel/getCountry.js'
+import {getCategory} from '../dataModel/getCategory.js'
 import {getDrilldown} from '../dataModel/getDrilldown.js'
 import {getCountryMap, getCountryMapJustOne} from '../dataModel/getCountryMap.js'
 
 //control
-import {Year} from './year.jsx'
-import {Cat} from './cat.jsx'
+import {Year} from './year.js'
+import {Cat} from './cat.js'
 import {sendData} from './message.js'
 
 //view
-import {Line} from '../view/line.jsx'
-import {Subline} from '../view/subline.jsx'
-import {Bar, updateBar} from '../view/bar.jsx'
+import {Line} from '../view/line.js'
+//import {Subline} from '../view/subline.jsx'
+import {subline} from '../view/subline.js'
+import {Bar, updateBar} from '../view/bar.js'
 
 let countryData, drilldownData, curCountry
 let drilldowned = false
@@ -72,7 +74,7 @@ export const BigBrother = React.createClass({
     document.getElementById('yearBar').value = year
     document.getElementById('catMenu').value = category
 
-    sendData(getCountryMap(countryData, (year-1999)))
+    sendData(getCountryMap(countryData.data, (year-1999)))
     
   },
 
@@ -82,10 +84,10 @@ export const BigBrother = React.createClass({
       index: year - 1999
     })
     if(this.state.cat !== 'All'){
-      updateBar((year - 1999))
+      updateBar(year - (1999))
       drilldowned ?
-        sendData(getCountryMapJustOne(countryData, curCountry, (year - 1999))) :
-        sendData(getCountryMap(countryData, (year - 1999)))
+        sendData(getCountryMapJustOne(countryData.data, curCountry, (year - 1999))) :
+        sendData(getCountryMap(countryData.data, (year - 1999)))
     }
   },
 
@@ -98,8 +100,8 @@ export const BigBrother = React.createClass({
       countryData = getCountry(this.props.data[val])
       drilldownData = getDrilldown(this.props.data[val], countryData)
       drilldowned ?
-      sendData(getCountryMapJustOne(countryData, curCountry, this.state.index)) :
-      sendData(getCountryMap(countryData, this.state.index))
+      sendData(getCountryMapJustOne(countryData.data, curCountry, this.state.index)) :
+      sendData(getCountryMap(countryData.data, this.state.index))
     }
   },
 
@@ -107,19 +109,19 @@ export const BigBrother = React.createClass({
   handleDrilldown(country){
     drilldowned = true
     curCountry = country
-    sendData(getCountryMapJustOne(countryData, country, this.state.index))
+    sendData(getCountryMapJustOne(countryData.data, country, this.state.index))
   },
 
   //user drill up back to countries
   handleDrillup(){
     drilldowned = false
-    sendData(getCountryMap(countryData, this.state.index))
+    sendData(getCountryMap(countryData.data, this.state.index))
   },
 
   render(){
 
     let peek1, peek2
-    let line, subline, bar
+    let line, bar //subline
 
     if(this.state.cat === "All"){
       peek1 = {display :'none'}
@@ -137,14 +139,15 @@ export const BigBrother = React.createClass({
       peek2 = {display :'none'}
       
       if(this.state.didMount){
-        subline = function(){
-          return(
-            <Subline style={peek1} totals={this.props.totals} cat={this.state.cat}></Subline>
-          )}.bind(this)()
-
+        // subline = function(){
+        //   return(
+        //     <Subline style={peek1} totals={this.props.totals} cat={this.state.cat}></Subline>
+        //   )}.bind(this)()
+        subline(getCategory(this.props.totals, this.state.cat))
         bar = function(){
           return(
-            <Bar style={peek1} arr1={countryData} arr2={drilldownData} index={this.state.index} 
+            <Bar style={peek1} arr1={countryData.data} arr2={drilldownData.data}
+            max1={countryData.max} max2={drilldownData.max} index={this.state.index}
             handleDrilldown={this.handleDrilldown} handleDrillup={this.handleDrillup}></Bar>
           )}.bind(this)()
       }
@@ -155,12 +158,14 @@ export const BigBrother = React.createClass({
 
     return(
       <div id="container">
+
         <div id="top">
           <div id="info">
             Category:
             <Cat options={this.props.cats} handleCat={this.handleCat}></Cat>
           </div>
         </div>
+
         <div id="main">
           <div className="left" id="left1" style={peek2}>
             {line}
@@ -172,12 +177,15 @@ export const BigBrother = React.createClass({
             <iframe id="ifr" src="map.html" width={_w} height={_h} scrolling="no"></iframe>
           </div>
         </div>
+
         <div id="bottom" style={peek1}>
-          {subline}
+         
         </div>
+
         <div id="above" style={peek1}>
           <Year handleYear={this.handleYear}></Year>
         </div>
+
       </div>
     )
   }

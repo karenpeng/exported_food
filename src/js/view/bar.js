@@ -9,6 +9,8 @@ export let Bar = React.createClass({
   PropTypes:{
     arr1: React.PropTypes.array.isRequired,
     arr2: React.PropTypes.array.isRequired,
+    max1: React.PropTypes.number.isRequired,
+    max2: React.PropTypes.number.isRequired,
     index: React.PropTypes.number.isRequired,
     handleDrilldown: React.PropTypes.func.isRequired,
     handleDrillup: React.PropTypes.func.isRequired
@@ -39,7 +41,7 @@ export let Bar = React.createClass({
               text: e.point.name
             })
             chart.yAxis[0].update({
-              max: that.props.arr2[0].data[0][1][that.props.arr2[0].data[0][1].length-1]
+              max: that.props.max2
             })
             
             if(curCountryYear !== preCountryYear){
@@ -55,7 +57,7 @@ export let Bar = React.createClass({
           drillup(e) {
             chart.setTitle({ text: 'Countries' })
             chart.yAxis[0].update({
-              max: that.props.arr1[0].data[0].y[that.props.arr1[0].data[0].y.length-1]
+              max: that.props.max1
             })
 
             if(curSubCatYear !== preSubCatYear){

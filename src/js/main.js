@@ -1,5 +1,5 @@
 import React from 'react'
-import {BigBrother} from './control/BigBrother.jsx'
+import {BigBrother} from './control/BigBrother.js'
 import {getAll} from './dataModel/getAll.js'
 
 //brfs es6 problem
