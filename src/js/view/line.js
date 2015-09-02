@@ -53,7 +53,8 @@ export let Line = React.createClass({
         layout: 'vertical',
         align: 'right',
         verticalAlign: 'middle',
-        borderWidth: 0
+        borderWidth: 0,
+        symbolHeight: 10
       },
       plotOptions: {
         spline: {

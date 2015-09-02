@@ -81,7 +81,7 @@ export let Bar = React.createClass({
         type: 'category'
       },
       yAxis: {
-        max: this.props.arr1[0].data[0].y[this.props.arr1[0].data[0].y.length-1],
+        max: this.props.max1,
         title: {
           text: 'Million $'
         },

@@ -48,7 +48,7 @@ export function getCountry(obj){
     },
     dataLabels:{
       enabled: true,
-      format: '{point.percentage:.1f}%'
+      format: '{point.y:.1f}'
     },
     data: []
   })

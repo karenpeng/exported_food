@@ -4,3 +4,4 @@ build
 data/modified
 _bar1.js
 todo.txt
+src/js/view/pie.js

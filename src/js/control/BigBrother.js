@@ -178,9 +178,7 @@ export const BigBrother = React.createClass({
           </div>
         </div>
 
-        <div id="bottom" style={peek1}>
-         
-        </div>
+        <div id="bottom" style={peek1}></div>
 
         <div id="above" style={peek1}>
           <Year handleYear={this.handleYear}></Year>
