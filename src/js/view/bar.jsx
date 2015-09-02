@@ -96,7 +96,7 @@ export let Bar = React.createClass({
           point: {
             events: {
               mouseOver(){
-                console.log(this)
+                //console.log(this)
                 zoomCountry = this.name
               },
             }

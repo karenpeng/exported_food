@@ -53,14 +53,8 @@ export const BigBrother = React.createClass({
 
     if(nextState.cat === 'All') return true
 
-    if(nextState.index !== this.state.index){
-      drilldowned ?
-      sendData(getCountryMapJustOne(countryData, curCountry, nextState.index)) :
-      sendData(getCountryMap(countryData, nextState.index))
-
-      if(this.state.cat !== 'All'){
-        updateBar(nextState.index)
-      }
+    if(nextState.index !== this.state.index && this.state.cat !== 'All'){
+      updateBar(nextState.index)
     }
 
     return nextState.cat !== this.state.cat || 
@@ -82,6 +76,8 @@ export const BigBrother = React.createClass({
     //@TODO: figure out how to do this in react way
     document.getElementById('yearBar').value = year
     document.getElementById('catMenu').value = category
+
+    sendData(getCountryMap(countryData, (year-1999)))
     
   },
 
@@ -90,6 +86,9 @@ export const BigBrother = React.createClass({
     this.setState({
       index: year - 1999
     })
+    drilldowned ?
+      sendData(getCountryMapJustOne(countryData, curCountry, (year - 1999))) :
+      sendData(getCountryMap(countryData, (year - 1999)))
   },
 
   //user change category
@@ -175,12 +174,12 @@ export const BigBrother = React.createClass({
             <iframe id="ifr" src="map.html" width={_w} height={_h} scrolling="no"></iframe>
           </div>
         </div>
-        <section id="bottom" style={peek1}>
+        <div id="bottom" style={peek1}>
           {subline}
-        </section>
-        <section id="above" style={peek1}>
+        </div>
+        <div id="above" style={peek1}>
           <Year handleYear={this.handleYear}></Year>
-        </section>
+        </div>
       </div>
     )
   }

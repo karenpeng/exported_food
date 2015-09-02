@@ -7,6 +7,7 @@ export let Subline = React.createClass({
     cat: React.PropTypes.string.isRequired
   },
   render(){
+    console.log(document.getElementById('bottom'))
     let chart = new Highcharts.Chart({
       chart:{
         renderTo: 'bottom',
