@@ -11,7 +11,7 @@
  ...
 ]
  */
-export function getAll(obj){
+export function getAllCats(obj){
   let output = []
   for(let key in obj){
     output.push({name: key, data:obj[key][0]["total"]})
