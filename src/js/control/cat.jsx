@@ -16,7 +16,7 @@ export const Cat = React.createClass({
       )
     }) 
     return(
-      <select onChange={this.handleClick}>
+      <select id="catMenu" onChange={this.handleClick}>
         {options}
       </select>
     )

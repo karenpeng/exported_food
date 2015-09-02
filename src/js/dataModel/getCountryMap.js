@@ -35,3 +35,32 @@ export function getCountryMap(arr, index){
   //console.dir(output)
   return output
 }
+
+/*
+{data:
+  [
+    {
+      "code": "AF",
+      "y": 53,
+      "name": "Afghanistan"
+    }
+  ]
+ */
+export function getCountryMapJustOne(arr, country, index){
+  let output = {data:[]}
+
+  arr[0].data.forEach((d, i)=>{
+    if(d['name'] === country){
+      if(ctnCode[d['name']] !== undefined && d.y[index] > 0){
+        output.data.push({
+          name: d['name'],
+          code: ctnCode[d['name']],
+          value: d.y[index]
+        })
+      }
+      return
+    }
+  })
+  //console.dir(output)
+  return output
+}

@@ -3,6 +3,14 @@ import {getDrilldownEachYear, getDrilldownEachYearJustY} from '../dataModel/getD
 
 let chart, curCountry, curCountryYear, curSubCatYear
 let arr1, arr2
+let zoomCountry
+
+
+function sendData(json){
+  let ifr = document.getElementById("ifr")
+  let targetOrigin = ifr.src
+  ifr.contentWindow.postMessage(JSON.stringify(json), targetOrigin)
+}
 
 export function bar(_arr1, _arr2, index){
   // Create the chart
@@ -37,6 +45,8 @@ export function bar(_arr1, _arr2, index){
               },100)
             preCountryYear = curCountryYear
           }
+
+
 
         },
         drillup: function(e) {
@@ -74,6 +84,18 @@ export function bar(_arr1, _arr2, index){
         width: 1,
         color: '#808080'
       }]
+    },
+    plotOptions: {
+      series: {
+        point: {
+          events: {
+            mouseOver(){
+              console.log(this.name)
+              zoomCountry = this.name
+            },
+          }
+        }
+      }      
     },
     legend: {
       enabled: false
