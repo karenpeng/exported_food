@@ -51,15 +51,10 @@ export const BigBrother = React.createClass({
   //no render when year is being changed
   shouldComponentUpdate(nextProps, nextState){
 
-    if(nextState.cat === 'All') return true
-
-    if(nextState.index !== this.state.index && this.state.cat !== 'All'){
-      updateBar(nextState.index)
-    }
-
     return nextState.cat !== this.state.cat || 
       nextState.windowWidth !== this.state.windowWidth ||
       nextState.didMount !== this.state.didMount
+
   },
 
   //user click one line in the 'All' category
@@ -86,9 +81,12 @@ export const BigBrother = React.createClass({
     this.setState({
       index: year - 1999
     })
-    drilldowned ?
-      sendData(getCountryMapJustOne(countryData, curCountry, (year - 1999))) :
-      sendData(getCountryMap(countryData, (year - 1999)))
+    if(this.state.cat !== 'All'){
+      updateBar((year - 1999))
+      drilldowned ?
+        sendData(getCountryMapJustOne(countryData, curCountry, (year - 1999))) :
+        sendData(getCountryMap(countryData, (year - 1999)))
+    }
   },
 
   //user change category

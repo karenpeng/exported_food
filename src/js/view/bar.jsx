@@ -26,8 +26,6 @@ export let Bar = React.createClass({
     curSubCatYear = this.props.index
     let preSubCatYear = this.props.index
 
-    let zoomCountry
-
     chart = new Highcharts.Chart({
       chart: {
         type: 'column',
@@ -51,7 +49,7 @@ export let Bar = React.createClass({
               preCountryYear = curCountryYear
             }
 
-            that.props.handleDrilldown(zoomCountry)
+            that.props.handleDrilldown(e.point.name)
 
           },
           drillup(e) {
@@ -90,18 +88,6 @@ export let Bar = React.createClass({
           width: 1,
           color: '#808080'
         }]
-      },
-      plotOptions: {
-        series: {
-          point: {
-            events: {
-              mouseOver(){
-                //console.log(this)
-                zoomCountry = this.name
-              },
-            }
-          }
-        }      
       },
       legend: {
         enabled: false
