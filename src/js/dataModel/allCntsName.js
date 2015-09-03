@@ -1,7 +1,3 @@
-/*
-['Canada', 'Mexico', ...]
- */
-
 /**
  * [allCntsName description]
  * @param  {array}   arr   the output of allCnts function

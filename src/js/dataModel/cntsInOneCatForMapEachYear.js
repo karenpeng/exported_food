@@ -1,7 +1,12 @@
 import {ctnCode} from '../../../data/countryCode.js'
 
+/**
+ * get all the countris in one cat for the map
+ * @param  {array} arr     the output of the cntsInOneCatForLine
+ * @param  {number} index  current index of year
+ * @return {object}         as below
+ */
 /*
-
  {data:
   [
     {
@@ -18,13 +23,6 @@ import {ctnCode} from '../../../data/countryCode.js'
   ]
 }
 */
-
-/**
- * get all the countris in one cat for the map
- * @param  {array} arr     the output of the cntsInOneCatForLine
- * @param  {number} index  current index of year
- * @return {object}         as above
- */
 export function cntsInOneCatForMapEachYear(arr, index){
   let output = {data:[]}
 

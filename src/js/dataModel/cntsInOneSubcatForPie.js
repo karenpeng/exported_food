@@ -1,3 +1,8 @@
+/**
+ * get all countries in one subcat
+ * @param  {array} arr      the output from the cntsInOneSubcatForLine function
+ * @return {array}          as below
+ */
 /*
 [{
   name: "Country",
@@ -12,12 +17,6 @@
   ...
   ]
 }]
- */
-
-/**
- * get all countries in one subcat
- * @param  {array} arr      the output from the cntsInOneSubcatForLine function
- * @return {array}          as above
  */
 export function cntsInOneSubcatForPie(arr){
   

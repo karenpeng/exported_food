@@ -1,24 +1,24 @@
 /**
- * @param  {array} arr     result from cntsInOneCatForPie.js
+ * @param  {array} arr     result from catsInOneCntForBar.js
  * @param  {number} index  which year
  * @return {array}         as below
  */
 /*
 [{
-  name: "Country",
+  name: "Category",
   //colorByPoint: true,
   data: [{
-    name: "Canada",
+    name: "Animals",
     y: 56.33
   }, {
-    name: "Mexico",
+    name: "Coffee",
     y: 24.03
   }, 
   ...
   ]
 }]
  */
-export function cntsInOneCatForPieEachYear(arr, index){
+export function catsInOneCntForBarEachYear(arr, index){
 
   let output = []
   output.push({
@@ -39,14 +39,14 @@ export function cntsInOneCatForPieEachYear(arr, index){
 
 /**
  * cntsInOneCatForPieEachYearJustY 
- * @param  {array} arr     result from cntsInOneCatForPie.js
+ * @param  {array} arr     result from catsInOneCntForBar.js
  * @param  {number} index  which year
  * @return {array}         as below
  */
 /*
 [12, 23, 21,...]
  */
-export function cntsInOneCatForPieEachYearJustY(arr, index){
+export function catsInOneCntForBarEachYearJustY(arr, index){
 
   let output = []
   arr[0].data.forEach((d)=>{

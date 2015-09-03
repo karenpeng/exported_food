@@ -1,3 +1,8 @@
+/**
+ * @param  {array} arr     result from cntsInOneSubcatForPie.js
+ * @param  {number} index  which year
+ * @return {array}         as below
+ */
 /*
 [{
   name: "Country",
@@ -12,12 +17,6 @@
   ...
   ]
 }]
- */
-
-/**
- * @param  {array} arr     result from cntsInOneSubcatForPie.js
- * @param  {number} index  which year
- * @return {array}         as above
  */
 export function cntsInOneSubcatForPieEachYear(arr, index){
     let output = []
@@ -37,15 +36,14 @@ export function cntsInOneSubcatForPieEachYear(arr, index){
     return output
 }
 
-
-/*
-[12, 23, 21,...]
- */
 /**
  * cntsInOneCatForPieEachYearJustY 
  * @param  {array} arr     result from cntsInOneSubcatForPie.js
  * @param  {number} index  which year
- * @return {array}         as above
+ * @return {array}         as below
+ */
+/*
+[12, 23, 21,...]
  */
 export function cntsInOneSubcatForPieEachYearJustY(arr, index){
   let output = []

@@ -1,3 +1,8 @@
+/**
+ * get all countries in one cat for pie
+ * @param  {array} arr     the output from cntsInOneCatForLine function
+ * @return {array}         array in above format 
+ */
 /*
 [{
   name: "Country",
@@ -12,11 +17,6 @@
   ...
   ]
 }]
- */
-/**
- * get all countries in one cat for pie
- * @param  {array} arr     the output from cntsInOneCatForLine function
- * @return {array}         array in above format 
  */
 export function cntsInOneCatForPie(arr){
   

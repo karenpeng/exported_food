@@ -1,3 +1,8 @@
+/**
+ * get all countries in one cat for subline
+ * @param  {object} obj       for instance, data["Animals"]
+ * @return {array}            array in above format 
+ */
 /*
 [
   {
@@ -10,12 +15,6 @@
   }, 
   ...
 ]
-
- */
-/**
- * get all countries in one cat for subline
- * @param  {object} obj       for instance, data["Animals"]
- * @return {array}            array in above format 
  */
 export function cntsInOneCatForLine(obj){
   

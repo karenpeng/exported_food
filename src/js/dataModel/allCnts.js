@@ -1,3 +1,8 @@
+/**
+ * get all the countries in all cats, for the init page
+ * @param  {obj}    obj  the whole data
+ * @return {array}       as below 
+ */
 /*
 [
   {
@@ -10,12 +15,6 @@
   },
 ]
 */
-
-/**
- * get all the countries in all cats, for the init page
- * @param  {obj}    obj  the whole data
- * @return {array}       as above 
- */
 export function allCnts(obj){
   let output = []
 

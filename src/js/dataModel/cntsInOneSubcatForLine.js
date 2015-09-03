@@ -1,3 +1,8 @@
+/**
+ * get all countries in one subcat for subline
+ * @param  {object} obj     a subcat, like data['Animals']['sheep']
+ * @return {arr}            as below
+ */
 /*
 [
   {
@@ -10,14 +15,7 @@
   }, 
   ...
 ]
-
- */
-
-/**
- * get all countries in one subcat for subline
- * @param  {object} obj     a subcat, like data['Animals']['sheep']
- * @return {arr}            as above
- */
+*/
 export function cntsInOneSubcatForLine(obj){
 
   let output = []

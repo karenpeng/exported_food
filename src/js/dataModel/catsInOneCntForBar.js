@@ -1,38 +1,39 @@
+/**
+ * get all cats in one country for pie
+ * @param  {array} arr     the output from cntsInOneCatForLine function
+ * @return {array}         array in above format 
+ */
 /*
 [{
   name: "Category",
+  //colorByPoint: true,
   data: [{
     name: "Animals",
     y: [56.33, 65, 25, ...]
   }, {
-    name: "Fish",
+    name: "Coffee",
     y: [24.03, 23, 3...]
   }, 
   ...
   ]
 }]
  */
-
-/**
- * [catsInOneCntForBar description]
- * @param  {object} obj    the whole data
- * @param  {array}  names  output from the allCntsName function
- * @return {array}
- */
-export function catsInOneCntForBar(obj, names){
-  let output = [{
+export function catsInOneCntForBar(arr){
+  
+  let output = []
+  
+  output.push({
     name: "Category",
+    //colorByPoint: true,
     data: []
-  }]
-  let hash = {}
-  names.forEach((n)=>{
-    hash[n] = []
   })
 
-  names.forEach((d)=>{
-
-
-
+  arr.forEach((obj)=>{
+    output[0].data.push({
+      name: obj['name'],
+      y: obj['data']
+    })
   })
 
+  return output
 }
