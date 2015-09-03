@@ -1,7 +1,8 @@
 import React from 'react'
 import {BigBrother} from './control/BigBrother.js'
-import {getAllCats} from './dataModel/getAllCats.js'
-import {getAllCnts} from './dataModel/getAllCnts.js'
+import {allCats} from './dataModel/allCats.js'
+import {allCnts} from './dataModel/allCnts.js'
+import {allCntsName} from './dataModel/allCntsName.js'
 
 //brfs es6 problem
 //https://github.com/substack/brfs/issues/39
@@ -17,6 +18,8 @@ fs.readFile('./data/json/data.json', 'utf8', (err, str) => {
 
   let cats = Object.keys(data)
   cats.unshift('All')//omg unshift returns the length of the array!!
-  //countries, drilldown
-  React.render(<BigBrother data={data} cats={cats} allCats={getAllCats(data)} allCnts={getAllCnts(data)}/>, document.getElementById('bigBrother'))
+  
+  let allCntsData = allCnts(data)
+
+  React.render(<BigBrother data={data} cats={cats}  ctns={allCntsName(allCntsData)} allCats={allCats(data)} allCnts={allCntsData}/>, document.getElementById('bigBrother'))
 })

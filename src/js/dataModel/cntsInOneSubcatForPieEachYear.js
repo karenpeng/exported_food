@@ -13,7 +13,7 @@
   ]
 }]
  */
-export function getCntsInOneSubcatForPieEachYear(arr, index){
+export function cntsInOneSubcatForPieEachYear(arr, index){
     let output = []
     output.push({
       name: arr[0].name,
@@ -35,7 +35,7 @@ export function getCntsInOneSubcatForPieEachYear(arr, index){
 /*
 [12, 23, 21,...]
  */
-export function getCntsInOneSubcatForPieEachYearJustY(arr, index){
+export function cntsInOneSubcatForPieEachYearJustY(arr, index){
   let output = []
   arr[0].data.forEach((d)=>{
     output.push(d.y[index])

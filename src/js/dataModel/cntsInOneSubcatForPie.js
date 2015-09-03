@@ -13,7 +13,7 @@
   ]
 }]
  */
-export function getCntsInOneSubcatForPie(obj, subCat){
+export function cntsInOneSubcatForPie(obj, subCat){
   let output = []
     output.push({
     name: "Country",

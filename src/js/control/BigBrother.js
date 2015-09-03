@@ -1,22 +1,23 @@
 import React from 'react'
 
 //data model
-import {getCntsInOneCatForPie} from '../dataModel/getCntsInOneCatForPie.js'
-import {getCntsInOneCatForLine} from '../dataModel/getCntsInOneCatForLine.js'
-import {getCntsInOneCatForMap} from '../dataModel/getCntsInOneCatForMap.js'
-import {getSubcatsInOneCat} from '../dataModel/getSubcatsInOneCat.js'
-import {getCntsInOneCatForPieEachYear, getCntsInOneCatForPieEachYearJustY} 
-  from '../dataModel/getCntsInOneCatForPieEachYear.js'
-import {getCntsInOneSubcatForPie} from '../dataModel/getCntsInOneSubcatForPie.js'
-import {getCntsInOneSubcatForPieEachYear, getCntsInOneSubcatForPieEachYearJustY} 
-  from '../dataModel/getCntsInOneSubcatForPieEachYear.js'
-import {getCntsInOneSubcatForMap} from '../dataModel/getCntsInOneSubcatForMap.js'
-import {getCntsInOneSubcatForLine} from '../dataModel/getCntsInOneSubcatForLine.js'
+import {cntsInOneCatForPie} from '../dataModel/cntsInOneCatForPie.js'
+import {cntsInOneCatForLine} from '../dataModel/cntsInOneCatForLine.js'
+import {cntsInOneCatForMap} from '../dataModel/cntsInOneCatForMap.js'
+import {subcatsInOneCat} from '../dataModel/subcatsInOneCat.js'
+import {cntsInOneCatForPieEachYear, cntsInOneCatForPieEachYearJustY} 
+  from '../dataModel/cntsInOneCatForPieEachYear.js'
+import {cntsInOneSubcatForPie} from '../dataModel/cntsInOneSubcatForPie.js'
+import {cntsInOneSubcatForPieEachYear, cntsInOneSubcatForPieEachYearJustY} 
+  from '../dataModel/cntsInOneSubcatForPieEachYear.js'
+import {cntsInOneSubcatForMap} from '../dataModel/cntsInOneSubcatForMap.js'
+import {cntsInOneSubcatForLine} from '../dataModel/cntsInOneSubcatForLine.js'
 
 //control
 import {Year} from './year.js'
 import {Cat} from './cat.js'
 import {sendData} from './message.js'
+import {Dimension} from './dimension.js'
 
 //view
 import {makeLine} from '../view/line.js'
@@ -30,7 +31,8 @@ export const BigBrother = React.createClass({
     data: React.PropTypes.object.isRequired,
     cats: React.PropTypes.array.isRequired,
     allCats: React.PropTypes.array.isRequired,
-    allCnts: React.PropTypes.array.isRequired
+    allCnts: React.PropTypes.array.isRequired,
+    allCntsName: React.PropTypes.array.isRequired
   },
   getInitialState(){
     return{
@@ -72,6 +74,10 @@ export const BigBrother = React.createClass({
 
   },
 
+  handleDimension(val){
+    console.log(val)
+  },
+
   //user drag year bar
   handleYear(year){
     this.setState({
@@ -79,11 +85,11 @@ export const BigBrother = React.createClass({
     })
     if(this.state.cat !== 'All'){
       if(this.state.subCat === null || this.state.subCat === 'All'){
-        updatePie((year-1999), getCntsInOneCatForPieEachYearJustY)
-        sendData(getCntsInOneCatForMap(cntsCatPieData, (year-1999)))
+        updatePie((year-1999), cntsInOneCatForPieEachYearJustY)
+        sendData(cntsInOneCatForMap(cntsCatPieData, (year-1999)))
       }else{
-        updatePie((year-1999), getCntsInOneSubcatForPieEachYearJustY)
-        sendData(getCntsInOneSubcatForMap(cntsSubCatPieData, (year-1999)))
+        updatePie((year-1999), cntsInOneSubcatForPieEachYearJustY)
+        sendData(cntsInOneSubcatForMap(cntsSubCatPieData, (year-1999)))
       }
     }
   },
@@ -95,8 +101,8 @@ export const BigBrother = React.createClass({
       subCat: 'All'
     })
     if(val !== 'All'){
-      cntsCatPieData = getCntsInOneCatForPie(this.props.data[val])
-      sendData(getCntsInOneCatForMap(cntsCatPieData, this.state.index))
+      cntsCatPieData = cntsInOneCatForPie(this.props.data[val])
+      sendData(cntsInOneCatForMap(cntsCatPieData, this.state.index))
       document.getElementById('catMenu2').value = 'All'
     }
   },
@@ -107,10 +113,10 @@ export const BigBrother = React.createClass({
       subCat: val
     })
     if(val === 'All'){
-      sendData(getCntsInOneCatForMap(cntsCatPieData, this.state.index))
+      sendData(cntsInOneCatForMap(cntsCatPieData, this.state.index))
     }else{
-      cntsSubCatPieData = getCntsInOneSubcatForPie(this.props.data[this.state.cat], val)
-      sendData(getCntsInOneSubcatForMap(cntsSubCatPieData, this.state.index))
+      cntsSubCatPieData = cntsInOneSubcatForPie(this.props.data[this.state.cat], val)
+      sendData(cntsInOneSubcatForMap(cntsSubCatPieData, this.state.index))
     }
   },
 
@@ -119,7 +125,7 @@ export const BigBrother = React.createClass({
     let peek1, peek2
 
     let subCats = this.state.cat === 'All'? 
-      null : getSubcatsInOneCat(this.props.data[this.state.cat])
+      null : subcatsInOneCat(this.props.data[this.state.cat])
 
     if(this.state.cat === "All"){
       peek1 = {display :'none'}
@@ -135,11 +141,11 @@ export const BigBrother = React.createClass({
       
       if(this.state.didMount){
         if(this.state.subCat === null || this.state.subCat === 'All'){
-          makeSubline(getCntsInOneCatForLine(this.props.data[this.state.cat]))
-          makePie(cntsCatPieData, this.state.index, getCntsInOneCatForPieEachYear)
+          makeSubline(cntsInOneCatForLine(this.props.data[this.state.cat]))
+          makePie(cntsCatPieData, this.state.index, cntsInOneCatForPieEachYear)
         }else{
-          makeSubline(getCntsInOneSubcatForLine(this.props.data[this.state.cat], this.state.subCat))
-          makePie(cntsSubCatPieData, this.state.index, getCntsInOneSubcatForPieEachYear)
+          makeSubline(cntsInOneSubcatForLine(this.props.data[this.state.cat], this.state.subCat))
+          makePie(cntsSubCatPieData, this.state.index, cntsInOneSubcatForPieEachYear)
         }
       }
     }
@@ -152,6 +158,7 @@ export const BigBrother = React.createClass({
 
         <div id="top">
           <div id="info">
+            <Dimension handleDimension={this.handleDimension}></Dimension>
             <Cat options1={this.props.cats} options2={subCats}
               handleCat={this.handleCat} handleSubcat={this.handleSubcat}></Cat>
           </div>

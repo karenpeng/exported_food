@@ -1,4 +1,4 @@
-export function getSubcatsInOneCat(arr){
+export function subcatsInOneCat(arr){
 
   let output = []
 

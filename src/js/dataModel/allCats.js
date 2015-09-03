@@ -11,10 +11,10 @@
  ...
 ]
  */
-export function getAllCats(obj){
+export function allCats(obj){
   let output = []
   for(let key in obj){
-    output.push({name: key, data:obj[key][0]["total"]})
+    output.push({name: key, data:obj[key]["total"]})
   }
   return output
 }

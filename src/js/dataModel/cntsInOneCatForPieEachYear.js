@@ -15,11 +15,11 @@
  */
 
 /**
- * @param  {array} arr     result from getCntsInOneCatForPie.js
+ * @param  {array} arr     result from cntsInOneCatForPie.js
  * @param  {number} index  which year
  * @return {array}          filter out all the other years
  */
-export function getCntsInOneCatForPieEachYear(arr, index){
+export function cntsInOneCatForPieEachYear(arr, index){
 
   let output = []
   output.push({
@@ -41,7 +41,7 @@ export function getCntsInOneCatForPieEachYear(arr, index){
 /*
 [12, 23, 21,...]
  */
-export function getCntsInOneCatForPieEachYearJustY(arr, index){
+export function cntsInOneCatForPieEachYearJustY(arr, index){
 
   let output = []
   arr[0].data.forEach((d)=>{

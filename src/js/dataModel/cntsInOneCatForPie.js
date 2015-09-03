@@ -1,29 +1,36 @@
 /*
-[
-  {
+[{
+  name: "Country",
+  //colorByPoint: true,
+  data: [{
     name: "Canada",
-    data: [56.33, 65, 25, ...]
-  }, 
-  {
+    y: [56.33, 65, 25, ...]
+  }, {
     name: "Mexico",
-    data: [24.03, 23, 3...]
+    y: [24.03, 23, 3...]
   }, 
   ...
-]
-
+  ]
+}]
  */
 /**
  * [getCatForBar description]
- * @param  {array} arr     for instance, data["Animals"]
+ * @param  {array} obj     for instance, data["Animals"]
  * @return {array}         array in above format 
  */
-export function getCntsInOneCatForLine(arr){
+export function cntsInOneCatForPie(obj){
   
   let output = []
+  
+  output.push({
+    name: "Country",
+    //colorByPoint: true,
+    data: []
+  })
 
   let hash = {}
 
-  arr.forEach((d, i) =>{
+  obj.forEach((d, i) =>{
     if(i > 0){
       let subCategory= d[Object.keys(d)[0]]
       subCategory.forEach((dd, ii) =>{
@@ -41,19 +48,22 @@ export function getCntsInOneCatForLine(arr){
   })
 
 
+  let arr = []
   for(let key in hash){
-    output.push({
+    arr.push({
       name: key,
-      data: hash[key]
+      y: hash[key]
     })
   }
   
-  output.sort((a, b) =>{
-    return b.data.reduce((b1, b2)=>{return b1 + b2}) 
-    - a.data.reduce((a1, a2)=>{return a1 + a2}) 
+  arr.sort((a, b) =>{
+    return b.y.reduce((b1, b2)=>{return b1 + b2}) 
+    - a.y.reduce((a1, a2)=>{return a1 + a2}) 
   })
 
-  output = output.slice(0, 10)
+  arr = arr.slice(0, 10)
+  
+  output[0].data = arr
   //console.dir(output)
   return output
 }

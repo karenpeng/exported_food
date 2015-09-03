@@ -1,5 +1,5 @@
 import React from 'react'
-import {getCntsInOneCatForPieEachYear, getCntsInOneCatForPieEachYearJustY} from '../dataModel/getCntsInOneCatForPieEachYear.js'
+import {cntsInOneCatForPieEachYear, cntsInOneCatForPieEachYearJustY} from '../dataModel/cntsInOneCatForPieEachYear.js'
 
 let chart, curCountry, curCountryYear, curSubCatYear
 let arr1, arr2
@@ -93,7 +93,7 @@ export let Bar = React.createClass({
       legend: {
         enabled: false
       },
-      series: getCntsInOneCatForPieEachYear(this.props.arr1, this.props.index),
+      series: cntsInOneCatForPieEachYear(this.props.arr1, this.props.index),
       drilldown: {
         series: getDrilldownEachYear(this.props.arr2, this.props.index)
       }
@@ -106,7 +106,7 @@ export let Bar = React.createClass({
 export function updateBar(index){
   if(chart.title.textStr === 'Countries'){
     curCountryYear = index
-    chart.series[0].setData(getCntsInOneCatForPieEachYearJustY(arr1, index))
+    chart.series[0].setData(cntsInOneCatForPieEachYearJustY(arr1, index))
   }else{
     curSubCatYear = index
     chart.series[0].setData(getDrilldownEachYearJustY(arr2, curCountry, index))

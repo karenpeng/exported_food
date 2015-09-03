@@ -19,7 +19,7 @@ import {ctnCode} from '../../../data/countryCode.js'
 }
 */
 
-export function getCntsInOneSubcatForMap(arr, index){
+export function cntsInOneSubcatForMap(arr, index){
   let output = {data:[]}
 
   arr[0].data.forEach((d, i)=>{

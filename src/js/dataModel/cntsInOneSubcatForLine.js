@@ -13,7 +13,7 @@
 
  */
 
-export function getCntsInOneSubcatForLine(arr, subCat){
+export function cntsInOneSubcatForLine(arr, subCat){
 
   let output = []
 
