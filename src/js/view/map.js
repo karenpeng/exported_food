@@ -40,7 +40,7 @@ export function makeMap(arr){
     },
     colorAxis: {
       min: 1,
-      max: 1000,
+      max: 10000,
       type: 'logarithmic'
     },
     tooltip: {

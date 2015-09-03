@@ -1,6 +1,7 @@
 /*
 [{
   name: "Country",
+  //colorByPoint: true,
   data: [{
     name: "Canada",
     y: [56.33, 65, 25, ...]
@@ -17,11 +18,13 @@
  * @param  {array} obj     for instance, data["Animals"]
  * @return {array}         array in above format 
  */
-export function getCountry(obj){
+export function getCntsInOneCatForPie(obj){
+  
   let output = []
   
   output.push({
     name: "Country",
+    //colorByPoint: true,
     data: []
   })
 
@@ -54,8 +57,11 @@ export function getCountry(obj){
   }
   
   arr.sort((a, b) =>{
-    return b.y[b.y.length-1] - a.y[a.y.length-1] 
+    return b.y.reduce((b1, b2)=>{return b1 + b2}) 
+    - a.y.reduce((a1, a2)=>{return a1 + a2}) 
   })
+
+  arr = arr.slice(0, 10)
   
   output[0].data = arr
   //console.dir(output)

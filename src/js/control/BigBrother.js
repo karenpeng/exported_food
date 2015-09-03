@@ -1,11 +1,10 @@
 import React from 'react'
 
 //data model
-//import {getAll} from '../dataModel/getAll.js'
-import {getCountry} from '../dataModel/getCountry.js'
-import {getCategory} from '../dataModel/getCategory.js'
-//import {getDrilldown} from '../dataModel/getDrilldown.js'
-import {getCountryMap, getCountryMapJustOne} from '../dataModel/getCountryMap.js'
+import {getCntsInOneCatForPie} from '../dataModel/getCntsInOneCatForPie.js'
+import {getCntsInOneCatForLine} from '../dataModel/getCntsInOneCatForLine.js'
+import {getCntsInOneCatForMap} from '../dataModel/getCntsInOneCatForMap.js'
+import {getSubcatsInOneCat} from '../dataModel/getSubcatsInOneCat.js'
 
 //control
 import {Year} from './year.js'
@@ -14,24 +13,23 @@ import {sendData} from './message.js'
 
 //view
 import {Line} from '../view/line.js'
-//import {Subline} from '../view/subline.jsx'
 import {subline} from '../view/subline.js'
-//import {Bar, updateBar} from '../view/bar.js'
 import {Pie, updatePie} from '../view/pie.js'
 
-let countryData, drilldownData, curCountry
-let drilldowned = false
+let countryData
 
 export const BigBrother = React.createClass({
   PropTypes:{
     data: React.PropTypes.object.isRequired,
     cats: React.PropTypes.array.isRequired,
-    totals: React.PropTypes.array.isRequired
+    allCats: React.PropTypes.array.isRequired,
+    allCnts: React.PropTypes.array.isRequired
   },
   getInitialState(){
     return{
       index: 15,
       cat: "All",
+      subCat: "All",
       windowWidth: window.innerWidth,
       didMount: false
     }
@@ -60,63 +58,31 @@ export const BigBrother = React.createClass({
 
   },
 
-  //user click one line in the 'All' category
-  handleDig(year, category){
-
-    countryData = getCountry(this.props.data[category])
-
-    this.setState({
-      index: year - 1999,
-      cat: category
-    })
-
-    //@TODO: figure out how to do this in react way
-    document.getElementById('yearBar').value = year
-    document.getElementById('catMenu').value = category
-
-    sendData(getCountryMap(countryData, (year-1999)))
-    
-  },
-
   //user drag year bar
   handleYear(year){
     this.setState({
       index: year - 1999
     })
     if(this.state.cat !== 'All'){
-      //updateBar(year - (1999))
       updatePie((year-1999))
-      drilldowned ?
-        sendData(getCountryMapJustOne(countryData, curCountry, (year - 1999))) :
-        sendData(getCountryMap(countryData, (year - 1999)))
+      sendData(getCntsInOneCatForMap(countryData, (year-1999)))
     }
   },
 
   //user change category
   handleCat(val){
     this.setState({
-      cat: val
+      cat: val,
+      subCat: getSubcatsInOneCat(this.props.data[val])
     })
     if(val !== 'All'){
-      countryData = getCountry(this.props.data[val])
-      //drilldownData = getDrilldown(this.props.data[val], countryData)
-      drilldowned ?
-      sendData(getCountryMapJustOne(countryData, curCountry, this.state.index)) :
-      sendData(getCountryMap(countryData, this.state.index))
+      countryData = getCntsInOneCatForPie(this.props.data[val])
+      sendData(getCntsInOneCatForMap(countryData, this.state.index))
     }
   },
 
-  //user drill down into one country
-  handleDrilldown(country){
-    drilldowned = true
-    curCountry = country
-    sendData(getCountryMapJustOne(countryData, country, this.state.index))
-  },
-
-  //user drill up back to countries
-  handleDrillup(){
-    drilldowned = false
-    sendData(getCountryMap(countryData, this.state.index))
+  handleSubcat(val){
+    console.log(val)
   },
 
   render(){
@@ -132,7 +98,7 @@ export const BigBrother = React.createClass({
       if(this.state.didMount){
         line = function(){
           return(
-            <Line style={peek2} dig={this.handleDig} arr={this.props.totals}></Line>
+            <Line style={peek2} dig={this.handleDig} arr={this.props.allCnts}></Line>
           )}.bind(this)()
       }
 
@@ -141,23 +107,11 @@ export const BigBrother = React.createClass({
       peek2 = {display :'none'}
       
       if(this.state.didMount){
-        // subline = function(){
-        //   return(
-        //     <Subline style={peek1} totals={this.props.totals} cat={this.state.cat}></Subline>
-        //   )}.bind(this)()
-        subline(getCategory(this.props.totals, this.state.cat))
-        // bar = function(){
-        //   return(
-        //     <Bar style={peek1} arr1={countryData.data} arr2={drilldownData.data}
-        //     max1={countryData.max} max2={drilldownData.max} index={this.state.index}
-        //     handleDrilldown={this.handleDrilldown} handleDrillup={this.handleDrillup}></Bar>
-        //   )}.bind(this)()
+
+        subline(getCntsInOneCatForLine(this.props.data[this.state.cat]))
         pie = function(){
           return(
-            <div>
             <Pie style={peek1} arr={countryData} index={this.state.index}></Pie>
-            
-            </div>
           )}.bind(this)()
       }
     }
@@ -171,7 +125,8 @@ export const BigBrother = React.createClass({
         <div id="top">
           <div id="info">
             Category:
-            <Cat options={this.props.cats} handleCat={this.handleCat}></Cat>
+            <Cat options1={this.props.cats} options2={this.state.cat === 'All'? null : getSubcatsInOneCat(this.props.data[this.state.cat])}
+              handleCat={this.handleCat} handleSubcat={this.handleSubcat}></Cat>
           </div>
         </div>
 
