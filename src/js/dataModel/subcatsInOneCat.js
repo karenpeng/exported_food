@@ -1,13 +1,11 @@
-export function subcatsInOneCat(arr){
+/**
+ * subcatsInOneCat description
+ * @param  {object} obj 
+ * @return {array}     
+ */
+export function subcatsInOneCat(obj){
 
-  let output = []
-
-  arr.forEach((d, i)=>{
-    if(i>0){
-      let key = Object.keys(d)[0]
-      output.push(key)
-    }
-  })
+  let output = Object.keys(obj)
   output.unshift('All')
   //console.dir(output)
   return output

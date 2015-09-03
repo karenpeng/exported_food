@@ -13,26 +13,21 @@
 
  */
 
-export function cntsInOneSubcatForLine(arr, subCat){
+/**
+ * get all countries in one subcat for subline
+ * @param  {object} obj     a subcat, like data['Animals']['sheep']
+ * @return {arr}            as above
+ */
+export function cntsInOneSubcatForLine(obj){
 
   let output = []
 
-  arr.forEach((d, i)=>{
-    if(i > 0){
-      let key = Object.keys(d)[0]
-      if(key === subCat){
-        d[key].forEach((dd, ii)=>{
-          if(ii > 0){
-            let country = Object.keys(dd)[0]
-            output.push({
-              name: country,
-              data: dd[country]
-            })
-          }
-        })
-      }
-    }
-  })
+  for(let cnt in obj){
+    output.push({
+      name: cnt,
+      data: obj[cnt]
+    })
+  }
 
   output.sort((a, b) =>{
     return b.data.reduce((b1, b2)=>{return b1 + b2}) 

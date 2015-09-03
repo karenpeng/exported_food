@@ -13,38 +13,39 @@
 
  */
 /**
- * [getCatForBar description]
- * @param  {array} arr     for instance, data["Animals"]
- * @return {array}         array in above format 
+ * get all countries in one cat for subline
+ * @param  {object} obj       for instance, data["Animals"]
+ * @return {array}            array in above format 
  */
-export function cntsInOneCatForLine(arr){
+export function cntsInOneCatForLine(obj){
   
   let output = []
 
   let hash = {}
 
-  arr.forEach((d, i) =>{
-    if(i > 0){
-      let subCategory= d[Object.keys(d)[0]]
-      subCategory.forEach((dd, ii) =>{
-        if(ii > 0){
-          let country = Object.keys(dd)[0]
-          if(hash[country] === undefined) hash[country] = []
-          dd[country].forEach((c, iii) =>{
-            if(hash[country][iii] === undefined) hash[country][iii] = 0
-            hash[country][iii] += dd[country][iii]
-            hash[country][iii] = parseFloat(hash[country][iii].toFixed(1))
-          })
-        }
+  for(let subCat in obj){
+    if(subCat !== 'total'){
+      let ctns = Object.keys(obj[subCat])
+      ctns.forEach((c) => {
+        if(hash[c] === undefined) hash[c] = []
+        obj[subCat][c].forEach((val, index) => {
+          if(hash[c][index] === undefined) hash[c][index] = 0
+          hash[c][index] += val
+        })
       })
     }
-  })
-
+  }
 
   for(let key in hash){
+
+    let arr = []
+    hash[key].forEach((d)=>{
+      arr.push(parseFloat(d.toFixed(1)))
+    })
+
     output.push({
       name: key,
-      data: hash[key]
+      data: arr
     })
   }
   
@@ -57,5 +58,3 @@ export function cntsInOneCatForLine(arr){
   //console.dir(output)
   return output
 }
-
-

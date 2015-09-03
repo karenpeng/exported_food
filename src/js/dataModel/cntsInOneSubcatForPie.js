@@ -13,34 +13,27 @@
   ]
 }]
  */
-export function cntsInOneSubcatForPie(obj, subCat){
+
+/**
+ * get all countries in one subcat
+ * @param  {array} arr      the output from the cntsInOneSubcatForLine function
+ * @return {array}          as above
+ */
+export function cntsInOneSubcatForPie(arr){
+  
   let output = []
-    output.push({
+  
+  output.push({
     name: "Country",
     //colorByPoint: true,
     data: []
   })
 
-  obj.forEach((d, i)=>{
-    if(i > 0){
-      let key = Object.keys(d)[0]
-      if(key === subCat){
-        d[key].forEach((dd, ii)=>{
-          if(ii > 0){
-            let country = Object.keys(dd)[0]
-            output[0].data.push({
-              name: country,
-              y: dd[country]
-            })
-          }
-        })
-      }
-    }
-  })
-
-  output[0].data.sort((a, b) =>{
-    return b.y.reduce((b1, b2)=>{return b1 + b2}) 
-    - a.y.reduce((a1, a2)=>{return a1 + a2}) 
+  arr.forEach((obj)=>{
+    output[0].data.push({
+      name: obj['name'],
+      y: obj['data']
+    })
   })
 
   //console.dir(output)

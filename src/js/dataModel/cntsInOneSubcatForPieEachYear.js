@@ -13,6 +13,12 @@
   ]
 }]
  */
+
+/**
+ * @param  {array} arr     result from cntsInOneSubcatForPie.js
+ * @param  {number} index  which year
+ * @return {array}         as above
+ */
 export function cntsInOneSubcatForPieEachYear(arr, index){
     let output = []
     output.push({
@@ -34,6 +40,12 @@ export function cntsInOneSubcatForPieEachYear(arr, index){
 
 /*
 [12, 23, 21,...]
+ */
+/**
+ * cntsInOneCatForPieEachYearJustY 
+ * @param  {array} arr     result from cntsInOneSubcatForPie.js
+ * @param  {number} index  which year
+ * @return {array}         as above
  */
 export function cntsInOneSubcatForPieEachYearJustY(arr, index){
   let output = []

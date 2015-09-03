@@ -4,8 +4,8 @@
 
 /**
  * [allCntsName description]
- * @param  {arry}   arr   the output of allCnts function
- * @return {array}        an array holding all the countries name
+ * @param  {array}   arr   the output of allCnts function
+ * @return {array}         an array holding all the countries name
  */
 export function allCntsName(arr){
   let output = []

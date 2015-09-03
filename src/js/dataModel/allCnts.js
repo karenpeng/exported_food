@@ -11,12 +11,17 @@
 ]
 */
 
+/**
+ * get all the countries in all cats, for the init page
+ * @param  {obj}    obj  the whole data
+ * @return {array}       as above 
+ */
 export function allCnts(obj){
   let output = []
 
   let hash = {}
   for(let cat in obj){
-    for(let subCat in obj[cat]{
+    for(let subCat in obj[cat]){
       if(subCat !== 'total'){
         let ctns = Object.keys(obj[cat][subCat])
         ctns.forEach((c) => {
@@ -27,15 +32,19 @@ export function allCnts(obj){
           })
         })
       }
-
-    })
-
+    }
   }
 
   for(let key in hash){
+
+    let arr = []
+    hash[key].forEach((d)=>{
+      arr.push(parseFloat(d.toFixed(1)))
+    })
+
     output.push({
       name: key,
-      data: hash[key]
+      data: arr
     })
   }
 

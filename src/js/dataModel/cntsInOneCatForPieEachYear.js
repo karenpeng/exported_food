@@ -17,7 +17,7 @@
 /**
  * @param  {array} arr     result from cntsInOneCatForPie.js
  * @param  {number} index  which year
- * @return {array}          filter out all the other years
+ * @return {array}         as above
  */
 export function cntsInOneCatForPieEachYear(arr, index){
 
@@ -40,6 +40,12 @@ export function cntsInOneCatForPieEachYear(arr, index){
 
 /*
 [12, 23, 21,...]
+ */
+/**
+ * cntsInOneCatForPieEachYearJustY 
+ * @param  {array} arr     result from cntsInOneCatForPie.js
+ * @param  {number} index  which year
+ * @return {array}         as above
  */
 export function cntsInOneCatForPieEachYearJustY(arr, index){
 
