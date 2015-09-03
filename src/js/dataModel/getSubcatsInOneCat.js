@@ -4,7 +4,7 @@ export function getSubcatsInOneCat(arr){
 
   arr.forEach((d, i)=>{
     if(i>0){
-      var key = Object.keys(d)[0]
+      let key = Object.keys(d)[0]
       output.push(key)
     }
   })

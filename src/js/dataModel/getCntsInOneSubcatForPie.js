@@ -38,7 +38,7 @@ export function getCntsInOneSubcatForPie(obj, subCat){
     }
   })
 
-  output.data.sort((a, b) =>{
+  output[0].data.sort((a, b) =>{
     return b.y.reduce((b1, b2)=>{return b1 + b2}) 
     - a.y.reduce((a1, a2)=>{return a1 + a2}) 
   })

@@ -85,7 +85,6 @@ export const BigBrother = React.createClass({
         updatePie((year-1999), getCntsInOneSubcatForPieEachYearJustY)
         sendData(getCntsInOneSubcatForMap(cntsSubCatPieData, (year-1999)))
       }
-      
     }
   },
 
@@ -102,6 +101,7 @@ export const BigBrother = React.createClass({
     }
   },
 
+  //user change subcategory
   handleSubcat(val){
     this.setState({
       subCat: val
@@ -117,7 +117,7 @@ export const BigBrother = React.createClass({
   render(){
 
     let peek1, peek2
-    let line, pie
+
     let subCats = this.state.cat === 'All'? 
       null : getSubcatsInOneCat(this.props.data[this.state.cat])
 
@@ -152,16 +152,13 @@ export const BigBrother = React.createClass({
 
         <div id="top">
           <div id="info">
-            <span>Category:</span>
             <Cat options1={this.props.cats} options2={subCats}
               handleCat={this.handleCat} handleSubcat={this.handleSubcat}></Cat>
           </div>
         </div>
 
         <div id="main">
-          <div className="left" id="left1" style={peek2}>
-            {line}
-          </div>
+          <div className="left" id="left1" style={peek2}></div>
           <div className="left" id="left2" style={peek1}></div>
           <div id="right" style={peek1}>
             <iframe id="ifr" src="map.html" width={_w} height={_h} scrolling="no"></iframe>

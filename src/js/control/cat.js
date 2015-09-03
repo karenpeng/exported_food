@@ -35,9 +35,11 @@ export const Cat = React.createClass({
 
     return(
       <div>
+        <span>Category:</span>
         <select id="catMenu1" onChange={this.handleClick1}>
           {options1}
         </select>
+        <span style={show}>Subcategory:</span>
         <select style={show} id="catMenu2" onChange={this.handleClick2}>
           {options2}
         </select>
