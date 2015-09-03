@@ -6,7 +6,7 @@
 export function subcatsInOneCat(obj){
 
   let output = Object.keys(obj)
-  output.unshift('All')
+  output[0] = 'All'
   //console.dir(output)
   return output
 }

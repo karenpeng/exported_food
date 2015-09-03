@@ -21,14 +21,14 @@ import {ctnCode} from '../../../data/countryCode.js'
 
 /**
  * get all the countris in one subcat for the map
- * @param  {array} arr     the output of the cntsInOneSubcatForPie
+ * @param  {array} arr     the output of the cntsInOneSubcatForLine
  * @param  {number} index  current index of year
  * @return {object}         as above
  */
 export function cntsInOneSubcatForMapEachYear(arr, index){
   let output = {data:[]}
 
-  arr[0].data.forEach((d, i)=>{
+  arr.forEach((d, i)=>{
     if(ctnCode[d['name']]!== undefined && d['data'][index] > 0){
       output.data.push({
         name: d['name'],
