@@ -14,16 +14,16 @@
  */
 /**
  * [getCatForBar description]
- * @param  {array} obj     for instance, data["Animals"]
+ * @param  {array} arr     for instance, data["Animals"]
  * @return {array}         array in above format 
  */
-export function getCntsInOneCatForLine(obj){
+export function getCntsInOneCatForLine(arr){
   
   let output = []
 
   let hash = {}
 
-  obj.forEach((d, i) =>{
+  arr.forEach((d, i) =>{
     if(i > 0){
       let subCategory= d[Object.keys(d)[0]]
       subCategory.forEach((dd, ii) =>{

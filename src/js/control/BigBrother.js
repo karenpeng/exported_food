@@ -5,6 +5,13 @@ import {getCntsInOneCatForPie} from '../dataModel/getCntsInOneCatForPie.js'
 import {getCntsInOneCatForLine} from '../dataModel/getCntsInOneCatForLine.js'
 import {getCntsInOneCatForMap} from '../dataModel/getCntsInOneCatForMap.js'
 import {getSubcatsInOneCat} from '../dataModel/getSubcatsInOneCat.js'
+import {getCntsInOneCatForPieEachYear, getCntsInOneCatForPieEachYearJustY} 
+  from '../dataModel/getCntsInOneCatForPieEachYear.js'
+import {getCntsInOneSubcatForPie} from '../dataModel/getCntsInOneSubcatForPie.js'
+import {getCntsInOneSubcatForPieEachYear, getCntsInOneSubcatForPieEachYearJustY} 
+  from '../dataModel/getCntsInOneSubcatForPieEachYear.js'
+import {getCntsInOneSubcatForMap} from '../dataModel/getCntsInOneSubcatForMap.js'
+import {getCntsInOneSubcatForLine} from '../dataModel/getCntsInOneSubcatForLine.js'
 
 //control
 import {Year} from './year.js'
@@ -12,11 +19,11 @@ import {Cat} from './cat.js'
 import {sendData} from './message.js'
 
 //view
-import {Line} from '../view/line.js'
-import {subline} from '../view/subline.js'
-import {Pie, updatePie} from '../view/pie.js'
+import {makeLine} from '../view/line.js'
+import {makeSubline} from '../view/subline.js'
+import {makePie, updatePie} from '../view/pie.js'
 
-let countryData
+let cntsCatPieData, cntsSubCatPieData
 
 export const BigBrother = React.createClass({
   PropTypes:{
@@ -29,7 +36,7 @@ export const BigBrother = React.createClass({
     return{
       index: 15,
       cat: "All",
-      subCat: "All",
+      subCat: null,
       windowWidth: window.innerWidth,
       didMount: false
     }
@@ -52,7 +59,14 @@ export const BigBrother = React.createClass({
   //no render when year is being changed
   shouldComponentUpdate(nextProps, nextState){
 
+    if(nextState.subCat === null){
+      return nextState.cat !== this.state.cat || 
+        nextState.windowWidth !== this.state.windowWidth ||
+        nextState.didMount !== this.state.didMount
+    }
+
     return nextState.cat !== this.state.cat || 
+      nextState.subCat !== this.state.subCat ||
       nextState.windowWidth !== this.state.windowWidth ||
       nextState.didMount !== this.state.didMount
 
@@ -64,8 +78,14 @@ export const BigBrother = React.createClass({
       index: year - 1999
     })
     if(this.state.cat !== 'All'){
-      updatePie((year-1999))
-      sendData(getCntsInOneCatForMap(countryData, (year-1999)))
+      if(this.state.subCat === null || this.state.subCat === 'All'){
+        updatePie((year-1999), getCntsInOneCatForPieEachYearJustY)
+        sendData(getCntsInOneCatForMap(cntsCatPieData, (year-1999)))
+      }else{
+        updatePie((year-1999), getCntsInOneSubcatForPieEachYearJustY)
+        sendData(getCntsInOneSubcatForMap(cntsSubCatPieData, (year-1999)))
+      }
+      
     }
   },
 
@@ -73,33 +93,40 @@ export const BigBrother = React.createClass({
   handleCat(val){
     this.setState({
       cat: val,
-      subCat: getSubcatsInOneCat(this.props.data[val])
+      subCat: 'All'
     })
     if(val !== 'All'){
-      countryData = getCntsInOneCatForPie(this.props.data[val])
-      sendData(getCntsInOneCatForMap(countryData, this.state.index))
+      cntsCatPieData = getCntsInOneCatForPie(this.props.data[val])
+      sendData(getCntsInOneCatForMap(cntsCatPieData, this.state.index))
+      document.getElementById('catMenu2').value = 'All'
     }
   },
 
   handleSubcat(val){
-    console.log(val)
+    this.setState({
+      subCat: val
+    })
+    if(val === 'All'){
+      sendData(getCntsInOneCatForMap(cntsCatPieData, this.state.index))
+    }else{
+      cntsSubCatPieData = getCntsInOneSubcatForPie(this.props.data[this.state.cat], val)
+      sendData(getCntsInOneSubcatForMap(cntsSubCatPieData, this.state.index))
+    }
   },
 
   render(){
 
     let peek1, peek2
-    let line, bar //subline
-    let pie
+    let line, pie
+    let subCats = this.state.cat === 'All'? 
+      null : getSubcatsInOneCat(this.props.data[this.state.cat])
 
     if(this.state.cat === "All"){
       peek1 = {display :'none'}
       peek2 = {display :'block'}
 
       if(this.state.didMount){
-        line = function(){
-          return(
-            <Line style={peek2} dig={this.handleDig} arr={this.props.allCnts}></Line>
-          )}.bind(this)()
+        makeLine(this.props.allCnts)
       }
 
     }else{
@@ -107,12 +134,13 @@ export const BigBrother = React.createClass({
       peek2 = {display :'none'}
       
       if(this.state.didMount){
-
-        subline(getCntsInOneCatForLine(this.props.data[this.state.cat]))
-        pie = function(){
-          return(
-            <Pie style={peek1} arr={countryData} index={this.state.index}></Pie>
-          )}.bind(this)()
+        if(this.state.subCat === null || this.state.subCat === 'All'){
+          makeSubline(getCntsInOneCatForLine(this.props.data[this.state.cat]))
+          makePie(cntsCatPieData, this.state.index, getCntsInOneCatForPieEachYear)
+        }else{
+          makeSubline(getCntsInOneSubcatForLine(this.props.data[this.state.cat], this.state.subCat))
+          makePie(cntsSubCatPieData, this.state.index, getCntsInOneSubcatForPieEachYear)
+        }
       }
     }
 
@@ -124,8 +152,8 @@ export const BigBrother = React.createClass({
 
         <div id="top">
           <div id="info">
-            Category:
-            <Cat options1={this.props.cats} options2={this.state.cat === 'All'? null : getSubcatsInOneCat(this.props.data[this.state.cat])}
+            <span>Category:</span>
+            <Cat options1={this.props.cats} options2={subCats}
               handleCat={this.handleCat} handleSubcat={this.handleSubcat}></Cat>
           </div>
         </div>
@@ -134,9 +162,7 @@ export const BigBrother = React.createClass({
           <div className="left" id="left1" style={peek2}>
             {line}
           </div>
-          <div className="left" id="left2" style={peek1}>
-            {pie}
-          </div>
+          <div className="left" id="left2" style={peek1}></div>
           <div id="right" style={peek1}>
             <iframe id="ifr" src="map.html" width={_w} height={_h} scrolling="no"></iframe>
           </div>

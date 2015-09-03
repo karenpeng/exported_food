@@ -22,14 +22,14 @@ export const Cat = React.createClass({
 
     options1 = this.props.options1.map((d, i) =>{
       return(
-        <option value={d}>{d}</option>
+        <option key={'cat'+i} value={d}>{d}</option>
       )
     })
 
     options2 = this.props.options2 === null ? 
-    this.props.option2 : this.props.options2.map((d, i) =>{
+    null : this.props.options2.map((d, i) =>{
     return(
-      <option value={d}>{d}</option>
+      <option key={'subcat'+i} value={d}>{d}</option>
       )
     })
 

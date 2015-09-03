@@ -42,6 +42,7 @@ export function getCntsInOneCatForPieEachYear(arr, index){
 [12, 23, 21,...]
  */
 export function getCntsInOneCatForPieEachYearJustY(arr, index){
+
   let output = []
   arr[0].data.forEach((d)=>{
     output.push(d.y[index])
