@@ -19,7 +19,7 @@ export function makeBar(_arr1, _arr2, index){
     chart: {
       type: 'column',
       renderTo: 'group2',
-      width: window.innerWidth - 40,
+      width: window.innerWidth * 0.96,
       events:{
         drilldown(e){
           curCat = e.point.name

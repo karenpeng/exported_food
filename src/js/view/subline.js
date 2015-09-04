@@ -4,7 +4,7 @@ export function makeSubline(arr){
     chart:{
       renderTo: 'bottom',
       type: 'spline',
-      width: window.innerWidth - 40,
+      width: window.innerWidth * 0.96,
       height: 260
     },
     title:{

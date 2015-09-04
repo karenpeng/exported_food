@@ -5,7 +5,7 @@ export function makeLine (arr){
       renderTo: 'main',
       type: 'spline',
       height: window.innerHeight - 160,
-      width: window.innerWidth - 40
+      width: window.innerWidth * 0.96
     },
     title:{
       text:''

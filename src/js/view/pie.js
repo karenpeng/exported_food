@@ -7,8 +7,8 @@ export function makePie(arr, index, func1){
   chart = new Highcharts.Chart({
     chart: {
       type: 'pie',
-      renderTo: 'left',
-       width: 400
+      renderTo: 'left'//,
+      //width: 400
       // height: window.innerHeight - 420,
       // events:{
       //   click(e){
