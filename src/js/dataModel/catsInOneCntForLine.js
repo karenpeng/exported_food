@@ -2,7 +2,7 @@
  * [catsInOneCntForLine description]
  * @param  {object} obj   the whole data
  * @param  {string} names country name
- * @return {[type]}       [description]
+ * @return {array}         as below
  */
 /*
 [
@@ -24,16 +24,14 @@ export function catsInOneCntForLine(obj, name){
   for(let cat in obj){
     for(let subCat in obj[cat]){
       
-      if(obj[cat][subCat][name] !== undefined){
+      if(obj[cat][subCat][name] === undefined) continue
  
-        if(hash[cat] === undefined) hash[cat] = []
-        obj[cat][subCat][cnt].forEach((d, i)=>{
-          if(hash[cat][i] === undefined) hash[cat][i] = 0
-          hash[cat][i] += d
-        }) 
-
-      }
-      
+      if(hash[cat] === undefined) hash[cat] = []
+      obj[cat][subCat][name].forEach((d, i)=>{
+        if(hash[cat][i] === undefined) hash[cat][i] = 0
+        hash[cat][i] += d
+      }) 
+         
     }
   }
 

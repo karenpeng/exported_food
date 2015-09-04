@@ -11,10 +11,10 @@ export const Dimension = React.createClass({
   render(){
     return (
       <div>
-        <span>View by:</span>
+        <span>Look at:</span>
         <select onChange={this.handleDimension}>
-          <option value="category">Category</option>
-          <option value="country">Country</option>
+          <option value="Country">Countries</option>
+          <option value="Category">Categories</option>
         </select>
       </div>
     )

@@ -5,7 +5,8 @@ export const Cat = React.createClass({
     options1: React.PropTypes.array.isRequired,
     options2: React.PropTypes.array.isRequired,
     handleCat: React.PropTypes.func.isRequired,
-    handleSubcat: React.PropTypes.func.isRequired
+    handleSubcat: React.PropTypes.func.isRequired,
+    name: React.PropTypes.string.isRequired
   },
   handleClick1(e){
     e.preventDefault()
@@ -35,7 +36,7 @@ export const Cat = React.createClass({
 
     return(
       <div>
-        <span>Category:</span>
+        <span>In {this.props.name}:</span>
         <select id="catMenu1" onChange={this.handleClick1}>
           {options1}
         </select>

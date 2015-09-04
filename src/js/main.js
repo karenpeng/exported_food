@@ -21,5 +21,7 @@ fs.readFile('./data/json/data.json', 'utf8', (err, str) => {
   
   let allCntsData = allCnts(data)
 
-  React.render(<BigBrother data={data} cats={cats}  ctns={allCntsName(allCntsData)} allCats={allCats(data)} allCnts={allCntsData}/>, document.getElementById('bigBrother'))
+  React.render(<BigBrother data={data} cats={cats} cnts={allCntsName(allCntsData)}
+    allCats={allCats(data)} allCnts={allCntsData}/>, 
+    document.getElementById('bigBrother'))
 })

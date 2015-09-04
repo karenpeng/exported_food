@@ -1,116 +1,112 @@
-import React from 'react'
-import {cntsInOneCatForPieEachYear, cntsInOneCatForPieEachYearJustY} from '../dataModel/cntsInOneCatForPieEachYear.js'
+import {catsInOneCntForBarEachYear, catsInOneCntForBarEachYearJustY} from '../dataModel/catsInOneCntForBarEachYear.js'
+import {subcatsInOneCntEachYear, subcatsInOneCntEachYearJustY} from '../dataModel/subcatsInOneCntEachYear.js'
 
-let chart, curCountry, curCountryYear, curSubCatYear
+let chart, curCat, curCatYear, curSubCatYear
 let arr1, arr2
 
-export let Bar = React.createClass({
-  PropTypes:{
-    arr1: React.PropTypes.array.isRequired,
-    arr2: React.PropTypes.array.isRequired,
-    max1: React.PropTypes.number.isRequired,
-    max2: React.PropTypes.number.isRequired,
-    index: React.PropTypes.number.isRequired,
-    handleDrilldown: React.PropTypes.func.isRequired,
-    handleDrillup: React.PropTypes.func.isRequired
-  },
-  render(){
+export function makeBar(_arr1, _arr2, index){
+  // Create the chart
+  arr1 = _arr1
+  arr2 = _arr2
 
-    let that = this
+  curCatYear = index
+  let preCatYear = index
+  
+  curSubCatYear = index
+  let preSubCatYear = index
 
-    arr1 = this.props.arr1
-    arr2 = this.props.arr2
-
-    curCountryYear = this.props.index
-    let preCountryYear = this.props.index
-    
-    curSubCatYear = this.props.index
-    let preSubCatYear = this.props.index
-
-    chart = new Highcharts.Chart({
-      chart: {
-        type: 'column',
-        renderTo: 'left2',
-        width: window.innerWidth * 0.6 - 20,
-        height: window.innerHeight - 320,
-        events:{
-          drilldown(e){
-            curCountry = e.point.name
-            chart.setTitle({
-              text: e.point.name
-            })
-            chart.yAxis[0].update({
-              max: that.props.max2
-            })
-            
-            if(curCountryYear !== preCountryYear){
-              setTimeout(function(){
-                updateBar(curCountryYear)
+  chart = new Highcharts.Chart({
+    chart: {
+      type: 'column',
+      renderTo: 'left',
+      width: window.innerWidth - 40,
+      height: window.innerHeight - 420,
+      events:{
+        drilldown(e){
+          curCat = e.point.name
+          chart.setTitle({
+            text: e.point.name
+          })
+          // chart.yAxis[0].update({
+          //   max: undefined
+          // })
+          
+          if(curCatYear !== preCatYear){
+            setTimeout(function(){
+                updateBar(curCatYear)
               },100)
-              preCountryYear = curCountryYear
-            }
-
-            that.props.handleDrilldown(e.point.name)
-
-          },
-          drillup(e) {
-            chart.setTitle({ text: 'Countries' })
-            chart.yAxis[0].update({
-              max: that.props.max1
-            })
-
-            if(curSubCatYear !== preSubCatYear){
-              setTimeout(function(){
-                updateBar(curSubCatYear)
-              },100)
-              preSubCatYear = curSubCatYear
-            }
-
-            that.props.handleDrillup()
+            preCatYear = curCatYear
           }
-        }
-      },
-      title: {
-        text: 'Countries'
-      },
-      subtitle: {
-        text: 'Click the columns to view detail'
-      },
-      xAxis: {
-        type: 'category'
-      },
-      yAxis: {
-        max: this.props.max1,
-        title: {
-          text: 'Million $'
+
         },
-        plotLines: [{
-          value: 0,
-          width: 1,
-          color: '#808080'
-        }]
-      },
-      legend: {
-        enabled: false
-      },
-      series: cntsInOneCatForPieEachYear(this.props.arr1, this.props.index),
-      drilldown: {
-        series: getDrilldownEachYear(this.props.arr2, this.props.index)
+        drillup(e) {
+          chart.setTitle({ text: 'Categories' })
+          // chart.yAxis[0].update({
+          //   max: arr1[0].max
+          // })
+
+          if(curSubCatYear !== preSubCatYear){
+            setTimeout(function(){
+              updateBar(curSubCatYear)
+            },100)
+            preSubCatYear = curSubCatYear
+          }
+
+        }
       }
-    })
-
-    return null
-  }
-})
-
-export function updateBar(index){
-  if(chart.title.textStr === 'Countries'){
-    curCountryYear = index
-    chart.series[0].setData(cntsInOneCatForPieEachYearJustY(arr1, index))
-  }else{
-    curSubCatYear = index
-    chart.series[0].setData(getDrilldownEachYearJustY(arr2, curCountry, index))
-  }
+    },
+    title: {
+      text: 'Categories'
+    },
+    subtitle: {
+      text: 'Click the columns to view detail'
+    },
+    xAxis: {
+      type: 'category'
+    },
+    yAxis: {
+      max: arr1[0].max,
+      title: {
+        text: 'Million $'
+      },
+      plotLines: [{
+        value: 0,
+        width: 1,
+        color: '#808080'
+      }]
+    },
+    legend: {
+      enabled: false
+    },
+    plotOptions: {
+      series: {
+        borderWidth: 0,
+        colorByPoint: true,
+        dataLabels: {
+          enabled: true,
+          format: '{point.y:.1f}'//,
+          //inside: true
+        }
+      }
+    },
+    tooltip: {
+      headerFormat: '<span style="color:{point.color}">{point.key}</span><br/>',
+      pointFormat: '<b>{point.y:.1f} Million$</b><br/>'
+    },
+    series: catsInOneCntForBarEachYear(arr1, index),
+    drilldown: {
+      series: subcatsInOneCntEachYear(arr2, index)
+    }
+  })
 }
 
+export function updateBar(index){
+  if(chart.title.textStr === 'categories'){
+    curCatYear = index
+    chart.series[0].setData(catsInOneCntForBarEachYearJustY(arr1, index))
+  }else{
+    curSubCatYear = index
+    chart.series[0].setData(subcatsInOneCntEachYearJustY(arr2, curCat, index))
+  }
+}
 

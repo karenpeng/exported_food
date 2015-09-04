@@ -6,7 +6,8 @@
 export function allCntsName(arr){
   let output = []
   arr.forEach((d)=>{
-    output.push(d.name)
+    if(d.name !== 'Rest of the world') output.push(d.name)
   })
+  output.unshift('All')
   return output
 }

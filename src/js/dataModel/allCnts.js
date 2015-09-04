@@ -21,16 +21,18 @@ export function allCnts(obj){
   let hash = {}
   for(let cat in obj){
     for(let subCat in obj[cat]){
-      if(subCat !== 'total'){
-        let ctns = Object.keys(obj[cat][subCat])
-        ctns.forEach((c) => {
-          if(hash[c] === undefined) hash[c] = []
-          obj[cat][subCat][c].forEach((val, index) => {
-            if(hash[c][index] === undefined) hash[c][index] = 0
-            hash[c][index] += val
-          })
+      if(subCat === 'total') continue
+      
+      let cnts = Object.keys(obj[cat][subCat])
+      if(cnts === 'Rest of the World') continue
+
+      cnts.forEach((c) => {
+        if(hash[c] === undefined) hash[c] = []
+        obj[cat][subCat][c].forEach((val, index) => {
+          if(hash[c][index] === undefined) hash[c][index] = 0
+          hash[c][index] += val
         })
-      }
+      })
     }
   }
 
@@ -52,7 +54,7 @@ export function allCnts(obj){
     - a.data.reduce((a1, a2)=>{return a1 + a2}) 
   })
 
-  output = output.slice(0, 30)
+  output = output.slice(0, 20)
 
   //console.dir(output)
   return output

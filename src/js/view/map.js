@@ -4,7 +4,7 @@ export function makeMap(arr){
   map = new Highcharts.Chart({
     chart:{
       type: 'map',
-      renderTo: 'haha',
+      renderTo: 'haha'//,
       // width: window.innerWidth / 2 - 20,
       // height: window.innerHeight - 320
     },
@@ -31,8 +31,8 @@ export function makeMap(arr){
         enabled: false
       },
       minorTickLength: 0,
-     tickLength: 0,
-     gridLineWidth: 0
+      tickLength: 0,
+      gridLineWidth: 0
     },
     mapNavigation: {
       enabled: true,
@@ -44,21 +44,21 @@ export function makeMap(arr){
       type: 'logarithmic'
     },
     tooltip: {
-      headerFormat: ''
+      headerFormat: '<span class="flag {point.flag}"></span>'
     },
     series : [{
-        data : arr,
-        mapData: Highcharts.maps['custom/world'],
-        joinBy: ['iso-a2', 'code'],
-        name: '',
-        states: {
-          hover: {
-            color: '#BADA55'
-          }
-        },
-        tooltip: {
-          valueSuffix: 'Million$'
+      data : arr,
+      mapData: Highcharts.maps['custom/world'],
+      joinBy: ['iso-a2', 'code'],
+      name: '',
+      states: {
+        hover: {
+          color: '#BADA55'
         }
+      },
+      tooltip: {
+        valueSuffix: 'Million$'
+      }
     }]
   })
 }

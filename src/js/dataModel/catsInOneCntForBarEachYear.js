@@ -9,10 +9,13 @@
   //colorByPoint: true,
   data: [{
     name: "Animals",
-    y: 56.33
+    y: 56.33,
+    drilldown: "Animals"
+
   }, {
     name: "Coffee",
-    y: 24.03
+    y: 24.03,
+    drilldown: "Coffee"
   }, 
   ...
   ]
@@ -23,14 +26,15 @@ export function catsInOneCntForBarEachYear(arr, index){
   let output = []
   output.push({
     name: arr[0].name,
-    //colorByPoint: arr[0].colorByPoint,
+    max: arr[0].max,
     data:[]
   })
 
   arr[0].data.forEach((d, i)=>{
     output[0].data[i] = {
       name: d.name,
-      y: d.y[index]
+      y: d.y[index],
+      drilldown: d.name
     }
   })
   //console.dir(output)

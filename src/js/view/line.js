@@ -2,13 +2,13 @@ export function makeLine (arr){
 
   let chart = new Highcharts.Chart({
     chart:{
-      renderTo: 'left1',
+      renderTo: 'left',
       type: 'spline',
       height: window.innerHeight - 120,
       width: window.innerWidth - 40
     },
     title:{
-      text:'Click to view detail'
+      text:''
     },
     subtitle: {
       text: 'Source USDA, www.fas.usda.gov/gats',

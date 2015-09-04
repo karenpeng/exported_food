@@ -1,6 +1,7 @@
 import React from 'react'
 
 //data model
+//dimension1
 import {cntsInOneCatForPie} from '../dataModel/cntsInOneCatForPie.js'
 import {cntsInOneCatForLine} from '../dataModel/cntsInOneCatForLine.js'
 import {cntsInOneCatForMapEachYear} from '../dataModel/cntsInOneCatForMapEachYear.js'
@@ -13,6 +14,11 @@ import {cntsInOneSubcatForPieEachYear, cntsInOneSubcatForPieEachYearJustY}
 import {cntsInOneSubcatForMapEachYear} from '../dataModel/cntsInOneSubcatForMapEachYear.js'
 import {cntsInOneSubcatForLine} from '../dataModel/cntsInOneSubcatForLine.js'
 
+//dimension2
+import {catsInOneCntForBar} from '../dataModel/catsInOneCntForBar.js'
+import {catsInOneCntForLine} from '../dataModel/catsInOneCntForLine.js'
+import {subcatsInOneCnt} from '../dataModel/subcatsInOneCnt.js'
+
 //control
 import {Year} from './year.js'
 import {Cat} from './cat.js'
@@ -23,19 +29,22 @@ import {Dimension} from './dimension.js'
 import {makeLine} from '../view/line.js'
 import {makeSubline} from '../view/subline.js'
 import {makePie, updatePie} from '../view/pie.js'
+import {makeBar, updateBar} from '../view/bar.js'
 
 let cntsCatLineData, cntsSubcatLineData
+let catsCntLineData, subcatsInOneCntData
 
 export const BigBrother = React.createClass({
   PropTypes:{
     data: React.PropTypes.object.isRequired,
     cats: React.PropTypes.array.isRequired,
+    cnts: React.PropTypes.array.isRequired,
     allCats: React.PropTypes.array.isRequired,
-    allCnts: React.PropTypes.array.isRequired,
-    allCntsName: React.PropTypes.array.isRequired
+    allCnts: React.PropTypes.array.isRequired
   },
   getInitialState(){
     return{
+      demension: 'Country',
       index: 15,
       cat: "All",
       subCat: null,
@@ -61,6 +70,8 @@ export const BigBrother = React.createClass({
   //no render when year is being changed
   shouldComponentUpdate(nextProps, nextState){
 
+    if(nextState.demension !== this.state.demension) return true
+
     if(nextState.subCat === null){
       return nextState.cat !== this.state.cat || 
         nextState.windowWidth !== this.state.windowWidth ||
@@ -75,7 +86,14 @@ export const BigBrother = React.createClass({
   },
 
   handleDimension(val){
-    console.log(val)
+    
+    this.setState({
+      demension: val,
+      cat: 'All',
+      subCat: null
+    })
+
+    document.getElementById('catMenu1').value = 'All'
   },
 
   //user drag year bar
@@ -83,13 +101,18 @@ export const BigBrother = React.createClass({
     this.setState({
       index: year - 1999
     })
+   
     if(this.state.cat !== 'All'){
-      if(this.state.subCat === null || this.state.subCat === 'All'){
-        updatePie((year-1999), cntsInOneCatForPieEachYearJustY)
-        sendData(cntsInOneCatForMapEachYear(cntsCatLineData, (year-1999)))
+       if(this.state.demension === 'Country'){
+        if(this.state.subCat === null || this.state.subCat === 'All'){
+          updatePie((year-1999), cntsInOneCatForPieEachYearJustY)
+          sendData(cntsInOneCatForMapEachYear(cntsCatLineData, (year-1999)))
+        }else{
+          updatePie((year-1999), cntsInOneSubcatForPieEachYearJustY)
+          sendData(cntsInOneSubcatForMapEachYear(cntsSubcatLineData, (year-1999)))
+        }
       }else{
-        updatePie((year-1999), cntsInOneSubcatForPieEachYearJustY)
-        sendData(cntsInOneSubcatForMapEachYear(cntsSubcatLineData, (year-1999)))
+        updateBar((year-1999))
       }
     }
   },
@@ -101,8 +124,13 @@ export const BigBrother = React.createClass({
       subCat: 'All'
     })
     if(val !== 'All'){
-      cntsCatLineData = cntsInOneCatForLine(this.props.data[val])
-      sendData(cntsInOneCatForMapEachYear(cntsCatLineData, this.state.index))
+      if(this.state.demension === 'Country'){
+        cntsCatLineData = cntsInOneCatForLine(this.props.data[val])
+        sendData(cntsInOneCatForMapEachYear(cntsCatLineData, this.state.index))
+      }else{
+        catsCntLineData = catsInOneCntForLine(this.props.data, val)
+        subcatsInOneCntData = subcatsInOneCnt(this.props.data, catsCntLineData, val)
+      }
       document.getElementById('catMenu2').value = 'All'
     }
   },
@@ -124,15 +152,19 @@ export const BigBrother = React.createClass({
 
     let peek1, peek2
 
-    let subCats = this.state.cat === 'All'? 
-      null : subcatsInOneCat(this.props.data[this.state.cat])
+    let subCats
+
+    if(this.state.demension === 'Category' || this.state.cat === 'All') subCats = null
+    else subCats = subcatsInOneCat(this.props.data[this.state.cat])
 
     if(this.state.cat === "All"){
       peek1 = {display :'none'}
       peek2 = {display :'block'}
 
       if(this.state.didMount){
-        makeLine(this.props.allCnts)
+
+        this.state.demension === 'Country' ?
+        makeLine(this.props.allCnts) : makeLine(this.props.allCats)
       }
 
     }else{
@@ -140,12 +172,18 @@ export const BigBrother = React.createClass({
       peek2 = {display :'none'}
       
       if(this.state.didMount){
-        if(this.state.subCat === null || this.state.subCat === 'All'){
-          makeSubline(cntsInOneCatForLine(this.props.data[this.state.cat]))
-          makePie(cntsInOneCatForPie(cntsCatLineData), this.state.index, cntsInOneCatForPieEachYear)
+
+        if(this.state.demension === 'Country'){
+          if(this.state.subCat === null || this.state.subCat === 'All'){
+            makeSubline(cntsInOneCatForLine(this.props.data[this.state.cat]))
+            makePie(cntsInOneCatForPie(cntsCatLineData), this.state.index, cntsInOneCatForPieEachYear)
+          }else{
+            makeSubline(cntsInOneSubcatForLine(this.props.data[this.state.cat][this.state.subCat]))
+            makePie(cntsInOneSubcatForPie(cntsSubcatLineData), this.state.index, cntsInOneSubcatForPieEachYear)
+          }
         }else{
-          makeSubline(cntsInOneSubcatForLine(this.props.data[this.state.cat][this.state.subCat]))
-          makePie(cntsInOneSubcatForPie(cntsSubcatLineData), this.state.index, cntsInOneSubcatForPieEachYear)
+            makeSubline(catsInOneCntForLine(this.props.data, this.state.cat))
+            makeBar(catsInOneCntForBar(catsCntLineData), subcatsInOneCntData, this.state.index)
         }
       }
     }
@@ -153,22 +191,27 @@ export const BigBrother = React.createClass({
     const _w = window.innerWidth * 0.4 - 20
     const _h = window.innerHeight - 320
 
+    let peek3 = this.state.demension === 'Country' ? {display:'block'} : {display:'none'}
+
     return(
       <div id="container">
 
         <div id="top">
           <div id="info">
             <Dimension handleDimension={this.handleDimension}></Dimension>
-            <Cat options1={this.props.cats} options2={subCats}
-              handleCat={this.handleCat} handleSubcat={this.handleSubcat}></Cat>
+            <Cat 
+              options1={this.state.demension === 'Country' ? this.props.cats : this.props.cnts} 
+              options2={subCats}
+              handleCat={this.handleCat} handleSubcat={this.handleSubcat}
+              name={this.state.demension === 'Country' ? 'Category' : 'Country'}>
+              </Cat>
           </div>
         </div>
 
         <div id="main">
-          <div className="left" id="left1" style={peek2}></div>
-          <div className="left" id="left2" style={peek1}></div>
+          <div className="left" id="left"></div>
           <div id="right" style={peek1}>
-            <iframe id="ifr" src="map.html" width={_w} height={_h} scrolling="no"></iframe>
+            <iframe id="ifr" src="map.html" width={_w} height={_h} scrolling="no" style={peek3}></iframe>
           </div>
         </div>
 
