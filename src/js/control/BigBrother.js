@@ -215,7 +215,8 @@ export const BigBrother = React.createClass({
     return(
       <div id="container">
 
-        <h1 className="row" id="topic">Imported Food Report</h1>
+        <h1 className="row" id="topic">Where our food comes from?</h1>
+        <p id="subtopic">U.S. imported food report</p>
 
         <div className="row" id="top">
 
