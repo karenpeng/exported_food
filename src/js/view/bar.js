@@ -18,9 +18,8 @@ export function makeBar(_arr1, _arr2, index){
   chart = new Highcharts.Chart({
     chart: {
       type: 'column',
-      renderTo: 'left',
+      renderTo: 'group2',
       width: window.innerWidth - 40,
-      height: window.innerHeight - 420,
       events:{
         drilldown(e){
           curCat = e.point.name

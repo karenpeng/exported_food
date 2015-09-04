@@ -57,6 +57,7 @@ export const BigBrother = React.createClass({
   handleResize(){
     this.setState({windowWidth: window.innerWidth})
   },
+
   componentDidMount(){
     window.addEventListener('resize', this.handleResize, false)
     this.setState({
@@ -82,9 +83,9 @@ export const BigBrother = React.createClass({
       nextState.subCat !== this.state.subCat ||
       nextState.windowWidth !== this.state.windowWidth ||
       nextState.didMount !== this.state.didMount
-
   },
 
+  //user change dimension
   handleDimension(val){
     
     this.setState({
@@ -150,7 +151,7 @@ export const BigBrother = React.createClass({
 
   render(){
 
-    let peek1, peek2
+    let peek1, peek2, peek3, peek4
 
     let subCats
 
@@ -167,10 +168,16 @@ export const BigBrother = React.createClass({
         makeLine(this.props.allCnts) : makeLine(this.props.allCats)
       }
 
+      peek3 = {display: 'none'}
+      peek4 = {display: 'none'}
+
     }else{
       peek1 = {display :'block'}
       peek2 = {display :'none'}
-      
+
+      peek3 = this.state.demension === 'Country' ? {display :'block'} : {display :'none'}
+      peek4 = this.state.demension === 'Country' ? {display :'none'} : {display :'block'}
+
       if(this.state.didMount){
 
         if(this.state.demension === 'Country'){
@@ -188,36 +195,32 @@ export const BigBrother = React.createClass({
       }
     }
 
-    const _w = window.innerWidth * 0.4 - 20
-    const _h = window.innerHeight - 320
-
-    let peek3 = this.state.demension === 'Country' ? {display:'block'} : {display:'none'}
-
     return(
       <div id="container">
 
-        <div id="top">
-          <div id="info">
-            <Dimension handleDimension={this.handleDimension}></Dimension>
-            <Cat 
-              options1={this.state.demension === 'Country' ? this.props.cats : this.props.cnts} 
-              options2={subCats}
-              handleCat={this.handleCat} handleSubcat={this.handleSubcat}
-              name={this.state.demension === 'Country' ? 'Category' : 'Country'}>
-              </Cat>
-          </div>
+        <div className="row" id="top">
+          <Dimension handleDimension={this.handleDimension}></Dimension>
+          <Cat
+            options1={this.state.demension === 'Country' ? this.props.cats : this.props.cnts} 
+            options2={subCats}
+            handleCat={this.handleCat} handleSubcat={this.handleSubcat}
+            name={this.state.demension === 'Country' ? 'Category' : 'Country'}>
+          </Cat>
         </div>
 
-        <div id="main">
-          <div className="left" id="left"></div>
-          <div id="right" style={peek1}>
-            <iframe id="ifr" src="map.html" width={_w} height={_h} scrolling="no" style={peek3}></iframe>
-          </div>
+        <div id="main" style={peek2}></div>
+
+        <div className="row" id="group1" style={peek3}>
+          <div style={peek3} className="five columns" id="left"></div>
+          
+            <iframe style={peek3} className="seven columns" id="ifr" src="map.html" scrolling="no"></iframe>
         </div>
+        <div className="row" id="group2" style={peek4}></div>
 
-        <div id="bottom" style={peek1}></div>
+        <div className="row" id="bottom" style={peek1}></div>
 
-        <div id="above" style={peek1}>
+        
+        <div className="row"  id="above" style={peek1}>
           <Year handleYear={this.handleYear}></Year>
         </div>
 

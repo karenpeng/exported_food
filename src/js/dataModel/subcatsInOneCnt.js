@@ -64,7 +64,7 @@ export function subcatsInOneCnt(obj, arr, name){
     output.push(myObj)
   })
 
-  console.dir(output)
+  //console.dir(output)
   return output
 }
 

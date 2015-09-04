@@ -6,49 +6,27 @@ html, body{
   width: 100%;
   height: 100%;
 }
-#container{
-  margin: 0;
-  padding: 0;
-  left: 0;
-}
-#main {
-  margin: 0 20px;
-  padding: 0;
-  left: 0;
-}
-.left{
-  float: left;
-  max-width: 700px;
-}
-#right{
-  float: right;
-}
 #top {
-  margin: 0;
-  padding: 0;
-  left: 0;
-  width: 100%;
-  height: 120px;
-}
-#info{
+  margin: 20px;
   margin: 0 auto;
   text-align: center;
 }
-#bottom{
-  position: fixed;
-  margin: 0 20px 20px 50px;
+#main {
+  margin: 20px;
   padding: 0;
   left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 260px;
 }
-#above{
-  position: absolute;
-  /*z-index: 2;*/
-  margin-left: 56px;
-  bottom: 62px;
+#group1, #group2{
+  margin: 20px 20px 0 20px;
+}
+#bottom{
+  margin: 0 20px;
+  height: 260px;
 }
 iframe{
   border: 0;
+  height: 400px;
+}
+.info{
+  display: inline;
 }

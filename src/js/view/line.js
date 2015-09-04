@@ -2,9 +2,9 @@ export function makeLine (arr){
 
   let chart = new Highcharts.Chart({
     chart:{
-      renderTo: 'left',
+      renderTo: 'main',
       type: 'spline',
-      height: window.innerHeight - 120,
+      height: window.innerHeight - 160,
       width: window.innerWidth - 40
     },
     title:{
