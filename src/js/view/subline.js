@@ -5,19 +5,22 @@ export function makeSubline(arr){
       renderTo: 'bottom',
       type: 'spline',
       width: window.innerWidth * 0.96,
-      height: 260
+      height: 240
     },
     title:{
-      text:''
+      text:'All time changes'
     },
     subtitle: {
-      text: ''
+      text: 'Drag the slider below to change current year'
     },
     xAxis: {
       title: {
         text: 'Year'
       },
-      categories: [1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014]
+      categories: [1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014],
+      lineColor: 'transparent',
+      minorTickLength: 0,
+      tickLength: 0
     },
     yAxis: {
       //min: 0,
@@ -34,7 +37,7 @@ export function makeSubline(arr){
       // headerFormat: "{point.x:} {point.key}",
       // pointFormat: "{point.y:,.1f} Million$"
       formatter(){
-        return "<b>"+this.x+" <b>"+this.series.name+":<br/>"+this.y+" Million$"
+        return "<b>"+this.x+" <b><br/>"+this.series.name+"<br/>"+this.y+" Million$"
       }
     },
     legend: {

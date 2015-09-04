@@ -5,7 +5,7 @@
  */
 /*
 [{
-  name: "Category",
+  name: "Categories",
   max; 122,
   colorByPoint: true,
   data: [
@@ -28,7 +28,7 @@ export function catsInOneCntForBar(arr){
   let output = []
   
   output.push({
-    name: "Category",
+    name: "Categories",
     max : 0,
     colorByPoint: true,
     data: []

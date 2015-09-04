@@ -26,9 +26,15 @@ export function makeBar(_arr1, _arr2, index){
           chart.setTitle({
             text: e.point.name
           })
-          // chart.yAxis[0].update({
-          //   max: undefined
-          // })
+
+          arr2.forEach((d)=>{
+            if(d['name'] === curCat){
+              chart.yAxis[0].update({
+                max: d.max
+              })
+            }
+            return
+          })
           
           if(curCatYear !== preCatYear){
             setTimeout(function(){
@@ -40,9 +46,9 @@ export function makeBar(_arr1, _arr2, index){
         },
         drillup(e) {
           chart.setTitle({ text: 'Categories' })
-          // chart.yAxis[0].update({
-          //   max: arr1[0].max
-          // })
+          chart.yAxis[0].update({
+            max: arr1[0].max
+          })
 
           if(curSubCatYear !== preSubCatYear){
             setTimeout(function(){
@@ -100,7 +106,7 @@ export function makeBar(_arr1, _arr2, index){
 }
 
 export function updateBar(index){
-  if(chart.title.textStr === 'categories'){
+  if(chart.title.textStr === 'Categories'){
     curCatYear = index
     chart.series[0].setData(catsInOneCntForBarEachYearJustY(arr1, index))
   }else{

@@ -17,17 +17,17 @@ export function makePie(arr, index, func1){
       // }
     },
     title: {
-      text: 'Countries',
+      text: '',
       align: 'center',
       verticalAlign: 'top',
-      y: 6
+      y: 20
     },
     subtitle: {
       text: ''
     },
     tooltip: {
       headerFormat: '<b>{point.key} <b>:<br>',
-      pointFormat: '{point.y:.1f} Million$<br>{point.percentage:.1f}% of total'
+      pointFormat: '{point.y:.1f} Million$<br><b>{point.percentage:.1f}% of total<b>'
     },
     plotOptions: {
       pie: {

@@ -24,5 +24,11 @@ export function allCats(obj){
       data: obj[cat]["total"]
     })
   }
+
+  output.sort((a,b)=>{
+    return b.data.reduce((b1, b2)=>{return b1 + b2}) 
+    - a.data.reduce((a1, a2)=>{return a1 + a2}) 
+  })
+  
   return output
 }

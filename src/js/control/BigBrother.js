@@ -1,31 +1,41 @@
 import React from 'react'
 
+/////////////////////
 //data model
-//dimension1
-import {cntsInOneCatForPie} from '../dataModel/cntsInOneCatForPie.js'
+/////////////////////
+
+//1.look at countries
+//cat
 import {cntsInOneCatForLine} from '../dataModel/cntsInOneCatForLine.js'
+import {cntsInOneCatForPie} from '../dataModel/cntsInOneCatForPie.js'
 import {cntsInOneCatForMapEachYear} from '../dataModel/cntsInOneCatForMapEachYear.js'
-import {subcatsInOneCat} from '../dataModel/subcatsInOneCat.js'
 import {cntsInOneCatForPieEachYear, cntsInOneCatForPieEachYearJustY} 
   from '../dataModel/cntsInOneCatForPieEachYear.js'
+
+//subcat
+import {subcatsInOneCat} from '../dataModel/subcatsInOneCat.js'
+import {cntsInOneSubcatForLine} from '../dataModel/cntsInOneSubcatForLine.js'
 import {cntsInOneSubcatForPie} from '../dataModel/cntsInOneSubcatForPie.js'
+import {cntsInOneSubcatForMapEachYear} from '../dataModel/cntsInOneSubcatForMapEachYear.js'
 import {cntsInOneSubcatForPieEachYear, cntsInOneSubcatForPieEachYearJustY} 
   from '../dataModel/cntsInOneSubcatForPieEachYear.js'
-import {cntsInOneSubcatForMapEachYear} from '../dataModel/cntsInOneSubcatForMapEachYear.js'
-import {cntsInOneSubcatForLine} from '../dataModel/cntsInOneSubcatForLine.js'
 
-//dimension2
-import {catsInOneCntForBar} from '../dataModel/catsInOneCntForBar.js'
-import {catsInOneCntForLine} from '../dataModel/catsInOneCntForLine.js'
+//look at categories
 import {subcatsInOneCnt} from '../dataModel/subcatsInOneCnt.js'
+import {catsInOneCntForLine} from '../dataModel/catsInOneCntForLine.js'
+import {catsInOneCntForBar} from '../dataModel/catsInOneCntForBar.js'
 
+/////////////////////
 //control
+/////////////////////
+import {Dimension} from './dimension.js'
 import {Year} from './year.js'
 import {Cat} from './cat.js'
 import {sendData} from './message.js'
-import {Dimension} from './dimension.js'
 
+/////////////////////
 //view
+/////////////////////
 import {makeLine} from '../view/line.js'
 import {makeSubline} from '../view/subline.js'
 import {makePie, updatePie} from '../view/pie.js'
@@ -116,6 +126,9 @@ export const BigBrother = React.createClass({
         updateBar((year-1999))
       }
     }
+
+    document.getElementById('curYear').innerHTML = year
+    document.getElementById('curYear').style.border = "1px #77c4f4 solid"
   },
 
   //user change category
@@ -133,6 +146,7 @@ export const BigBrother = React.createClass({
         subcatsInOneCntData = subcatsInOneCnt(this.props.data, catsCntLineData, val)
       }
       document.getElementById('catMenu2').value = 'All'
+      document.getElementById('curYear').style.border = "1px #d1d1d1 solid"
     }
   },
 
@@ -146,6 +160,7 @@ export const BigBrother = React.createClass({
     }else{
       cntsSubcatLineData = cntsInOneSubcatForLine(this.props.data[this.state.cat][val])
       sendData(cntsInOneSubcatForMapEachYear(cntsSubcatLineData, this.state.index))
+      document.getElementById('curYear').style.border = "1px #d1d1d1 solid"
     }
   },
 
@@ -195,10 +210,15 @@ export const BigBrother = React.createClass({
       }
     }
 
+    let _w = window.innerWidth - 320
+
     return(
       <div id="container">
 
+        <h1 className="row" id="topic">Imported Food Report</h1>
+
         <div className="row" id="top">
+
           <Dimension handleDimension={this.handleDimension}></Dimension>
           <Cat
             options1={this.state.demension === 'Country' ? this.props.cats : this.props.cnts} 
@@ -206,22 +226,24 @@ export const BigBrother = React.createClass({
             handleCat={this.handleCat} handleSubcat={this.handleSubcat}
             name={this.state.demension === 'Country' ? 'Category' : 'Country'}>
           </Cat>
+          <span 
+            style ={this.state.cat === 'All'? {display:'none'}:{display:'inline'}}> In Year <span id="curYear">2014</span></span>
         </div>
 
         <div id="main" style={peek2}></div>
 
         <div className="row" id="group1" style={peek3}>
-          <div style={peek3} className="five columns" id="left"></div>
+          <div style={peek3} className="six columns" id="left"></div>
           
-            <iframe style={peek3} className="seven columns" id="ifr" src="map.html" scrolling="no"></iframe>
+            <iframe style={peek3} className="six columns" id="ifr" src="map.html" scrolling="no"></iframe>
         </div>
         <div className="row" id="group2" style={peek4}></div>
 
-        <div className="row" id="bottom" style={peek1}></div>
-
-        
-        <div className="row"  id="above" style={peek1}>
-          <Year handleYear={this.handleYear}></Year>
+        <div id="bottomWrap">
+          <div className="row" id="bottom" style={peek1}></div>
+          <div className="row"  id="above" style={{width:_w, display:peek1.display}}>
+            <Year handleYear={this.handleYear} ></Year>
+          </div>
         </div>
 
       </div>

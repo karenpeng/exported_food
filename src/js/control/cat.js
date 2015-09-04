@@ -35,12 +35,12 @@ export const Cat = React.createClass({
     })
 
     return(
-      <div>
-        <span>In {this.props.name}:</span>
+      <div className="choose">
+        <span> In {this.props.name} </span>
         <select id="catMenu1" onChange={this.handleClick1}>
           {options1}
         </select>
-        <span style={show}>Subcategory:</span>
+        <span style={show}> Subcategory </span>
         <select style={show} id="catMenu2" onChange={this.handleClick2}>
           {options2}
         </select>

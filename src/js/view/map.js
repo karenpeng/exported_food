@@ -40,7 +40,7 @@ export function makeMap(arr){
     },
     colorAxis: {
       min: 1,
-      max: 10000,
+      max: 1000,
       type: 'logarithmic'
     },
     tooltip: {
@@ -53,7 +53,7 @@ export function makeMap(arr){
       name: '',
       states: {
         hover: {
-          color: '#BADA55'
+          color: '#bee3fd'
         }
       },
       tooltip: {
