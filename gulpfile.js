@@ -10,6 +10,7 @@ var reactify = require('reactify')
 var brfs = require('brfs')
 var server = require('gulp-server-livereload')
 var mocha = require('gulp-mocha')
+require('babel/register')
 
 function compile(watch) {
   var files = ['./src/js/main.js', './src/js/mapmain.js']
@@ -55,15 +56,15 @@ function watch() {
 }
 
 function test(){
-  return gulp.src('./test/test.js', {read: false})
+  return gulp.src('./tests/*.js', {read: false})
   // gulp-mocha needs filepaths so you can't have any plugins before it 
   .pipe(mocha({reporter: 'nyan'}))
-  .once('error', function () {
-            process.exit(1)
-        })
-  .once('end', function () {
-      process.exit()
-  })
+  // .once('error', function () {
+  //           process.exit(1)
+  //       })
+  // .once('end', function () {
+  //     process.exit()
+  // })
 }
 
 function serve(){
@@ -84,3 +85,4 @@ gulp.task('test', test)
 gulp.task('serve', serve)
 
 gulp.task('default', ['watch', 'serve'])
+
