@@ -1,12 +1,12 @@
 #where our food comes from?
-###( interactive U.S. imported food report )
+( interactive U.S. imported food report )
 
-
+-
 ####1. Brief
 An excersice of data visualization:
 
-Given a dataset provided by the USDA ([Excel format](https://raw.githubusercontent.com/faunadb/exercises/master/viz/importedfoodsbycountry2015.xls) / [HTML format](https://raw.githubusercontent.com/faunadb/exercises/master/viz/importedfoodsbycountry2015.tar.gz)) of food import quantities to the United States by year, category, and origin.
-Present this data in a way that makes sense and allows for exploration.
+Given a dataset provided by the USDA ([Excel format](https://raw.githubusercontent.com/faunadb/exercises/master/viz/importedfoodsbycountry2015.xls) / [HTML format](https://raw.githubusercontent.com/faunadb/exercises/master/viz/importedfoodsbycountry2015.tar.gz)),
+present this data in a way that makes sense and allows for exploration.
 
 Original data sources are [here](http://www.ers.usda.gov/data-products/us-food-imports.aspx).
 Details and requirements are [here](https://github.com/faunadb/exercises/blob/master/viz.md).
@@ -31,10 +31,10 @@ It's not easy to present all the information inside just one graph.
 People care about the food they eat, where it come from and how it changes from years to years.
 
  * changes as a macroscopical trend (all year changes)
- * details in microcosmic (each year)
+ * microcosmic detail (each year)
  * be able to compare data (country vs. country / category vs. category)
 
-*And with the insight1, I come up with a sketch idea:*
+*Combining Insight1, I come up with a sketch idea:*
 
 Full year changes|
 -----------
@@ -48,21 +48,22 @@ Look at countries in categories | Look at categories in countries
 ####3. Process
 
 #####1. Design layout
-
-Look at countries precentages inside selected category
+  a. All year changes
+  
+  b. Look at countries precentages inside selected category
 
 <img src="https://github.com/karenpeng/imported_food/blob/master/images/IMG_5829.jpg" width="500px"/>
 
-Look at categoris value inside selected country
 
+  c. Look at categoris value inside selected country
 <img src="https://github.com/karenpeng/imported_food/blob/master/images/IMG_5836.jpg" width="500px"/>
 
 #####2. Structure code base
 Some techniques:
- * ```gulp```: buile, serve and test the system
+ * ```gulp```: build, serve and test the system
  * ```browserify```: bundle different modules
  * ```React```: control user interface
- * ```HighCharts```: create data visualization component
+ * ```HighCharts```: create data visualization components
  * ```ES6```: write javascript in a more "functional" way
 
 
@@ -72,7 +73,7 @@ src
 ├─js
    ├─main.js(entry of bundle)   
    ├─control
-        ├─current year controller, current category controller, current country controller
+        ├─year controller, category controller, country controller
    ├─dataModel
         ├─all sorts of data structures for different charts
    ├─view
@@ -84,4 +85,9 @@ Actually I used [```D3```](http://d3js.org/) first, but due to the time being fo
 
 -
 ####4. Outcome
-[Launch web site](http://karenpeng.github.io/imported_food/). :smile:
+
+[Launch website](http://karenpeng.github.io/imported_food/) :smile:
+
+or
+
+[Watch demo video]()
