@@ -10,6 +10,9 @@ describe('test catsInOneCntForLine\n', function(){
       result.forEach((d)=>{
         assert(typeof d.name === 'string')
         assert(Object.prototype.toString.call(d.data) === '[object Array]')
+        d.data.forEach((dd)=>{
+          assert(typeof dd === 'number')
+        })
       })   
       done()
     })

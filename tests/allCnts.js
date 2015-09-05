@@ -1,12 +1,11 @@
 import assert from 'assert'
 import wholeData from '../data/json/data.json'
-import {allCats} from '../src/js/dataModel/allCats.js'
+import {allCnts} from '../src/js/dataModel/allCnts.js'
 
-describe('test allCats\n', function(){
+describe('test allCnts\n', function(){
   describe('when given an object', function(){
-    it('should return an array of object containing all the frist level keys and its total value', function(done){
-      const result = allCats(wholeData)
-      assert(result.length) === Object.keys(wholeData).length
+    it('should return an array of object containing all the contries and its total value', function(done){
+      const result = allCnts(wholeData)
       result.forEach((d)=>{
         assert(typeof d.name === 'string')
         assert(Object.prototype.toString.call(d.data) === '[object Array]')
