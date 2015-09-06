@@ -80,7 +80,13 @@ src
         ├─all charts: pie, column, spline, map
 ```
  
-#####3. Visualization
+#####3. Data processing
+In order to avoid confusion in comparision, quantity is not being shown.
+
+Data is modified into json format as below:
+<img src="https://github.com/karenpeng/imported_food/blob/master/images/10.png" width="900px"/>
+
+#####4. Visualization
 Actually I used [```D3```](http://d3js.org/) first, but due to the time being for this exercise, switched to ```HighCharts``` instead.
 
 -
