@@ -90,4 +90,15 @@ Actually I used [```D3```](http://d3js.org/) first, but due to the time being fo
 
 or
 
-[Watch demo video]()
+Look at some screenshoots:
+
+<img src="https://github.com/karenpeng/imported_food/blob/master/images/1.png" width="900px"/>
+<img src="https://github.com/karenpeng/imported_food/blob/master/images/2.png" width="900px"/>
+<img src="https://github.com/karenpeng/imported_food/blob/master/images/3.png" width="900px"/>
+<img src="https://github.com/karenpeng/imported_food/blob/master/images/4.png" width="900px"/>
+<img src="https://github.com/karenpeng/imported_food/blob/master/images/6.png" width="900px"/>
+<img src="https://github.com/karenpeng/imported_food/blob/master/images/7.png" width="900px"/>
+<img src="https://github.com/karenpeng/imported_food/blob/master/images/8.png" width="900px"/>
+<img src="https://github.com/karenpeng/imported_food/blob/master/images/9.png" width="900px"/>
+<img src="https://github.com/karenpeng/imported_food/blob/master/images/5.png" width="900px"/>
+Fin.
