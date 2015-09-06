@@ -10,6 +10,8 @@ var reactify = require('reactify')
 var brfs = require('brfs')
 var server = require('gulp-server-livereload')
 var mocha = require('gulp-mocha')
+var istanbul = require('gulp-istanbul')
+var isparta = require('isparta')
 require('babel/register')
 
 function compile(watch) {
@@ -67,6 +69,27 @@ function test(){
   // })
 }
 
+function coverage() {
+  var SOURCES = 'src/**/*.js'
+  var TESTS = 'tests/*.js'
+  gulp.src(SOURCES)
+  .pipe(istanbul({
+    instrumenter: isparta.Instrumenter // Use the isparta instrumenter (code coverage for ES6)
+  }))
+  .pipe(istanbul.hookRequire())
+  .on('finish', function () {
+    // run test
+    gulp.src(TESTS, {read: false})
+    .pipe(mocha({reporter: 'nyan'}))
+    .on('end', function () {
+      // generate coverage reporter
+      gulp.src(SOURCES, {read: false})
+    .pipe(istanbul.writeReports())
+    // 生成完成后的测试报告在 coverage 目录下，打开 coverage/lcov-report/index.html 查看
+    })
+  })
+}
+
 function serve(){
   gulp.src('.')
   .pipe(server({
@@ -82,6 +105,7 @@ function serve(){
 gulp.task('build', compile)
 gulp.task('watch', watch)
 gulp.task('test', test)
+gulp.task('test-cov', coverage)
 gulp.task('serve', serve)
 
 gulp.task('default', ['watch', 'serve'])
