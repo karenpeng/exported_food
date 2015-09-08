@@ -180,7 +180,8 @@ export const BigBrother = React.createClass({
       if(this.state.didMount){
 
         this.state.demension === 'Country' ?
-        makeLine(this.props.allCnts) : makeLine(this.props.allCats)
+        makeLine(this.props.allCnts, this.state.windowWidth > 800) 
+          : makeLine(this.props.allCats, this.state.windowWidth > 800)
       }
 
       peek3 = {display: 'none'}
@@ -197,20 +198,21 @@ export const BigBrother = React.createClass({
 
         if(this.state.demension === 'Country'){
           if(this.state.subCat === null || this.state.subCat === 'All'){
-            makeSubline(cntsInOneCatForLine(this.props.data[this.state.cat]))
+            makeSubline(cntsInOneCatForLine(this.props.data[this.state.cat]), this.state.windowWidth > 800)
             makePie(cntsInOneCatForPie(cntsCatLineData), this.state.index, cntsInOneCatForPieEachYear)
           }else{
-            makeSubline(cntsInOneSubcatForLine(this.props.data[this.state.cat][this.state.subCat]))
+            makeSubline(cntsInOneSubcatForLine(this.props.data[this.state.cat][this.state.subCat]), this.state.windowWidth > 800)
             makePie(cntsInOneSubcatForPie(cntsSubcatLineData), this.state.index, cntsInOneSubcatForPieEachYear)
           }
         }else{
-            makeSubline(catsInOneCntForLine(this.props.data, this.state.cat))
+            makeSubline(catsInOneCntForLine(this.props.data, this.state.cat), this.state.windowWidth > 800)
             makeBar(catsInOneCntForBar(catsCntLineData), subcatsInOneCntData, this.state.index)
         }
       }
     }
 
-    let _w = window.innerWidth - 320
+    let _w = this.state.windowWidth > 800 ? window.innerWidth - 320 : window.innerWidth - 100
+    let _left = this.state.windowWidth > 800 ? 130 : 60
 
     return(
       <div id="container">
@@ -242,7 +244,7 @@ export const BigBrother = React.createClass({
 
         <div id="bottomWrap">
           <div className="row" id="bottom" style={peek1}></div>
-          <div className="row"  id="above" style={{width:_w, display:peek1.display}}>
+          <div className="row"  id="above" style={{width:_w, display:peek1.display, left:_left}}>
             <Year handleYear={this.handleYear} ></Year>
           </div>
         </div>

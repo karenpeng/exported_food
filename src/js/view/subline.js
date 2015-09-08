@@ -1,4 +1,4 @@
-export function makeSubline(arr){
+export function makeSubline(arr, bool){
   
     let chart = new Highcharts.Chart({
     chart:{
@@ -41,6 +41,7 @@ export function makeSubline(arr){
       }
     },
     legend: {
+      enabled: bool,
       layout: 'vertical',
       align: 'right',
       verticalAlign: 'middle',

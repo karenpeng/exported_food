@@ -27,7 +27,7 @@ export function makePie(arr, index, func1){
     },
     tooltip: {
       headerFormat: '<b>{point.key} <b>:<br>',
-      pointFormat: '{point.y:.1f} Million$<br><b>{point.percentage:.1f}% of total<b>'
+      pointFormat: '<b>{point.y:.1f} Million$</b><br>{point.percentage:.1f}% of total'
     },
     plotOptions: {
       pie: {
@@ -38,7 +38,12 @@ export function makePie(arr, index, func1){
             textShadow: '0px 1px 2px white'
           },
           connectorColor: '#333',
-          connectorWidth: 0   
+          connectorWidth: 0   ,
+          formatter(){
+            return(
+              "<b>"+this.key+"</b><br/>"+this.percentage.toFixed(1) + "%"
+            )
+          } 
         },
         //showInLegend: true,
         allowPointSelect: true,

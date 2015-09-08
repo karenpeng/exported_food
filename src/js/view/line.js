@@ -1,4 +1,4 @@
-export function makeLine (arr){
+export function makeLine (arr, bool){
 
   let chart = new Highcharts.Chart({
     chart:{
@@ -41,6 +41,7 @@ export function makeLine (arr){
       }
     },
     legend: {
+      enabled: bool,
       layout: 'vertical',
       align: 'right',
       verticalAlign: 'middle',
