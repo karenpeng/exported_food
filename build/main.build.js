@@ -23687,7 +23687,7 @@ var BigBrother = _react2['default'].createClass({
 
       if (this.state.didMount) {
 
-        this.state.demension === 'Country' ? (0, _viewLineJs.makeLine)(this.props.allCnts, this.state.windowWidth > 800) : (0, _viewLineJs.makeLine)(this.props.allCats, this.state.windowWidth > 800);
+        this.state.demension === 'Country' ? (0, _viewLineJs.makeLine)(this.props.allCnts) : (0, _viewLineJs.makeLine)(this.props.allCats);
       }
 
       peek3 = { display: 'none' };
@@ -23703,21 +23703,20 @@ var BigBrother = _react2['default'].createClass({
 
         if (this.state.demension === 'Country') {
           if (this.state.subCat === null || this.state.subCat === 'All') {
-            (0, _viewSublineJs.makeSubline)((0, _dataModelCntsInOneCatForLineJs.cntsInOneCatForLine)(this.props.data[this.state.cat]), this.state.windowWidth > 800);
+            (0, _viewSublineJs.makeSubline)((0, _dataModelCntsInOneCatForLineJs.cntsInOneCatForLine)(this.props.data[this.state.cat]));
             (0, _viewPieJs.makePie)((0, _dataModelCntsInOneCatForPieJs.cntsInOneCatForPie)(cntsCatLineData), this.state.index, _dataModelCntsInOneCatForPieEachYearJs.cntsInOneCatForPieEachYear);
           } else {
-            (0, _viewSublineJs.makeSubline)((0, _dataModelCntsInOneSubcatForLineJs.cntsInOneSubcatForLine)(this.props.data[this.state.cat][this.state.subCat]), this.state.windowWidth > 800);
+            (0, _viewSublineJs.makeSubline)((0, _dataModelCntsInOneSubcatForLineJs.cntsInOneSubcatForLine)(this.props.data[this.state.cat][this.state.subCat]));
             (0, _viewPieJs.makePie)((0, _dataModelCntsInOneSubcatForPieJs.cntsInOneSubcatForPie)(cntsSubcatLineData), this.state.index, _dataModelCntsInOneSubcatForPieEachYearJs.cntsInOneSubcatForPieEachYear);
           }
         } else {
-          (0, _viewSublineJs.makeSubline)((0, _dataModelCatsInOneCntForLineJs.catsInOneCntForLine)(this.props.data, this.state.cat), this.state.windowWidth > 800);
+          (0, _viewSublineJs.makeSubline)((0, _dataModelCatsInOneCntForLineJs.catsInOneCntForLine)(this.props.data, this.state.cat));
           (0, _viewBarJs.makeBar)((0, _dataModelCatsInOneCntForBarJs.catsInOneCntForBar)(catsCntLineData), subcatsInOneCntData, this.state.index);
         }
       }
     }
 
-    var _w = this.state.windowWidth > 800 ? window.innerWidth - 320 : window.innerWidth - 100;
-    var _left = this.state.windowWidth > 800 ? 130 : 60;
+    var _w = window.innerWidth - 320;
 
     return _react2['default'].createElement(
       'div',
@@ -23767,7 +23766,7 @@ var BigBrother = _react2['default'].createClass({
         _react2['default'].createElement('div', { className: 'row', id: 'bottom', style: peek1 }),
         _react2['default'].createElement(
           'div',
-          { className: 'row', id: 'above', style: { width: _w, display: peek1.display, left: _left } },
+          { className: 'row', id: 'above', style: { width: _w, display: peek1.display } },
           _react2['default'].createElement(_yearJs.Year, { handleYear: this.handleYear })
         )
       )
@@ -25206,7 +25205,7 @@ Object.defineProperty(exports, '__esModule', {
 });
 exports.makeLine = makeLine;
 
-function makeLine(arr, bool) {
+function makeLine(arr) {
 
   var chart = new Highcharts.Chart({
     chart: {
@@ -25249,7 +25248,6 @@ function makeLine(arr, bool) {
       }
     },
     legend: {
-      enabled: bool,
       layout: 'vertical',
       align: 'right',
       verticalAlign: 'middle',
@@ -25312,7 +25310,7 @@ function makePie(arr, index, func1) {
     },
     tooltip: {
       headerFormat: '<b>{point.key} <b>:<br>',
-      pointFormat: '<b>{point.y:.1f} Million$</b><br>{point.percentage:.1f}% of total'
+      pointFormat: '{point.y:.1f} Million$<br><b>{point.percentage:.1f}% of total<b>'
     },
     plotOptions: {
       pie: {
@@ -25323,10 +25321,7 @@ function makePie(arr, index, func1) {
             textShadow: '0px 1px 2px white'
           },
           connectorColor: '#333',
-          connectorWidth: 0,
-          formatter: function formatter() {
-            return "<b>" + this.key + "</b><br/>" + this.percentage.toFixed(1) + "%";
-          }
+          connectorWidth: 0
         },
         //showInLegend: true,
         allowPointSelect: true,
@@ -25367,7 +25362,7 @@ Object.defineProperty(exports, '__esModule', {
 });
 exports.makeSubline = makeSubline;
 
-function makeSubline(arr, bool) {
+function makeSubline(arr) {
 
   var chart = new Highcharts.Chart({
     chart: {
@@ -25410,7 +25405,6 @@ function makeSubline(arr, bool) {
       }
     },
     legend: {
-      enabled: bool,
       layout: 'vertical',
       align: 'right',
       verticalAlign: 'middle',
