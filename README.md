@@ -56,6 +56,7 @@ Look at countries in categories | Look at categories in countries
 
 
   c. Look at categoris value inside selected country
+  
 <img src="https://github.com/karenpeng/imported_food/blob/master/images/IMG_5836.jpg" width="500px"/>
 
 #####2. Structure code base
