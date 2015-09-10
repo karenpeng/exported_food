@@ -23725,7 +23725,7 @@ var BigBrother = _react2['default'].createClass({
       _react2['default'].createElement(
         'h1',
         { className: 'row', id: 'topic' },
-        'Where our food comes from?'
+        'Where does our food come from?'
       ),
       _react2['default'].createElement(
         'p',
